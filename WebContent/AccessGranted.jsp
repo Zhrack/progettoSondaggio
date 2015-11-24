@@ -10,7 +10,15 @@
 <body>
  <h1>Access Granted, </h1>
  
- <p>Inserted name<h4><s:property value="user"/></h4></p>
- <p>with password <h4><s:property value="psw"/></h4>.</p>
+<%--  <p>Inserted name<h4><s:property value="user"/></h4></p> --%>
+<%--  <p>with password <h4><s:property value="psw"/></h4>.</p> --%>
+ 
+ <s:iterator value="list">
+	<s:property value="userID"/> , 
+	<s:property value="nickname"/>,
+	<s:property value="pswrd"/> , 
+	<s:property value="nome"/>,
+	<s:property value="cognome"/><br/><br/>
+</s:iterator>
 </body>
 </html>

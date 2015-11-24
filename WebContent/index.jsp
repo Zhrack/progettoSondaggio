@@ -10,12 +10,12 @@
 <body>
    <h1>Simple Login with Struts2</h1>
    <form action="loginSubmitted" method="post">
-		Username:<br>
-		<input type="text" name="user">
-		<br>
-		Password:<br>
-		<input type="password" name="psw">
-		<br><br>
+<!-- 		Username:<br> -->
+<!-- 		<input type="text" name="user"> -->
+<!-- 		<br> -->
+<!-- 		Password:<br> -->
+<!-- 		<input type="password" name="psw"> -->
+<!-- 		<br><br> -->
 		<input type="submit" value="Submit"/>
    </form>
    <br><br><br><hr>

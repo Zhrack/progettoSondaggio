@@ -20,7 +20,7 @@ public class VisitatoreAction extends ActionSupport{
 	private static final String psw3 = "matteo";
 	private static final String psw4 = "simone";
 	
-	  static final String url = "jdbc:mysql://localhost:3306/world";
+	  static final String url = "jdbc:mysql://localhost:3306/sondaggioDB";
 	  static final String user = "root";
 	  static final String psw = user;
 	
@@ -77,7 +77,6 @@ public class VisitatoreAction extends ActionSupport{
 
 	          Class.forName("com.mysql.jdbc.Driver").newInstance();
 	          Connection con = DriverManager.getConnection(url, user, psw);
-	          con.setCatalog("sondaggioDB");
 
 	          Statement stmt = con.createStatement();
 

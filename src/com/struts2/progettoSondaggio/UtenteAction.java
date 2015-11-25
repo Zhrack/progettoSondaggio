@@ -1,4 +1,4 @@
-package com.struts2.Struts2FirstProj;
+package com.struts2.progettoSondaggio;
 
 import com.opensymphony.xwork2.ActionSupport;
 

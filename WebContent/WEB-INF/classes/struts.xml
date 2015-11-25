@@ -7,7 +7,7 @@
    <package name="helloworld" extends="struts-default">
      
       <action name="loginSubmitted" 
-            class="com.struts2.Struts2FirstProj.VisitatoreAction" 
+            class="com.struts2.progettoSondaggio.VisitatoreAction" 
             method="execute">
             <result name="success">/AccessGranted.jsp</result>
             <result name="error">/AccessDenied.jsp</result>

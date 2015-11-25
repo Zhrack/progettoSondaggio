@@ -14,6 +14,7 @@ public class UtenteDB {
 		this.pswrd = pswrd;
 		this.nome = nome;
 		this.cognome = cognome;
+		
 	}
 	
 	public String getUserID() {

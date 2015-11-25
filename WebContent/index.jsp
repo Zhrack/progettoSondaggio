@@ -8,14 +8,32 @@
 <title>Login Example</title>
 </head>
 <body>
-   <h1>Simple Login with Struts2</h1>
+   <h1>Login</h1>
    <form action="loginSubmitted" method="post">
-<!-- 		Username:<br> -->
-<!-- 		<input type="text" name="user"> -->
-<!-- 		<br> -->
-<!-- 		Password:<br> -->
-<!-- 		<input type="password" name="psw"> -->
-<!-- 		<br><br> -->
+   		<s:hidden name="option" value="login"/>
+		Username:<br>
+		<input type="text" name="username">
+		<br>
+		Password:<br>
+		<input type="password" name="password">
+		<br><br>
+		<input type="submit" value="Submit"/>
+   </form>
+   <h1>Registrati</h1>
+   <form action="registrationSubmitted" method="post">
+   		<s:hidden name="option" value="registrazione"/>
+		Username:<br>
+		<input type="text" name="username">
+		<br>
+		Password:<br>
+		<input type="password" name="password">
+		<br>
+		Nome:<br>
+		<input type="text" name="nome">
+		<br>
+		Cognome:<br>
+		<input type="text" name="cognome">
+		<br><br>
 		<input type="submit" value="Submit"/>
    </form>
    <br><br><br><hr>

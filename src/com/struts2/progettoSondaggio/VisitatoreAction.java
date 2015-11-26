@@ -7,8 +7,22 @@ import com.opensymphony.xwork2.ActionSupport;
 
 
 public class VisitatoreAction extends ActionSupport{	
-
 	
+	public class LoginData
+	{
+		public String username;
+		public String password;
+		public boolean isAmministratore;
+		
+		public LoginData(String username, String password, boolean isAmministatore)
+		{
+			this.username = username;
+			this.password = password;
+			this.isAmministratore = isAmministratore;
+		}
+	}
+
+	private LoginData loginData;
 	private LoginController loginController;
 	
 	private String username;
@@ -25,39 +39,25 @@ public class VisitatoreAction extends ActionSupport{
 	{
 		list = new ArrayList<UtenteDB>();
 		loginController = new LoginController();
+		loginData = new LoginData("", "", false);
 	}
 
 	public String execute() throws Exception {		
-	
-//	      try {
-//
-//	          Class.forName("com.mysql.jdbc.Driver").newInstance();
-//	          Connection con = DriverManager.getConnection(url, user, psw);
-//
-//	          Statement stmt = con.createStatement();
-//
-//	          ResultSet result = stmt.executeQuery("SELECT * FROM utente");
-//	          
-//	          while(result.next())
-//	          {
-//	        	 list.add(new UtenteDB(result.getString("userID"), result.getString("nickname"), result.getString("pswrd")
-//	        			 , result.getString("nome"), result.getString("cognome")));
-//	          } 
-//
-//	          con.close();
-//
-//	      } catch (Exception ex) {
-//	          Logger.getLogger(VisitatoreAction.class.getName()).log( 
-//	                           Level.SEVERE, null, ex);
-//	      }
 		System.out.println("Option selezionata: " + option);
 		if(option.equals("login"))
 		{
 			System.out.println("Dentro login");
-			if(loginController.login(username, password))
+			loginData.username = username;
+			loginData.password = password;
+			loginData.isAmministratore = false;
+			if(loginController.login(loginData))
 			{
-				System.out.println("Login OK");
-				return SUCCESS;
+				System.out.println("Login OK " + loginData.isAmministratore);
+				if(loginData.isAmministratore)
+				{
+					return "amministratoreSuccess";
+				}
+				else return "utenteSuccess";
 			}
 			else return "loginFallito";
 		}

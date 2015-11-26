@@ -5,13 +5,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Access Granted</title>
+<title>Utente - Pannello di controllo</title>
 </head>
 <body>
- <h1>Access Granted, </h1>
- 
-<%--  <p>Inserted name<h4><s:property value="user"/></h4></p> --%>
-<%--  <p>with password <h4><s:property value="psw"/></h4>.</p> --%>
+ <h1>Pannello Utente</h1>
  
  <s:iterator value="list">
 	<s:property value="userID"/> , 

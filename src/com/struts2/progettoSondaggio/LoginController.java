@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.struts2.progettoSondaggio.VisitatoreAction.LoginData;
+
 public class LoginController {
 	static final String url = "jdbc:mysql://localhost:3306/sondaggioDB";
 	static final String user = "root";
@@ -18,27 +20,31 @@ public class LoginController {
 		
 	}
 	
-	public boolean login(String username, String password)
+	public boolean login(LoginData data)
 	{
 		// Check username e password sul DB
 	      try {
-	    	  System.out.println("username: " + username);
-	    	  System.out.println("password: " + password);
+	    	  System.out.println("username: " + data.username);
+	    	  System.out.println("password: " + data.password);
 	          Class.forName("com.mysql.jdbc.Driver").newInstance();
 	          Connection con = DriverManager.getConnection(url, user, psw);
 
 	          Statement stmt = con.createStatement();
 
-	          ResultSet result = stmt.executeQuery("select * from utente WHERE nickname='" + username + "'");
+	          ResultSet result = stmt.executeQuery("select * from utente WHERE nickname='" + data.username + "'");
 	          if (!result.isBeforeFirst() ) 
 	          {    
 	        	  return false;
 	          } 
 	          result.next();
 	          System.out.println("Pass DB: " + result.getString("pswrd"));
-	          if(result.getString("pswrd").equals(password))
+	          if(result.getString("pswrd").equals(data.password))
 	          {
-	        	  
+	        	  if(result.getString("dataPagamento") != null)
+	        	  {
+	        		  System.out.println("amministratore");
+	        		  data.isAmministratore = true;
+	        	  }
 	        	  con.close();
 	        	  return true;
 	          }

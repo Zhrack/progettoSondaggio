@@ -1,6 +1,7 @@
 package com.struts2.progettoSondaggio;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -29,7 +30,6 @@ public class VisitatoreAction extends ActionSupport{
 	private String password;
 	private String nome;
 	private String cognome;
-	private String nascita;
 	
 	private String option;
 
@@ -65,7 +65,7 @@ public class VisitatoreAction extends ActionSupport{
 		else if(option.equals("registrazione"))
 		{
 			System.out.println("Dentro registrazione");
-			if(loginController.registrazione(username, password, nome, cognome, nascita))
+			if(loginController.registrazione(username, password, nome, cognome))
 			{
 				System.out.println("Reg OK");
 				return SUCCESS;
@@ -126,14 +126,6 @@ public class VisitatoreAction extends ActionSupport{
 
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
-	}
-
-	public String getNascita() {
-		return nascita;
-	}
-
-	public void setNascita(String nascita) {
-		this.nascita = nascita;
 	}
 	
 }

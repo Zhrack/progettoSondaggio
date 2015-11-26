@@ -26,5 +26,17 @@
             <result name="success">/AmministratoreView.jsp</result>
             <result name="error">/UtenteView.jsp</result>
       </action>
+      <action name="logout" 
+            class="com.struts2.progettoSondaggio.UtenteAction" 
+            method="logout">
+            <result name="success">/index.jsp</result>
+      </action>
+      
+      
+      <action name="logout" 
+            class="com.struts2.progettoSondaggio.AmministratoreAction" 
+            method="logout">
+            <result name="success">/index.jsp</result>
+      </action>
    </package>
 </struts>

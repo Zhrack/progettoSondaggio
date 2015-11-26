@@ -29,6 +29,7 @@ public class VisitatoreAction extends ActionSupport{
 	private String password;
 	private String nome;
 	private String cognome;
+	private String nascita;
 	
 	private String option;
 
@@ -64,7 +65,7 @@ public class VisitatoreAction extends ActionSupport{
 		else if(option.equals("registrazione"))
 		{
 			System.out.println("Dentro registrazione");
-			if(loginController.registrazione(username, password, nome, cognome))
+			if(loginController.registrazione(username, password, nome, cognome, nascita))
 			{
 				System.out.println("Reg OK");
 				return SUCCESS;
@@ -125,6 +126,14 @@ public class VisitatoreAction extends ActionSupport{
 
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
+	}
+
+	public String getNascita() {
+		return nascita;
+	}
+
+	public void setNascita(String nascita) {
+		this.nascita = nascita;
 	}
 	
 }

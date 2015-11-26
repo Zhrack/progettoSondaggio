@@ -8,19 +8,15 @@ public class UtenteAction extends ActionSupport{
 	
 	private String username;
 	
-	private boolean pagamentoEffettuato;
-	
 	public UtenteAction()
 	{
 		pagamentoController = new PagamentoController();
-		pagamentoEffettuato = false;
 	}
 	
 	public String execute() throws Exception {	
 		if(pagamentoController.effettuaPagamento(username))
 		{
 			System.out.println("pagamento true");
-			pagamentoEffettuato = true;
 			return SUCCESS;
 		}
 		else return ERROR;
@@ -33,14 +29,6 @@ public class UtenteAction extends ActionSupport{
 
 	public void setUsername(String username) {
 		this.username = username;
-	}
-
-	public boolean getPagamentoEffettuato() {
-		return pagamentoEffettuato;
-	}
-
-	public void setPagamentoEffettuato(boolean pagamentoEffettuato) {
-		this.pagamentoEffettuato = pagamentoEffettuato;
 	}
 
 }

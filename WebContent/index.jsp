@@ -33,6 +33,9 @@
 		<br>
 		Cognome:<br>
 		<input type="text" name="cognome">
+		<br>
+		Data di nascita:<br>
+		<s:date name="nascita" format="MM/dd/yyyy" />
 		<br><br>
 		<input type="submit" value="Submit"/>
    </form>

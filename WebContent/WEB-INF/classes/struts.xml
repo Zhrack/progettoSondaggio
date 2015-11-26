@@ -19,5 +19,12 @@
             <result name="success">/UtenteView.jsp</result>
             <result name="registrazioneFallita">/AccessDenied.jsp</result>
       </action>
+      
+      <action name="effettuaPagamento" 
+            class="com.struts2.progettoSondaggio.UtenteAction" 
+            method="execute">
+            <result name="success">/AmministratoreView.jsp</result>
+            <result name="error">/UtenteView.jsp</result>
+      </action>
    </package>
 </struts>

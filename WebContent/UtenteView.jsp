@@ -10,12 +10,15 @@
 <body>
  <h1>Pannello Utente</h1>
  
- <s:iterator value="list">
-	<s:property value="userID"/> , 
-	<s:property value="nickname"/>,
-	<s:property value="pswrd"/> , 
-	<s:property value="nome"/>,
-	<s:property value="cognome"/><br/><br/>
-</s:iterator>
+<div>
+    <h3>Vuoi diventare Amministratore?</h3>
+   	<form action="effettuaPagamento" method="post">
+		Riscrivi il tuo username per sicurezza:<br>
+		<input type="text" name="username">
+		<br>
+		<input type="submit" value="Paga"/>
+   	</form>
+</div>
+
 </body>
 </html>

@@ -11,7 +11,7 @@
             method="execute">
             <result name="amministratoreSuccess">/AmministratoreView.jsp</result>
             <result name="utenteSuccess">/UtenteView.jsp</result>
-            <result name="loginFallito">/AccessDenied.jsp</result>
+            <result name="loginFallito">/index.jsp</result>
       </action>
       <action name="registrationSubmitted" 
             class="com.struts2.progettoSondaggio.VisitatoreAction" 

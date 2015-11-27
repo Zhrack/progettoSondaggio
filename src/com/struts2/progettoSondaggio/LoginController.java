@@ -61,13 +61,13 @@ public class LoginController {
 	      return false;
 	}
 	
-	public boolean registrazione(String username, String password, String nome, String cognome)
+	public boolean registrazione(String username, String password, String nome, String cognome, String sesso)
 	{
 		// Aggiungi nuovo utente
 		try {
 
-	          String insert = "INSERT INTO utente(nickname, pswrd, nome, cognome, dataPagamento)" +
-	                  "VALUES (?, ?, ?, ?, null)";
+	          String insert = "INSERT INTO utente(nickname, pswrd, nome, cognome, sesso, dataPagamento)" +
+	                  "VALUES (?, ?, ?, ?, ?, null)";
 
 	          Class.forName("com.mysql.jdbc.Driver").newInstance();
 	          Connection con = DriverManager.getConnection(url, user, psw);
@@ -78,6 +78,7 @@ public class LoginController {
 	          ps.setString(2, password);
 	          ps.setString(3, nome);
 	          ps.setString(4, cognome);
+	          ps.setString(5, sesso);
 	          ps.executeUpdate();
 	          con.close();
 	          return true;

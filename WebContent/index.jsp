@@ -51,6 +51,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>	 
 					<p><a href="#">Sei un'utente nuovo ? </a></p>
 				</form>
+				
+				<form action="registrationSubmitted" method="post">
+				<s:hidden name="option" value="registrazione"/>
+						<input name="username" type="text" class="text" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" >
+						<input name="password" type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+						<input name="nome" type="text" class="text" value="Nome" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome';}" >
+						<input name="cognome" type="text" class="text" value="Cognome" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Cognome';}" >
+						<s:radio label="Sesso" name="sesso" list="{'maschio','femmina'}" />
+						<div class="submit">
+							<input type="submit" onclick="myFunction()" value="Accedi" >
+					</div>	 
+					<p><a href="#">Sei un'utente nuovo ? </a></p>
+				</form>
 				 
 				
 				

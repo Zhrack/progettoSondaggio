@@ -10,6 +10,10 @@
 <body>
  <h1>Pannello Amministratore</h1>
  
- 
+ <div>
+	<form action="logout" method="get">
+		<input type="submit" value="Logout"/>
+   	</form>
+</div>
 </body>
 </html>

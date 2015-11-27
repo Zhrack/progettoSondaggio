@@ -14,6 +14,7 @@ public class UtenteAction extends ActionSupport{
 	}
 	
 	public String execute() throws Exception {	
+		
 		if(pagamentoController.effettuaPagamento(username))
 		{
 			System.out.println("pagamento true");
@@ -21,6 +22,11 @@ public class UtenteAction extends ActionSupport{
 		}
 		else return ERROR;
 		
+	}
+	
+	public String logout() throws Exception
+	{
+		return SUCCESS;
 	}
 
 	public String getUsername() {

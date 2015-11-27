@@ -20,5 +20,13 @@
    	</form>
 </div>
 
+<br><br><br>
+	
+<div>
+	<form action="logout" method="get">
+		<input type="submit" value="Logout"/>
+   	</form>
+</div>
+
 </body>
 </html>

@@ -32,11 +32,21 @@
             <result name="success">/index.jsp</result>
       </action>
       
-      
+      <action name="ToCreaSondaggioView" 
+            class="com.struts2.progettoSondaggio.AmministratoreAction" 
+            method="toCreaSondaggioView">
+            <result name="success">/creaSondaggio.jsp</result>
+      </action>
       <action name="logout" 
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="logout">
             <result name="success">/index.jsp</result>
+      </action>
+      
+      <action name="creaSondaggio" 
+            class="com.struts2.progettoSondaggio.AmministratoreAction" 
+            method="creaSondaggio">
+            <result name="success">/AmministratoreView.jsp</result>
       </action>
    </package>
 </struts>

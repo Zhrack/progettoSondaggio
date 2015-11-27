@@ -9,7 +9,11 @@
 </head>
 <body>
  <h1>Pannello Amministratore</h1>
- 
+  <div>
+	<form action="ToCreaSondaggioView" method="get">
+		<input type="submit" value="Crea nuovo Sondaggio"/>
+   	</form>
+</div><br><br>
  <div>
 	<form action="logout" method="get">
 		<input type="submit" value="Logout"/>

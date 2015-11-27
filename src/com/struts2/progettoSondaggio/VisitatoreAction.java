@@ -3,11 +3,14 @@ package com.struts2.progettoSondaggio;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 
-public class VisitatoreAction extends ActionSupport{	
+public class VisitatoreAction extends ActionSupport implements SessionAware{	
 	
 	public class LoginData
 	{
@@ -33,13 +36,11 @@ public class VisitatoreAction extends ActionSupport{
 	private String sesso;
 	
 	private String option;
-
 	
-	private List<UtenteDB> list;
+	private Map<String, Object> ses;
 		
 	public VisitatoreAction()
 	{
-		list = new ArrayList<UtenteDB>();
 		loginController = new LoginController();
 		loginData = new LoginData("", "", false);
 	}
@@ -57,9 +58,15 @@ public class VisitatoreAction extends ActionSupport{
 				System.out.println("Login OK " + loginData.isAmministratore);
 				if(loginData.isAmministratore)
 				{
+					ses.put("username", username);
+					System.out.println("Session username: " + (String)this.ses.get("username"));
 					return "amministratoreSuccess";
 				}
-				else return "utenteSuccess";
+				else 
+				{
+					ses.put("username", username);
+					return "utenteSuccess";
+				}
 			}
 			else return "loginFallito";
 		}
@@ -68,6 +75,7 @@ public class VisitatoreAction extends ActionSupport{
 			System.out.println("Dentro registrazione");
 			if(loginController.registrazione(username, password, nome, cognome, sesso))
 			{
+				ses.put("username", username);
 				System.out.println("Reg OK");
 				return SUCCESS;
 			}
@@ -79,14 +87,6 @@ public class VisitatoreAction extends ActionSupport{
 			return "loginFallito";
 		}
 			
-	}
-	
-	public List<UtenteDB> getList() {
-		return this.list;
-	}
-
-	public void setList(List<UtenteDB> list) {
-		this.list = list;
 	}
 
 	public String getPassword() {
@@ -135,6 +135,11 @@ public class VisitatoreAction extends ActionSupport{
 
 	public void setSesso(String sesso) {
 		this.sesso = sesso;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> arg0) {
+		this.ses = arg0;
 	}
 	
 }

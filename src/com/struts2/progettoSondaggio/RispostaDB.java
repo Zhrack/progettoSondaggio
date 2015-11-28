@@ -8,8 +8,14 @@ import java.sql.Statement;
 
 public class RispostaDB {
 
+	private PartecipazioneDB partecipazioneDB;
 	
-	public String aggiungiRisposta(String testo, String domandaID) throws Exception
+	public RispostaDB()
+	{
+		partecipazioneDB = new PartecipazioneDB();
+	}
+	
+	public boolean aggiungiRisposta(String testo, String domandaID) throws Exception
 	{
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
@@ -21,18 +27,22 @@ public class RispostaDB {
 
         // trova id della domanda
         Statement stmt = con.createStatement();
-
+        
         ResultSet result = stmt.executeQuery("SELECT MAX(rispostaID) AS rispostaID FROM Risposta WHERE domandaID_fk=" + domandaID);
         if (!result.isBeforeFirst() ) 
         {    
         	con.close();
-      	  	return null;
+      	  	return false;
         } 
         result.next();
-        
+        boolean errore = false;
         String rispostaID = result.getString("rispostaID");
+        if(rispostaID == null || !partecipazioneDB.aggiungiPartecipazione(rispostaID))
+        {
+        	errore = true;
+        }
         con.close();
         
-        return rispostaID;
+        return !errore;
 	}
 }

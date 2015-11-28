@@ -8,12 +8,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
-public class AmministratoreAction extends ActionSupport implements SessionAware{
+public class AmministratoreAction extends ActionSupport implements SessionAware, ModelDriven<SondaggioDB>{
 	
 	private Map<String, Object> ses;
 	
@@ -24,7 +27,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware{
 	
 	private String nomeSondaggio;
 	private ArrayList<String> testiDomanda;
-	private ArrayList<String> testiRisposta;
+	private ArrayList<ElencoRisposte> testiRisposta;
 
 	public AmministratoreAction() throws Exception
 	{
@@ -44,9 +47,20 @@ public class AmministratoreAction extends ActionSupport implements SessionAware{
 		sondaggioDB = new SondaggioDB(this, testiDomanda, testiRisposta);
 	}
 	
-	public String creaSondaggio() throws Exception
+	public String creaSondaggio()
 	{
-		return sondaggioDB.creaSondaggio(nomeSondaggio);
+		try
+		{
+			String result = sondaggioDB.creaSondaggio(nomeSondaggio);;
+			
+			return result;
+		}
+		catch(Exception ex)
+		{
+			Logger.getLogger(LoginController.class.getName()).log( 
+                    Level.SEVERE, null, ex);
+		}
+		return ERROR;
 	}
 	
 	public String toCreaSondaggioView() throws Exception
@@ -115,11 +129,16 @@ public class AmministratoreAction extends ActionSupport implements SessionAware{
 		this.testiDomanda = testiDomanda;
 	}
 
-	public ArrayList<String> getTestiRisposta() {
+	public ArrayList<ElencoRisposte> getTestiRisposta() {
 		return testiRisposta;
 	}
 
-	public void setTestiRisposta(ArrayList<String> testiRisposta) {
+	public void setTestiRisposta(ArrayList<ElencoRisposte> testiRisposta) {
 		this.testiRisposta = testiRisposta;
+	}
+
+	@Override
+	public SondaggioDB getModel() {
+		return sondaggioDB;
 	}
 }

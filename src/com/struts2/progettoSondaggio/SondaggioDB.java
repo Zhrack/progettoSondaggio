@@ -13,9 +13,9 @@ public class SondaggioDB {
 	private DomandaDB domandaDB;
 	
 	private ArrayList<String> testiDomanda;
-	private ArrayList<String> testiRisposta;
+	private ArrayList<ElencoRisposte> testiRisposta;
 
-	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<String> testiRisposta)
+	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta)
 	{
 		this.amm = amm;
 		this.testiDomanda = testiDomanda;
@@ -36,30 +36,11 @@ public class SondaggioDB {
 			//scorri domande
 			for(int i = 0; i < testiDomanda.size(); ++i)
 			{
-				String domandaID = domandaDB.aggiungiDomanda(testiDomanda.get(i), sondaggioID);
-				if(domandaID != null)
-				{
-					//scorri risposte di questa domanda
-					for(int j = 0; j < testiDomanda.size(); ++j)
-					{
-						String rispostaID = domandaDB.aggiungiRisposta(testiDomanda.get(i));
-						if(rispostaID != null)
-						{
-							// Aggiungi a Partecipazione
-						}
-						else
-						{
-							System.out.println("Errore rispostaID: " + j);
-							errore = true;
-						}
-					}
-				}
-				else
+				if(!domandaDB.aggiungiDomanda(testiDomanda.get(i), sondaggioID, testiRisposta.get(i), i))
 				{
 					System.out.println("Errore domandaID: " + i);
 					errore = true;
-				}
-				
+				}				
 			}
 		}
 		if(!errore)

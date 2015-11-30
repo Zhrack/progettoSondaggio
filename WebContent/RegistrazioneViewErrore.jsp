@@ -5,19 +5,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			.bs-example{
+				margin: 20px;
+				}
+		</style>
 <link href="statix/css/index.css" rel='stylesheet' type='text/css' />
 <title>Riprova la registrazione</title>
 </head>
 <body>
 
+<div class="bs-example">
+    <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Errore!</strong> Registrazione non riuscito, riprova.
+    </div>
+</div>
+
+
 
 <div class="main">
-		
-
 		<div class="login-form">
-		<div class="error">
-			<p>Errore! La registrazione non è andata a buon fine. Riprova</p>
-		</div>
+		
 		<h2>Registrazione</h2>
 				<form action="registrationSubmitted" method="post">
 				<s:hidden name="option" value="registrazione"/>

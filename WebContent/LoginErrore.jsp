@@ -28,6 +28,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </head>
 <body>
 	 <!-----start-main---->
+	 <div class="bs-example">
+    <div class="alert alert-danger fade in">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Errore!</strong> Login non riuscito, riprova.
+    </div>
+</div>
+
+
+
+
+	 
+	 
 	 <div class="main">
 		<div class="login-form">
 			<h1>Progetto Sondaggio</h1>

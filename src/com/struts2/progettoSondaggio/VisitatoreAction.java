@@ -78,7 +78,6 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 				return "erroreCampiRegistrazione";
 			}
 		
-			System.out.println(sesso);
 			
 			
 			if(loginController.registrazione(username, password, nome, cognome, sesso))

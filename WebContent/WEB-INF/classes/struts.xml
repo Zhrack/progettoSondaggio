@@ -33,7 +33,7 @@
             <result name="success">/index.jsp</result>
       </action>
       
-      <action name="ToCreaSondaggioView" 
+      <action name="ToCreaSondaggio" 
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="toCreaSondaggioView">
             <result name="success">/creaSondaggio.jsp</result>

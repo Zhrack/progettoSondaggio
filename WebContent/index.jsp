@@ -25,23 +25,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="head">
 						<img src="statix/images/user.png" alt=""/>
 					</div>
-					
-					
-				<!-- 	
-				<form action="loginSubmitted" method="post">
-   		<s:hidden name="option" value="login"/>
-		Username:<br>
-		<input type="text" name="username">
-		<br>
-		Password:<br>
-		<input type="password" name="password">
-		<br><br>
-		<input type="submit" value="Submit"/>
-   </form>	 -->
-   
-					
-					
-					
 				<form action="loginSubmitted" method="post">
 				<s:hidden name="option" value="login"/>
 						<input name="username" type="text" class="text" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" >
@@ -51,20 +34,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>	 
 					
 				</form>
-				<p>Sei un nuovo utente? Registrati.</p>
-				<form action="registrationSubmitted" method="post">
-				<s:hidden name="option" value="registrazione"/>
-						<input name="username" type="text" class="text" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" >
-						<input name="password" type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
-						<input name="nome" type="text" class="text" value="Nome" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome';}" >
-						<input name="cognome" type="text" class="text" value="Cognome" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Cognome';}" >
-						<s:radio label="Sesso" name="sesso" list="{'maschio','femmina'}" />
-						
-						<div class="submit">
-							<input type="submit" onclick="myFunction()" value="Registrati" >
-					</div>	 
-					<p><a href="#">Sei un'utente nuovo ? </a></p>
-				</form>
+				<p><a href="RegistrazioneView.jsp">Sei un nuovo utente? Registrati.</a></p>
+				
 				 
 				
 				

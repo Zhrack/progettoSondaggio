@@ -73,6 +73,14 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		else if(option.equals("registrazione"))
 		{
 			System.out.println("Dentro registrazione");
+			if(!(loginController.checkFieldsRegistration(username, password, nome, cognome, sesso)))
+			{
+				return "erroreCampiRegistrazione";
+			}
+		
+			System.out.println(sesso);
+			
+			
 			if(loginController.registrazione(username, password, nome, cognome, sesso))
 			{
 				ses.put("username", username);
@@ -80,6 +88,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 				return SUCCESS;
 			}
 			else return "registrazioneFallita";
+		
 		}
 		else
 		{
@@ -137,7 +146,8 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		this.sesso = sesso;
 	}
 
-	@Override
+	
+	@Override 
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
 	}

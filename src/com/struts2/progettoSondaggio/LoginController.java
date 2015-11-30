@@ -5,8 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+
+
+import org.apache.commons.lang.ArrayUtils;
 
 import com.struts2.progettoSondaggio.VisitatoreAction.LoginData;
 
@@ -63,6 +68,19 @@ public class LoginController {
 	
 	public boolean registrazione(String username, String password, String nome, String cognome, String sesso)
 	{
+		// trasforma il sesso in un valore 0 o 1
+		if((Objects.equals("maschio",sesso)))
+			sesso="1";
+		else if((Objects.equals("femmina",sesso)))
+			sesso="0";
+		
+		// mette la prima lettere maiuscola
+		nome = nome.substring(0, 1).toUpperCase() + nome.substring(1);
+		cognome = cognome.substring(0, 1).toUpperCase() + cognome.substring(1);
+		
+		
+		
+		
 		// Aggiungi nuovo utente
 		try {
 
@@ -88,5 +106,72 @@ public class LoginController {
 	      }
 		
 		return false;
+	}
+	
+	
+	
+	public boolean checkFieldsRegistration(String username, String password, String nome, String cognome, String sesso)
+	{
+		String[] valueAlphaNumeric={username, password};
+		String[] valueAlpha={nome, cognome};
+		String[] both=(String[]) ArrayUtils.addAll(valueAlphaNumeric, valueAlpha);
+		boolean allCorrect=true;
+		
+		// controlla se cè un campo vuoto
+		for(int i=0;i<both.length;i++)
+		{
+			if(!(both[i] != null && !both[i].isEmpty()))
+			{
+				allCorrect = false;
+			}
+		}
+		
+		System.out.println(allCorrect);
+		
+		// check sui valori alfanumerici
+		for(int i=0;i<valueAlphaNumeric.length;i++)
+		{
+			if(!this.isAlphaNumeric(valueAlphaNumeric[i]))
+			{
+				allCorrect = false;
+			}
+		}
+		
+		
+		System.out.println(allCorrect);
+		// check sui valori alfabetici
+		for(int i=0;i<valueAlpha.length;i++)
+		{
+			if(!this.isAlpha(valueAlpha[i]))
+			{
+				allCorrect = false;
+			}
+		}
+		
+		System.out.println(allCorrect);
+		// check sul sesso
+		if(!((Objects.equals("maschio",sesso)) || (Objects.equals("femmina",sesso))))
+			{
+				allCorrect=false;
+			}
+		
+		System.out.println(allCorrect);
+		
+		return allCorrect;
+	}
+	
+
+	
+	
+	public boolean isAlphaNumeric(String str)
+	{
+		Pattern p = Pattern.compile("[^a-zA-Z0-9]");
+		boolean hasSpecialChar = p.matcher(str).find();
+		return !hasSpecialChar;
+	}
+	
+	public boolean isAlpha(String str)
+	{
+		return str.matches("[a-zA-Z]+");
 	}
 }

@@ -3,18 +3,18 @@ package com.struts2.progettoSondaggio;
 import java.util.ArrayList;
 
 public class ElencoRisposte {
-	public ArrayList<String> testiRisposta;
+	public ArrayList<String> risposte;
 	
-	public ElencoRisposte(ArrayList<String> testiRisposta)
+	public ElencoRisposte(ArrayList<String> risposte)
 	{
-		this.testiRisposta = testiRisposta;
+		this.risposte = risposte;
 	}
 
-	public ArrayList<String> getTestiRisposta() {
-		return testiRisposta;
+	public ArrayList<String> getRisposte() {
+		return risposte;
 	}
 
-	public void setTestiRisposta(ArrayList<String> testiRisposta) {
-		this.testiRisposta = testiRisposta;
+	public void setRisposte(ArrayList<String> risposte) {
+		this.risposte = risposte;
 	}
 }

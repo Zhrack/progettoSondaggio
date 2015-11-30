@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <title>Crea Sondaggio</title>
 
 <SCRIPT language="javascript">
+
         function aggiungiDomanda(tableID) 
         {
                 var table = document.getElementById(tableID);
@@ -42,37 +44,19 @@
 
         }
         
-        function aggiungiRisposta(tableID) 
+        function aggiungiRisposta(divDomanda, divRisposta) 
         {
-                var table = document.getElementById(tableID);
+                var domanda = document.getElementById(divDomanda);
+                var risposta = document.getElementById(divRisposta);
 
-                var rowCount = table.rows.length;
-                var row = table.insertRow(rowCount);
-                var counts = rowCount - 1;
+                var rowCountDomanda = $("#divDomanda > div").length;
+                var countsDomanda = rowCountDomanda - 1;
+                
+                var rowCountRisposta = $("#divRisposta > input").length;
+                var rowRisposta = risposta.insertRow(rowCountRisposta);
+                var countsRisposta = rowCountRisposta - 1;
 
-                var cell1 = row.insertCell(0);
-                var houseNo = document.createElement("input");
-                houseNo.type = "text";
-                houseNo.name = "addresses[" + counts + "].houseNo";
-                cell1.appendChild(houseNo);
-
-                var cell2 = row.insertCell(1);
-                var street = document.createElement("input");
-                street.type = "text";
-                street.name = "addresses[" + counts + "].street";
-                cell2.appendChild(street);
-
-                var cell3 = row.insertCell(2);
-                var city = document.createElement("input");
-                city.type = "text";
-                city.name = "addresses[" + counts + "].city";
-                cell3.appendChild(city);
-
-                var cell4 = row.insertCell(3);
-                var country = document.createElement("input");
-                country.type = "text";
-                country.name = "addresses[" + counts + "].country";
-                cell4.appendChild(country);
+                
 
         }
 </SCRIPT>
@@ -82,14 +66,18 @@
 
 <form action="creaSondaggio" method="post">
 		<input name="nomeSondaggio" type="text" class="text" value="Nome Sondaggio" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome Sondaggio';}" >
-		<div id='divDomanda'>
-		<input type="text" value="testiDomanda[0]" ><br>
-			<div id='divRisposta'>
-				<input type="text" value="testiRisposta[0].testiRisposta[0]" ><br>
+		<div id='divDomande'>
+			<div id='divDomanda0'>
+				<input type="text" value="testiDomanda[0]" ><br><br>
+				
+				- <input type="text" value="testiRisposta[0].risposte[0]" ><br>
+				- <input type="text" value="testiRisposta[0].risposte[1]" ><br>
+				
+				<br>
+				<input type="button" value="Nuova risposta" onClick="aggiungiRisposta('divDomanda0');"> 
 			</div>
-			<input type="button" value="Nuova risposta" onClick="aggiungiRisposta('divRisposta');"> 
 		</div>
-		<input type="button" value="Nuova domanda" onClick="aggiungiDomanda('divDomanda');"> 
+		<input type="button" value="Nuova domanda" onClick="aggiungiDomanda('divDomande');"> 
 		<div class="submit">
 			<input type="submit" onclick="myFunction()" value="Crea" >
 		</div>	 

@@ -41,7 +41,7 @@ public class DomandaDB {
         con.close();
         boolean errore = false;
         //scorri risposte di questa domanda
-        ArrayList<String> risposte = testiRisposta.getTestiRisposta();
+        ArrayList<String> risposte = testiRisposta.getRisposte();
 		for(int j = 0; j < risposte.size(); ++j)
 		{
 			if(!rispostaDB.aggiungiRisposta(risposte.get(j), domandaID))

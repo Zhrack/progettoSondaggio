@@ -27,7 +27,11 @@ public class RispostaDB {
 
         PreparedStatement ps = con.prepareStatement("INSERT INTO Risposta(testoRisposta, domandaID_fk) VALUES ('" + testo + "', " +
         																											domandaID + ")");
-        ps.executeUpdate();
+        if(ps.executeUpdate() == 0)
+        {
+        	con.close();
+        	return false;
+        }
 
         // trova id della domanda
         Statement stmt = con.createStatement();

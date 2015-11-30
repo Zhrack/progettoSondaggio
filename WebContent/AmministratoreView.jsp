@@ -10,7 +10,7 @@
 <body>
  <h1>Pannello Amministratore</h1>
   <div>
-	<form action="ToCreaSondaggioView" method="get">
+	<form action="ToCreaSondaggio" method="get">
 		<input type="submit" value="Crea nuovo Sondaggio"/>
    	</form>
 </div><br><br>

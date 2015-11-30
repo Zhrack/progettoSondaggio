@@ -18,6 +18,11 @@ import com.opensymphony.xwork2.ModelDriven;
 
 public class AmministratoreAction extends ActionSupport implements SessionAware, ModelDriven<SondaggioDB>{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private Map<String, Object> ses;
 	
 	private SondaggioDB sondaggioDB;
@@ -31,19 +36,35 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public AmministratoreAction() throws Exception
 	{
+		System.out.println("Ctor AmmAction");
+		username = "";
+	}
+	
+	public void init()
+	{
 		username = (String)this.ses.get("username");
 		System.out.println("Session username: " + username);
 		
-		String userID = userIDFromNickname(username);
-		if(userID != null)
-		{
-			System.out.println("Session userID: " + userID);
-			this.ses.put("userID", userID);
+		String userID;
+		try {
+			userID = userIDFromNickname(username);
+			if(userID != null)
+			{
+				System.out.println("Session userID: " + userID);
+				this.ses.put("userID", userID);
+			}
+			else
+			{
+				System.out.println("Errore session userID");
+			}
+		} catch (Exception ex) {
+			Logger.getLogger(LoginController.class.getName()).log( 
+                    Level.SEVERE, null, ex);
 		}
-		else
-		{
-			System.out.println("Errore session userID");
-		}
+		
+		testiDomanda = new ArrayList<String>();
+		testiRisposta = new ArrayList<ElencoRisposte>();
+		
 		sondaggioDB = new SondaggioDB(this, testiDomanda, testiRisposta);
 	}
 	
@@ -103,6 +124,11 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	@Override
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
+		
+		if(username.equals(""))
+		{
+			init();
+		}
 	}
 
 	public String getUsername() {

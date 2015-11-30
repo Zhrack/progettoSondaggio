@@ -7,17 +7,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DomandaDB {
 	private RispostaDB rispostaDB;
 	
-	public DomandaDB()
+	private Map<String, Object> ses;
+	
+	public DomandaDB(Map<String, Object> ses)
 	{
-		rispostaDB = new RispostaDB();
+		rispostaDB = new RispostaDB(ses);
 	}
 	
 	public boolean aggiungiDomanda(String testo, String sondaggioID, ElencoRisposte testiRisposta, int index) throws Exception
 	{
+		System.out.println("aggiungiDomanda: " + testo + " " + sondaggioID);
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
 
@@ -44,6 +48,7 @@ public class DomandaDB {
         ArrayList<String> risposte = testiRisposta.getRisposte();
 		for(int j = 0; j < risposte.size(); ++j)
 		{
+			System.out.println("Risposte get " + j + ": " + risposte.get(j));
 			if(!rispostaDB.aggiungiRisposta(risposte.get(j), domandaID))
 			{
 				System.out.println("Errore rispostaID: " + j);

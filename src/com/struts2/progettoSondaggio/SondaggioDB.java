@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SondaggioDB {
 	
@@ -14,14 +15,16 @@ public class SondaggioDB {
 	
 	private ArrayList<String> testiDomanda;
 	private ArrayList<ElencoRisposte> testiRisposta;
+	
+	private Map<String, Object> ses;
 
-	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta)
+	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta, Map<String, Object> ses)
 	{
 		this.amm = amm;
 		this.testiDomanda = testiDomanda;
 		this.testiRisposta = testiRisposta;
 		
-		domandaDB = new DomandaDB();
+		domandaDB = new DomandaDB(ses);
 	}
 	
 	public String creaSondaggio(String nomeSondaggio) throws Exception
@@ -33,15 +36,21 @@ public class SondaggioDB {
 		String sondaggioID = getLastSondaggioID((String)amm.getSession().get("userID"));
 		if(sondaggioID != null)
 		{
+			System.out.println("sondaggioID " + sondaggioID);
 			//scorri domande
 			for(int i = 0; i < testiDomanda.size(); ++i)
 			{
+				System.out.println("testiDomanda[" + i + "]: " + testiDomanda.get(i));
 				if(!domandaDB.aggiungiDomanda(testiDomanda.get(i), sondaggioID, testiRisposta.get(i), i))
 				{
 					System.out.println("Errore domandaID: " + i);
 					errore = true;
 				}				
 			}
+		}
+		else
+		{
+			System.out.println("sondaggioID == null");
 		}
 		if(!errore)
 		{

@@ -65,13 +65,14 @@
 <h1>Crea un Sondaggio</h1>
 
 <form action="creaSondaggio" method="post">
+		Nome Sondaggio
 		<input name="nomeSondaggio" type="text" class="text" value="Nome Sondaggio" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome Sondaggio';}" >
+		<br><br>
 		<div id='divDomande'>
 			<div id='divDomanda0'>
-				<input type="text" value="testiDomanda[0]" ><br><br>
+				Domanda: <input type="text" name="testiDomanda[0]" ><br><br>
 				
-				- <input type="text" value="testiRisposta[0].risposte[0]" ><br>
-				- <input type="text" value="testiRisposta[0].risposte[1]" ><br>
+				- Risposta: <input type="text" name="testiRisposta[0].risposte[0]" ><br>
 				
 				<br>
 				<input type="button" value="Nuova risposta" onClick="aggiungiRisposta('divDomanda0');"> 

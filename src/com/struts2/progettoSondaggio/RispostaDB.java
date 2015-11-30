@@ -5,23 +5,27 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Map;
 
 public class RispostaDB {
 
 	private PartecipazioneDB partecipazioneDB;
 	
-	public RispostaDB()
+	private Map<String, Object> ses;
+	
+	public RispostaDB(Map<String, Object> ses)
 	{
-		partecipazioneDB = new PartecipazioneDB();
+		partecipazioneDB = new PartecipazioneDB(ses);
 	}
 	
 	public boolean aggiungiRisposta(String testo, String domandaID) throws Exception
 	{
+		System.out.println("aggiungiRisposta: " + testo + " " + domandaID);
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
 
 
-        PreparedStatement ps = con.prepareStatement("INSERT INTO Domanda(testoDomanda, sondaggioID_fk) VALUES ('" + testo + "', " +
+        PreparedStatement ps = con.prepareStatement("INSERT INTO Risposta(testoRisposta, domandaID_fk) VALUES ('" + testo + "', " +
         																											domandaID + ")");
         ps.executeUpdate();
 

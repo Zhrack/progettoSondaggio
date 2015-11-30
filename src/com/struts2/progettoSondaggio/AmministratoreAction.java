@@ -65,7 +65,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		testiDomanda = new ArrayList<String>();
 		testiRisposta = new ArrayList<ElencoRisposte>();
 		
-		sondaggioDB = new SondaggioDB(this, testiDomanda, testiRisposta);
+		sondaggioDB = new SondaggioDB(this, testiDomanda, testiRisposta, ses);
 	}
 	
 	public String creaSondaggio()

@@ -10,13 +10,13 @@ import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
 
-public class PartecipazioneDB implements SessionAware{
+public class PartecipazioneDB{
 	
 	private Map<String, Object> ses;
-
-	@Override
-	public void setSession(Map<String, Object> arg0) {
-		this.ses = arg0;
+	
+	public PartecipazioneDB(Map<String, Object> ses)
+	{
+		this.ses = ses;
 	}
 	
 	public boolean aggiungiPartecipazione(String rispostaID) throws Exception

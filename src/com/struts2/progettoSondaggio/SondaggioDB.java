@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
@@ -89,5 +90,58 @@ public class SondaggioDB {
         con.close();
         
         return sondaggioID;
+	}
+	
+	// amministratore ha cliccato su "modifica" di un sondaggio, raccogli i dati del sondaggio
+	public String prendiDatiSondaggio(String sondaggioID, SondaggioData sondaggioData, ArrayList<DomandaData> domandeData, ArrayList<RispostaData> risposteData) throws Exception
+	{
+		// aggiorna sondaggioData
+		sondaggioData.setSondaggioID(sondaggioID);
+		
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT nome FROM sondaggio WHERE sondaggioID=" + sondaggioID);
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return "error";
+        } 
+        result.next();
+        
+        String nome = result.getString("nome");
+        sondaggioData.setNomeSondaggio(nome);
+        
+        con.close();
+        
+        // aggiorna domandaData
+        String res = domandaDB.prendiDatiDomande(sondaggioID, domandeData, risposteData);
+        
+        return res;
+	}
+	
+	public String applicaModificaSondaggio(SondaggioData sondaggioData, ArrayList<DomandaData> domandeData, ArrayList<RispostaData> risposteData) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        // aggiorna sondaggio
+        PreparedStatement ps = con.prepareStatement(
+        		"UPDATE Sondaggio SET nome='" + sondaggioData.getNomeSondaggio() + 
+        		"' WHERE sondaggioID=" + sondaggioData.getSondaggioID()
+        		);
+        
+		if(ps.executeUpdate() == 0)
+		{
+			con.close();
+			return "error";
+		}
+		con.close();
+		// aggiorna domande
+		String res = domandaDB.applicaModificaDomande(domandeData, risposteData);
+
+		return res;
 	}
 }

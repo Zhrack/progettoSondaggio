@@ -101,6 +101,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		{
 			modificaSondaggioData.setNomeSondaggio("");
 			modificaSondaggioData.setSondaggioID("");
+			modificaSondaggioData.setAutore(""); // non usato in questo caso
 			modificaDomandeData.clear();
 			modificaRisposteData.clear();
 			String result = sondaggioDB.prendiDatiSondaggio(sondaggioIDScelto, modificaSondaggioData, modificaDomandeData, modificaRisposteData);
@@ -149,7 +150,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
         Statement stmt = con.createStatement();
 
-        ResultSet result = stmt.executeQuery("select userID from utente WHERE nickname='" + username + "'");
+        ResultSet result = stmt.executeQuery("SELECT userID FROM utente WHERE nickname='" + username + "'");
         if (!result.isBeforeFirst() ) 
         {    
         	con.close();

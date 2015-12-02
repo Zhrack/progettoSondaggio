@@ -18,6 +18,16 @@ public class SondaggioDB {
 	private ArrayList<ElencoRisposte> testiRisposta;
 	
 	private Map<String, Object> ses;
+	
+	public SondaggioDB(Map<String, Object> ses)
+	{
+		this.amm = null;
+		this.testiDomanda = null;
+		this.testiRisposta = null;
+		
+		this.ses = ses;
+		domandaDB = null;
+	}
 
 	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta, Map<String, Object> ses)
 	{
@@ -25,6 +35,7 @@ public class SondaggioDB {
 		this.testiDomanda = testiDomanda;
 		this.testiRisposta = testiRisposta;
 		
+		this.ses = ses;
 		domandaDB = new DomandaDB(ses);
 	}
 	
@@ -143,5 +154,33 @@ public class SondaggioDB {
 		String res = domandaDB.applicaModificaDomande(domandeData, risposteData);
 
 		return res;
+	}
+	
+	public String prendiListaSondaggi(ArrayList<SondaggioData> sondaggi) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT S.sondaggioID, S.nome, U.nickname FROM Sondaggio S, Utente U WHERE S.amministratore_fk=U.userID");
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return "error";
+        } 
+        
+        while(result.next())
+        {
+        	SondaggioData data = new SondaggioData();
+        	
+        	data.setSondaggioID(result.getString("sondaggioID"));
+        	data.setNomeSondaggio(result.getString("nome"));
+        	data.setAutore(result.getString("nickname"));
+        	sondaggi.add(data);
+        }
+        con.close();
+        
+        return "success";
 	}
 }

@@ -12,17 +12,26 @@
  <script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript"></script>
         <script>  
-$(document).ready(function(){   
-        alert ("attivazione richiesta");  
+		$(document).ready(function(){	
           $.ajax({  
                  url:'getSurvey',  
                  success: function(response){  
-                     alert("risposta: " + response);
-                     for(var key in response) {
-                    	    var value = response[key];
-                    	    alert("value: " + value);
-                    	}
+                    alert("risposta: " + response.resultQuery);
+                    //$("#liID").text(response.resultQuery);
+                    //var array = JSON.parse("[" + response.resultQuery + "]");
+                    console.log(response.resultQuery)
+                    
+                    alert(response.resultQuery)
                      
+                     
+                    
+                   
+					var array = response.resultQuery.split(",");
+					alert(array[0]);
+                     
+                  
+                     
+                     $('<li />', {html: response.resultQuery}).appendTo('ul.ulID')
                  }  
 });  
 });  
@@ -50,6 +59,13 @@ $(document).ready(function(){
 </div>
 
 <br><br><br>
+
+<div>
+	<ul class="ulID">
+		<li id="liID">asdasdas</li>
+	</ul>
+</div>	
+	
 	
 <div>
 	<form action="logout" method="get">

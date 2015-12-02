@@ -28,7 +28,11 @@ public class DomandaDB {
 
         PreparedStatement ps = con.prepareStatement("INSERT INTO Domanda(testoDomanda, sondaggioID_fk) VALUES ('" + testo + "', " +
         																											sondaggioID + ")");
-        ps.executeUpdate();
+        if(ps.executeUpdate() == 0)
+        {
+        	con.close();
+        	return false;
+        }
 
         // trova id della domanda
         Statement stmt = con.createStatement();
@@ -57,5 +61,60 @@ public class DomandaDB {
 		}
         
         return !errore;
+	}
+	
+	public String prendiDatiDomande(String sondaggioID, ArrayList<DomandaData> domandeData, ArrayList<RispostaData> risposteData) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT D.domandaID, D.testoDomanda FROM Sondaggio, Domanda D WHERE sondaggioID=" + sondaggioID);
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return "error";
+        } 
+        
+        while(result.next())
+        {
+        	DomandaData data = new DomandaData();
+        	data.setDomandaID(result.getString("domandaID"));
+        	data.setTesto(result.getString("testoDomanda"));
+        	domandeData.add(data);
+        }        
+        con.close();
+        
+        // aggiorna domandaData
+        String res = rispostaDB.prendiDatiRisposte(sondaggioID, risposteData);
+        
+        return res;
+	}
+	
+	public String applicaModificaDomande(ArrayList<DomandaData> domandeData, ArrayList<RispostaData> risposteData) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        // aggiorna domande
+        for(int i = 0; i < domandeData.size(); ++i)
+        {
+        	PreparedStatement ps = con.prepareStatement(
+            		"UPDATE Domanda SET testoDomanda='" + domandeData.get(i).getTesto() + 
+            		"' WHERE domandaID=" + domandeData.get(i).getDomandaID()
+            		);
+            
+    		if(ps.executeUpdate() == 0)
+    		{
+    			con.close();
+    			return "error";
+    		}
+        }
+		con.close();
+		// aggiorna risposte
+		String res = rispostaDB.applicaModificaRisposte(risposteData);
+
+		return res;
 	}
 }

@@ -4,11 +4,6 @@ import java.util.ArrayList;
 
 public class ElencoRisposte {
 	private ArrayList<String> risposte;
-	
-//	public ElencoRisposte(ArrayList<String> risposte)
-//	{
-//		this.risposte = risposte;
-//	}
 
 	public ArrayList<String> getRisposte() {
 		return risposte;

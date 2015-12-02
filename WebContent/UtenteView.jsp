@@ -14,14 +14,16 @@
         <script>  
 		$(document).ready(function(){	
           $.ajax({  
-                 url:'getSurvey',  
+        	  	 dataType: "json",
+                 url:'getSurvey',
+                 data: null,
                  success: function(response){  
                     alert("risposta: " + response.resultQuery);
                     //$("#liID").text(response.resultQuery);
                     //var array = JSON.parse("[" + response.resultQuery + "]");
                     console.log(response.resultQuery)
                     
-                    alert(response.resultQuery)
+                    alert(response.resultQuery);
                      
                      
                     

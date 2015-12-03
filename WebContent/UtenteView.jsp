@@ -18,22 +18,33 @@
                  url:'getSurvey',
                  data: null,
                  success: function(response){  
+                	alert("fdsfsdf");
                     alert("risposta: " + response.resultQuery);
                     //$("#liID").text(response.resultQuery);
                     //var array = JSON.parse("[" + response.resultQuery + "]");
-                    console.log(response.resultQuery)
-                    
+                    console.log(response)
+                    var obj = jQuery.parseJSON(response.resultQuery);
+                    alert("2222");
+                    alert(obj);
+                    for (var property in obj) {
+                        if (object.hasOwnProperty(property)) {
+                            // do stuff
+                            alert(property)
+                        }
+                    }
+					
+					
                     alert(response.resultQuery);
                      
                      
-                    
+                    // DEVO CAPIRE COME TRASFORMARE LA STRINGA DI JSON IN ARRAY DI JAVASCRIPT
                    
 					var array = response.resultQuery.split(",");
-					alert(array[0]);
+					alert(array[0].toString());
                      
                   
                      
-                     $('<li />', {html: response.resultQuery}).appendTo('ul.ulID')
+                    $('<li />', {html: response.resultQuery}).appendTo('ul.ulID')
                  }  
 });  
 });  

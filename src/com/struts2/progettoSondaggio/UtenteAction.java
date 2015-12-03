@@ -20,7 +20,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	static final String url = "jdbc:mysql://localhost:3306/sondaggioDB";
 	static final String user = "root";
 	static final String psw = user;
-	public JSONArray resultQuery;
+	public String resultQuery;
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
 	private String username;
@@ -69,8 +69,22 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		System.out.println("adaaad");
 		
 		
-		this.requestSurvey();
+		//this.requestSurvey();
 		
+		JSONObject json = new JSONObject();
+		json.put("sun","yellow");
+
+		JSONArray veg = new JSONArray();
+		JSONObject vegData = new JSONObject();
+		vegData.put("apple","red");
+		vegData.put("banana","yellow");
+		vegData.put("melon","orange");
+
+		veg.put(vegData);   
+
+		json.put("vegetables",veg);
+		
+		this.resultQuery=json.toString();
 		
 		return SUCCESS;
 	}
@@ -114,8 +128,9 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	          
 	          System.out.println("Braaaaaaaaaaa");
 	          System.out.println(arrayList);
-	          JSONArray mJSONArray = new JSONArray(Arrays.asList(arrayList));
-	          this.resultQuery=mJSONArray;
+	          JSONArray mJSONArray = new JSONArray(arrayList);
+	          //JSONArray mJSONArray = new JSONArray(Arrays.asList(arrayList));
+	         // this.resultQuery=mJSONArray;
 	          System.out.println("ddddddd");
 	          System.out.println(this.resultQuery);
 	          
@@ -163,12 +178,12 @@ public String prendiListaSondaggi() throws Exception
 	}
 
 
-	public JSONArray getResultQuery() {
+	public String getResultQuery() {
 		return resultQuery;
 	}
 
 
-	public void setResultQuery(JSONArray resultQuery) {
+	public void setResultQuery(String resultQuery) {
 		this.resultQuery = resultQuery;
 	}
 	

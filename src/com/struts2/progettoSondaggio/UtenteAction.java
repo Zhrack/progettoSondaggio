@@ -23,12 +23,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	public JSONArray resultQuery;
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
-<<<<<<< HEAD
-	
-	// raccoglie i sondaggi disponibili su richiesta
-=======
-	private String username;
->>>>>>> origin/master
+
 	private ArrayList<SondaggioData> sondaggiDisponibili;
 	private SondaggioDB sondaggioDB;
 	private PartecipazioneDB partecipazioneDB;
@@ -40,13 +35,8 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	private ArrayList<String> testiDomandaUtente;
 	private ArrayList<RispostaData> testiRispostaUtente;
 	
-<<<<<<< HEAD
 	private boolean startup;
-=======
 
-	
-	
->>>>>>> origin/master
 	public UtenteAction()
 	{
 		startup = false;
@@ -55,12 +45,9 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	public void init()
 	{
 		pagamentoController = new PagamentoController();
-<<<<<<< HEAD
 		
 		String username = (String)this.ses.get("username");
-=======
-		username = (String)this.ses.get("username");
->>>>>>> origin/master
+
 		System.out.println("Session username: " + username);
 		
 		String userID;
@@ -88,7 +75,6 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		sondaggiDisponibili = new ArrayList<SondaggioData>();
 	}
 	
-<<<<<<< HEAD
 	public String execute() {	
 		
 		if(pagamentoController.effettuaPagamento((String)this.ses.get("userID")))
@@ -97,11 +83,10 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 			return SUCCESS;
 		}
 		else return ERROR;
-=======
+}
 	
 	public String getSurvey() throws Exception {	
 		
->>>>>>> origin/master
 		
 		System.out.println("adaaad");
 		
@@ -248,16 +233,6 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		return SUCCESS;
 	}
 
-<<<<<<< HEAD
-=======
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
->>>>>>> origin/master
 	public ArrayList<SondaggioData> getSondaggiDisponibili() {
 		return sondaggiDisponibili;
 	}

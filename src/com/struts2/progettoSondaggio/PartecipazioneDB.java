@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.apache.struts2.interceptor.SessionAware;
@@ -19,24 +20,24 @@ public class PartecipazioneDB{
 		this.ses = ses;
 	}
 	
-	public boolean aggiungiPartecipazione(String rispostaID) throws Exception
+	public String aggiungiPartecipazione(ArrayList<RispostaData> risposte) throws Exception
 	{
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
 
         String userID = (String)ses.get("userID");
-        PreparedStatement ps = con.prepareStatement("INSERT INTO Partecipazione(userID_fk, rispostaID_fk) VALUES ('" + userID + "', '" +
-        																											rispostaID + "')");
-        if(ps.executeUpdate() == 0)
+        for(int i = 0; i < risposte.size(); ++i)
         {
-        	con.close();
-        	return false;
+	        PreparedStatement ps = con.prepareStatement("INSERT INTO Partecipazione(userID_fk, rispostaID_fk) VALUES ('" + userID + "', '" +
+	        		risposte.get(i).getRispostaID() + "')");
+	        if(ps.executeUpdate() == 0)
+	        {
+	        	con.close();
+	        	return "error";
+	        }
         }
-        else
-        {
-        	con.close();
-        	return true;
-        }
+        con.close();
+    	return "success";
 	}
 
 }

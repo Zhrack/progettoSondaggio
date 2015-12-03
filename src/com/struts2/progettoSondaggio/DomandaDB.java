@@ -117,4 +117,34 @@ public class DomandaDB {
 
 		return res;
 	}
+	
+	public String prendiInfoSondaggio(
+			String sondaggioID,	ArrayList<String> testiDomanda, ArrayList<RispostaData> testiRisposta) throws Exception 
+	{	
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT testoDomanda FROM Domanda WHERE sondaggioID_fk=" + sondaggioID);
+        
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return "error";
+        } 
+        
+        while(result.next())
+        {
+        	testiDomanda.add(result.getString("testoDomanda"));
+        }
+
+        
+        con.close();
+        
+        // prendi dati per testiDomanda e testiRisposta
+        String res = rispostaDB.prendiInfoSondaggio(sondaggioID, testiRisposta);
+        
+        return res;
+	}
 }

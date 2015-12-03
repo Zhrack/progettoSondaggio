@@ -91,4 +91,35 @@ public class RispostaDB {
 		
 		return "success";
 	}
+	
+	public String prendiInfoSondaggio(
+			String sondaggioID, ArrayList<RispostaData> testiRisposta) throws Exception 
+	{	
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery(
+        		"SELECT R.rispostaID, R.testoRisposta FROM Domanda D, Risposta R " +
+        		"WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=" + sondaggioID
+        		);
+        
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return "error";
+        } 
+        
+        while(result.next())
+        {
+        	RispostaData data = new RispostaData();
+        	data.setRispostaID(result.getString("rispostaID"));
+        	data.setTestoRisposta(result.getString("testoRisposta"));
+        	testiRisposta.add(data);
+        }
+        con.close();
+        
+        return "success";
+	}
 }

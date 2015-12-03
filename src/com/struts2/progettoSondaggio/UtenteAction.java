@@ -19,22 +19,30 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	
 	private PagamentoController pagamentoController;
 	
-	private String username;
-	
+	// raccoglie i sondaggi disponibili su richiesta
 	private ArrayList<SondaggioData> sondaggiDisponibili;
 	
 	private SondaggioDB sondaggioDB;
+	private PartecipazioneDB partecipazioneDB;
 	
+	// variabili usate per partecipare ad un sondaggio
+	private String sondaggioIDScelto;
+	private String nomeSondaggioUtente;
+	private String autoreSondaggioUtente;
+	private ArrayList<String> testiDomandaUtente;
+	private ArrayList<RispostaData> testiRispostaUtente;
+	
+	private boolean startup;
 	public UtenteAction()
 	{
-		username = "";
+		startup = false;
 	}
 	
 	public void init()
 	{
 		pagamentoController = new PagamentoController();
 		
-		username = (String)this.ses.get("username");
+		String username = (String)this.ses.get("username");
 		System.out.println("Session username: " + username);
 		
 		String userID;
@@ -50,17 +58,21 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 				System.out.println("Errore session userID");
 			}
 		} catch (Exception ex) {
-			Logger.getLogger(LoginController.class.getName()).log( 
+			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
 		}
 		
+		testiDomandaUtente = new ArrayList<String>();
+		testiRispostaUtente = new ArrayList<RispostaData>();
+		
 		sondaggioDB = new SondaggioDB(ses);
+		partecipazioneDB = new PartecipazioneDB(ses);
 		sondaggiDisponibili = new ArrayList<SondaggioData>();
 	}
 	
-	public String execute() throws Exception {	
+	public String execute() {	
 		
-		if(pagamentoController.effettuaPagamento(username))
+		if(pagamentoController.effettuaPagamento((String)this.ses.get("userID")))
 		{
 			System.out.println("pagamento true");
 			return SUCCESS;
@@ -69,23 +81,49 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		
 	}
 	
-public String prendiListaSondaggi() throws Exception 
+	public String prendiListaSondaggi() 
 	{	
 		sondaggiDisponibili.clear();
-		return sondaggioDB.prendiListaSondaggi(sondaggiDisponibili);
+		try {
+			return sondaggioDB.prendiListaSondaggi(sondaggiDisponibili);
+		} catch (Exception e) {
+			Logger.getLogger(UtenteAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		return "error";
+	}
+	
+	// prende i dati da DB per partecipare ad un sondaggio
+	public String prendiInfoSondaggio() 
+	{	
+		nomeSondaggioUtente = "";
+		autoreSondaggioUtente = "";
+		testiDomandaUtente.clear();
+		testiRispostaUtente.clear();
+		try {
+			return sondaggioDB.prendiInfoSondaggio(sondaggioIDScelto, nomeSondaggioUtente, autoreSondaggioUtente, testiDomandaUtente, testiRispostaUtente);
+		} catch (Exception e) {
+			Logger.getLogger(UtenteAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		return "error";
+	}
+	//aggiorna la tabella Partecipazione nel DB
+	public String aggiungiPartecipazione() 
+	{
+		try {
+			return partecipazioneDB.aggiungiPartecipazione(testiRispostaUtente);
+		} catch (Exception e) {
+			Logger.getLogger(UtenteAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		return "error";
 	}
 	
 	public String logout() throws Exception
 	{
+		this.ses.clear();
 		return SUCCESS;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public ArrayList<SondaggioData> getSondaggiDisponibili() {
@@ -100,8 +138,9 @@ public String prendiListaSondaggi() throws Exception
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
 		
-		if(username.equals(""))
+		if(!startup)
 		{
+			startup = true;
 			init();
 		}
 	}
@@ -127,4 +166,43 @@ public String prendiListaSondaggi() throws Exception
 		return res;
 	}
 
+	public String getSondaggioIDScelto() {
+		return sondaggioIDScelto;
+	}
+
+	public void setSondaggioIDScelto(String sondaggioIDScelto) {
+		this.sondaggioIDScelto = sondaggioIDScelto;
+	}
+
+	public String getNomeSondaggioUtente() {
+		return nomeSondaggioUtente;
+	}
+
+	public void setNomeSondaggioUtente(String nomeSondaggioUtente) {
+		this.nomeSondaggioUtente = nomeSondaggioUtente;
+	}
+
+	public String getAutoreSondaggioUtente() {
+		return autoreSondaggioUtente;
+	}
+
+	public void setAutoreSondaggioUtente(String autoreSondaggioUtente) {
+		this.autoreSondaggioUtente = autoreSondaggioUtente;
+	}
+
+	public ArrayList<String> getTestiDomandaUtente() {
+		return testiDomandaUtente;
+	}
+
+	public void setTestiDomandaUtente(ArrayList<String> testiDomandaUtente) {
+		this.testiDomandaUtente = testiDomandaUtente;
+	}
+
+	public ArrayList<RispostaData> getTestiRispostaUtente() {
+		return testiRispostaUtente;
+	}
+
+	public void setTestiRispostaUtente(ArrayList<RispostaData> testiRispostaUtente) {
+		this.testiRispostaUtente = testiRispostaUtente;
+	}
 }

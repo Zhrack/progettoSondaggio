@@ -14,16 +14,14 @@ public class SondaggioDB {
 	private AmministratoreAction amm;
 	private DomandaDB domandaDB;
 	
-	private ArrayList<String> testiDomanda;
-	private ArrayList<ElencoRisposte> testiRisposta;
+//	private ArrayList<String> testiDomanda;
+//	private ArrayList<ElencoRisposte> testiRisposta;
 	
 	private Map<String, Object> ses;
 	
 	public SondaggioDB(Map<String, Object> ses)
 	{
 		this.amm = null;
-		this.testiDomanda = null;
-		this.testiRisposta = null;
 		
 		this.ses = ses;
 		domandaDB = null;
@@ -32,14 +30,12 @@ public class SondaggioDB {
 	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta, Map<String, Object> ses)
 	{
 		this.amm = amm;
-		this.testiDomanda = testiDomanda;
-		this.testiRisposta = testiRisposta;
 		
 		this.ses = ses;
 		domandaDB = new DomandaDB(ses);
 	}
 	
-	public String creaSondaggio(String nomeSondaggio) throws Exception
+	public String creaSondaggio(String nomeSondaggio, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta) throws Exception
 	{
 		// Aggiungi sondaggio a DB
 		String sondaggioID = aggiungiSondaggioDB(nomeSondaggio, (String)amm.getSession().get("userID"));
@@ -182,5 +178,34 @@ public class SondaggioDB {
         con.close();
         
         return "success";
+	}
+	
+	public String prendiInfoSondaggio(
+			String sondaggioID, String nomeSondaggio, String autoreSondaggio, 
+			ArrayList<String> testiDomanda, ArrayList<RispostaData> testiRisposta) throws Exception 
+	{	
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT S.nome, U.nickname FROM Sondaggio S, Utente U WHERE S.amministratore_fk=U.userID" +
+        		" AND S.sondaggioID=" + sondaggioID);
+        
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return "error";
+        } 
+        result.next();
+        nomeSondaggio = result.getString("nome");
+        autoreSondaggio = result.getString("nickname");
+        
+        con.close();
+        
+        // prendi dati per testiDomanda e testiRisposta
+        String res = domandaDB.prendiInfoSondaggio(sondaggioID, testiDomanda, testiRisposta);
+        
+        return res;
 	}
 }

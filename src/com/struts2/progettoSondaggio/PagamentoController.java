@@ -13,10 +13,10 @@ public class PagamentoController {
 		
 	}
 	
-	public boolean effettuaPagamento(String username)
+	public boolean effettuaPagamento(String userID)
 	{
 		// Aggiorna data pagamento DB e torna true
-		String updatePagamento = "UPDATE utente SET dataPagamento=? WHERE nickname='" + username + "'";
+		String updatePagamento = "UPDATE utente SET dataPagamento=? WHERE userID=" + userID;
 		  try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);

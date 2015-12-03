@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
 <head>
-	<title>The Entrar-shadow Website form | w3layouts</title>
+	<title>Progetto Sondaggio</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
@@ -36,24 +36,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 				<form action="loginSubmitted" method="post">
 				<s:hidden name="option" value="login"/>
-						<input name="username" type="text" class="text" value="USERNAME" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" >
-						<input name="password" type="password" value="Password" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+						<input name="username" type="text" class="text" value="matteo" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" >
+						<input name="password" type="password" value="matteo" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
 						<div class="submit">
 							<input type="submit" onclick="myFunction()" value="Accedi" >
 					</div>	 
 					
 				</form>
 				<p><a href="RegistrazioneView.jsp">Sei un nuovo utente? Registrati.</a></p>
-				
-				 
-				
-				
-				
-				
-				
-				
-				
 			</div>
+			
+			
 			<!--//End-login-form-->
 			 <!-----start-copyright---->
    					<div class="copy-right">

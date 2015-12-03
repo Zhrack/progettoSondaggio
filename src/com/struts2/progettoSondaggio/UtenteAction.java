@@ -5,23 +5,31 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.json.*;
 
+import com.mysql.jdbc.ResultSetMetaData;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UtenteAction extends ActionSupport implements SessionAware{
-	
+	static final String url = "jdbc:mysql://localhost:3306/sondaggioDB";
+	static final String user = "root";
+	static final String psw = user;
+	public JSONArray resultQuery;
 	private Map<String, Object> ses;
-	
 	private PagamentoController pagamentoController;
+<<<<<<< HEAD
 	
 	// raccoglie i sondaggi disponibili su richiesta
+=======
+	private String username;
+>>>>>>> origin/master
 	private ArrayList<SondaggioData> sondaggiDisponibili;
-	
 	private SondaggioDB sondaggioDB;
 	private PartecipazioneDB partecipazioneDB;
 	
@@ -32,7 +40,13 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	private ArrayList<String> testiDomandaUtente;
 	private ArrayList<RispostaData> testiRispostaUtente;
 	
+<<<<<<< HEAD
 	private boolean startup;
+=======
+
+	
+	
+>>>>>>> origin/master
 	public UtenteAction()
 	{
 		startup = false;
@@ -41,8 +55,12 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	public void init()
 	{
 		pagamentoController = new PagamentoController();
+<<<<<<< HEAD
 		
 		String username = (String)this.ses.get("username");
+=======
+		username = (String)this.ses.get("username");
+>>>>>>> origin/master
 		System.out.println("Session username: " + username);
 		
 		String userID;
@@ -70,6 +88,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		sondaggiDisponibili = new ArrayList<SondaggioData>();
 	}
 	
+<<<<<<< HEAD
 	public String execute() {	
 		
 		if(pagamentoController.effettuaPagamento((String)this.ses.get("userID")))
@@ -78,7 +97,75 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 			return SUCCESS;
 		}
 		else return ERROR;
+=======
+	
+	public String getSurvey() throws Exception {	
 		
+>>>>>>> origin/master
+		
+		System.out.println("adaaad");
+		
+		
+		this.requestSurvey();
+		
+		
+		return SUCCESS;
+	}
+	
+	
+	
+	
+	public boolean requestSurvey()
+	{
+		 try {
+	          Class.forName("com.mysql.jdbc.Driver").newInstance();
+	          Connection con = DriverManager.getConnection(url, user, psw);
+	          Statement stmt = con.createStatement();
+
+	          ResultSet result = stmt.executeQuery("SELECT * FROM sondaggioDB.Sondaggio;");
+	          if (!result.isBeforeFirst() ) 
+	          {    
+	        	  return false;
+	          } 
+	          
+	          
+	          ArrayList<String> arrayList = new ArrayList<String>(); 
+	          
+	          
+	          
+	          ResultSetMetaData metadata = (ResultSetMetaData) result.getMetaData();
+	          int numberOfColumns = metadata.getColumnCount();
+	          System.out.println("numberOfColumns="+numberOfColumns);
+	          
+	          while (result.next()) {              
+	                  int i = 1;
+	                  while(i <= numberOfColumns) {
+	                      arrayList.add(result.getString(i++));
+	                  }
+	                  System.out.println(result.getString("sondaggioID"));
+	                  System.out.println(result.getString("nome"));
+	                  System.out.println("i="+i);
+	          }
+	          
+	          
+	          
+	          System.out.println("Braaaaaaaaaaa");
+	          System.out.println(arrayList);
+	          JSONArray mJSONArray = new JSONArray(Arrays.asList(arrayList));
+	          this.resultQuery=mJSONArray;
+	          System.out.println("ddddddd");
+	          System.out.println(this.resultQuery);
+	          
+	          con.close(); 
+        	  return false;
+
+	      } catch (Exception ex) {
+	          Logger.getLogger(LoginController.class.getName()).log( 
+	                           Level.SEVERE, null, ex);
+	      }
+		 
+		 
+		return false;
 	}
 	
 	public String prendiListaSondaggi() 
@@ -119,31 +206,10 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		}
 		return "error";
 	}
+
 	
-	public String logout() throws Exception
-	{
-		this.ses.clear();
-		return SUCCESS;
-	}
+	
 
-	public ArrayList<SondaggioData> getSondaggiDisponibili() {
-		return sondaggiDisponibili;
-	}
-
-	public void setSondaggiDisponibili(ArrayList<SondaggioData> sondaggiDisponibili) {
-		this.sondaggiDisponibili = sondaggiDisponibili;
-	}
-
-	@Override
-	public void setSession(Map<String, Object> arg0) {
-		this.ses = arg0;
-		
-		if(!startup)
-		{
-			startup = true;
-			init();
-		}
-	}
 	
 	private String userIDFromNickname(String username) throws Exception
 	{
@@ -164,6 +230,52 @@ public class UtenteAction extends ActionSupport implements SessionAware{
         con.close();
         
 		return res;
+	}
+
+
+	public JSONArray getResultQuery() {
+		return resultQuery;
+	}
+
+
+	public void setResultQuery(JSONArray resultQuery) {
+		this.resultQuery = resultQuery;
+	}
+	
+	public String logout() throws Exception
+	{
+		this.ses.clear();
+		return SUCCESS;
+	}
+
+<<<<<<< HEAD
+=======
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+>>>>>>> origin/master
+	public ArrayList<SondaggioData> getSondaggiDisponibili() {
+		return sondaggiDisponibili;
+	}
+
+	public void setSondaggiDisponibili(ArrayList<SondaggioData> sondaggiDisponibili) {
+		this.sondaggiDisponibili = sondaggiDisponibili;
+	}
+	
+
+	@Override
+	public void setSession(Map<String, Object> arg0) {
+		this.ses = arg0;
+		
+		if(!startup)
+		{
+			startup = true;
+			init();
+		}
 	}
 
 	public String getSondaggioIDScelto() {

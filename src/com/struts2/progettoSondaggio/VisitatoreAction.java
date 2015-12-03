@@ -73,13 +73,14 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		else if(option.equals("registrazione"))
 		{
 			System.out.println("Dentro registrazione");
+			// controllo se i campi della registrazione non contengono valori strani
 			if(!(loginController.checkFieldsRegistration(username, password, nome, cognome, sesso)))
 			{
 				return "erroreCampiRegistrazione";
 			}
 		
 			
-			
+			// query per la registrazione
 			if(loginController.registrazione(username, password, nome, cognome, sesso))
 			{
 				ses.put("username", username);

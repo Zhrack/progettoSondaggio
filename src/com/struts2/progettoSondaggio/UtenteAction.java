@@ -26,7 +26,9 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
 
+	// usato per generare la lista di sondaggi disponibili
 	private ArrayList<SondaggioData> sondaggiDisponibili;
+	
 	private SondaggioDB sondaggioDB;
 	private PartecipazioneDB partecipazioneDB;
 	

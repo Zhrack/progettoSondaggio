@@ -60,7 +60,7 @@
    	</div>
 </div>
 
-<br>
+<br> 
 
 <div style="text-align: center">
 	<div id="yourdiv" style="display: inline-block">

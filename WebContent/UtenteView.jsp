@@ -39,7 +39,7 @@
 		<h1>Pannello Utente</h1>
 	</div>
 	<div id="logout">
-   		<form action="logout" method="get">
+   		<form action="logoutUtente" method="get">
 		<input type="submit" value="Logout"/>
    	</form>
    	</div>

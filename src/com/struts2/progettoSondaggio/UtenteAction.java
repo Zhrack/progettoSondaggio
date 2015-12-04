@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,22 +25,31 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	public String resultQuery;
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
-	private String username;
+
 	private ArrayList<SondaggioData> sondaggiDisponibili;
 	private SondaggioDB sondaggioDB;
+	private PartecipazioneDB partecipazioneDB;
 	
+	// variabili usate per partecipare ad un sondaggio
+	private String sondaggioIDScelto;
+	private String nomeSondaggioUtente;
+	private String autoreSondaggioUtente;
+	private ArrayList<String> testiDomandaUtente;
+	private ArrayList<RispostaData> testiRispostaUtente;
+	
+	private boolean startup;
 
-	
-	
 	public UtenteAction()
 	{
-		username = "";
+		startup = false;
 	}
 	
 	public void init()
 	{
 		pagamentoController = new PagamentoController();
-		username = (String)this.ses.get("username");
+		
+		String username = (String)this.ses.get("username");
+
 		System.out.println("Session username: " + username);
 		
 		String userID;
@@ -54,14 +65,27 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 				System.out.println("Errore session userID");
 			}
 		} catch (Exception ex) {
-			Logger.getLogger(LoginController.class.getName()).log( 
+			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
 		}
 		
+		testiDomandaUtente = new ArrayList<String>();
+		testiRispostaUtente = new ArrayList<RispostaData>();
+		
 		sondaggioDB = new SondaggioDB(ses);
+		partecipazioneDB = new PartecipazioneDB(ses);
 		sondaggiDisponibili = new ArrayList<SondaggioData>();
 	}
 	
+	public String execute() {	
+		
+		if(pagamentoController.effettuaPagamento((String)this.ses.get("userID")))
+		{
+			System.out.println("pagamento true");
+			return SUCCESS;
+		}
+		else return ERROR;
+}
 	
 	public String getSurvey() throws Exception {	
 		
@@ -69,22 +93,8 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		System.out.println("adaaad");
 		
 		
-		//this.requestSurvey();
+		this.requestSurvey();
 		
-		JSONObject json = new JSONObject();
-		json.put("sun","yellow");
-
-		JSONArray veg = new JSONArray();
-		JSONObject vegData = new JSONObject();
-		vegData.put("apple","red");
-		vegData.put("banana","yellow");
-		vegData.put("melon","orange");
-
-		veg.put(vegData);   
-
-		json.put("vegetables",veg);
-		
-		this.resultQuery=json.toString();
 		
 		return SUCCESS;
 	}
@@ -106,33 +116,46 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	          } 
 	          
 	          
-	          ArrayList<String> arrayList = new ArrayList<String>(); 
 	          
 	          
 	          
 	          ResultSetMetaData metadata = (ResultSetMetaData) result.getMetaData();
 	          int numberOfColumns = metadata.getColumnCount();
-	          System.out.println("numberOfColumns="+numberOfColumns);
 	          
+	          
+	          HashMap<Integer,String[]> resultQuery = new HashMap<Integer,String[]>();
+	          
+	          int i;
+              int j;
+              int k=0;
+              
 	          while (result.next()) {              
-	                  int i = 1;
-	                  while(i <= numberOfColumns) {
-	                      arrayList.add(result.getString(i++));
+	                  	
+	                  i=0;
+	                  j=1;
+	                  String[] sondaggio = new String[3];
+	                  
+	                  
+	                  while(i < numberOfColumns) {
+	                	 
+	                	  sondaggio[i]=result.getString(j);
+	                      i++;
+	                      j++;
 	                  }
-	                  System.out.println(result.getString("sondaggioID"));
-	                  System.out.println(result.getString("nome"));
-	                  System.out.println("i="+i);
+	                  
+	                  resultQuery.put(k,sondaggio);
+	                  k++;
+	                  
 	          }
 	          
 	          
 	          
-	          System.out.println("Braaaaaaaaaaa");
-	          System.out.println(arrayList);
-	          JSONArray mJSONArray = new JSONArray(arrayList);
-	          //JSONArray mJSONArray = new JSONArray(Arrays.asList(arrayList));
-	         // this.resultQuery=mJSONArray;
-	          System.out.println("ddddddd");
-	          System.out.println(this.resultQuery);
+	          String[] sondaggio2 = new String[3];
+	          sondaggio2=resultQuery.get(1);
+	          System.out.println(sondaggio2[1]);
+	          JSONObject JSONobj = new JSONObject(resultQuery);
+	          this.resultQuery=JSONobj.toString();
+	          
 	          
 	          con.close(); 
         	  return false;
@@ -146,10 +169,43 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 		return false;
 	}
 	
-public String prendiListaSondaggi() throws Exception 
+	public String prendiListaSondaggi() 
 	{	
 		sondaggiDisponibili.clear();
-		return sondaggioDB.prendiListaSondaggi(sondaggiDisponibili);
+		try {
+			return sondaggioDB.prendiListaSondaggi(sondaggiDisponibili);
+		} catch (Exception e) {
+			Logger.getLogger(UtenteAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		return "error";
+	}
+	
+	// prende i dati da DB per partecipare ad un sondaggio
+	public String prendiInfoSondaggio() 
+	{	
+		nomeSondaggioUtente = "";
+		autoreSondaggioUtente = "";
+		testiDomandaUtente.clear();
+		testiRispostaUtente.clear();
+		try {
+			return sondaggioDB.prendiInfoSondaggio(sondaggioIDScelto, nomeSondaggioUtente, autoreSondaggioUtente, testiDomandaUtente, testiRispostaUtente);
+		} catch (Exception e) {
+			Logger.getLogger(UtenteAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		return "error";
+	}
+	//aggiorna la tabella Partecipazione nel DB
+	public String aggiungiPartecipazione() 
+	{
+		try {
+			return partecipazioneDB.aggiungiPartecipazione(testiRispostaUtente);
+		} catch (Exception e) {
+			Logger.getLogger(UtenteAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		return "error";
 	}
 
 	
@@ -189,16 +245,10 @@ public String prendiListaSondaggi() throws Exception
 	
 	public String logout() throws Exception
 	{
+		this.ses.clear();
 		return SUCCESS;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	public ArrayList<SondaggioData> getSondaggiDisponibili() {
 		return sondaggiDisponibili;
 	}
@@ -212,10 +262,50 @@ public String prendiListaSondaggi() throws Exception
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
 		
-		if(username.equals(""))
+		if(!startup)
 		{
+			startup = true;
 			init();
 		}
 	}
 
+	public String getSondaggioIDScelto() {
+		return sondaggioIDScelto;
+	}
+
+	public void setSondaggioIDScelto(String sondaggioIDScelto) {
+		this.sondaggioIDScelto = sondaggioIDScelto;
+	}
+
+	public String getNomeSondaggioUtente() {
+		return nomeSondaggioUtente;
+	}
+
+	public void setNomeSondaggioUtente(String nomeSondaggioUtente) {
+		this.nomeSondaggioUtente = nomeSondaggioUtente;
+	}
+
+	public String getAutoreSondaggioUtente() {
+		return autoreSondaggioUtente;
+	}
+
+	public void setAutoreSondaggioUtente(String autoreSondaggioUtente) {
+		this.autoreSondaggioUtente = autoreSondaggioUtente;
+	}
+
+	public ArrayList<String> getTestiDomandaUtente() {
+		return testiDomandaUtente;
+	}
+
+	public void setTestiDomandaUtente(ArrayList<String> testiDomandaUtente) {
+		this.testiDomandaUtente = testiDomandaUtente;
+	}
+
+	public ArrayList<RispostaData> getTestiRispostaUtente() {
+		return testiRispostaUtente;
+	}
+
+	public void setTestiRispostaUtente(ArrayList<RispostaData> testiRispostaUtente) {
+		this.testiRispostaUtente = testiRispostaUtente;
+	}
 }

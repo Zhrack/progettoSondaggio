@@ -27,7 +27,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	private SondaggioDB sondaggioDB;
 	
-	private String username;
+
 	
 	// dati per creazione sondaggio
 	private String nomeSondaggio;
@@ -36,20 +36,20 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	// dati per modifica sondaggio
 	private String sondaggioIDScelto;
-	
 	private SondaggioData modificaSondaggioData;
 	private ArrayList<DomandaData> modificaDomandeData;
 	private ArrayList<RispostaData> modificaRisposteData;
 
+	private boolean startup;
 	public AmministratoreAction() throws Exception
 	{
 		System.out.println("Ctor AmmAction");
-		username = "";
+		startup = false;
 	}
 	
 	public void init()
 	{
-		username = (String)this.ses.get("username");
+		String username = (String)this.ses.get("username");
 		System.out.println("Session username: " + username);
 		
 		String userID;
@@ -83,13 +83,13 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	{
 		try
 		{
-			String result = sondaggioDB.creaSondaggio(nomeSondaggio);
+			String result = sondaggioDB.creaSondaggio(nomeSondaggio, testiDomanda, testiRisposta);
 			
 			return result;
 		}
 		catch(Exception ex)
 		{
-			Logger.getLogger(LoginController.class.getName()).log( 
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
 		}
 		return ERROR;
@@ -110,7 +110,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		}
 		catch(Exception ex)
 		{
-			Logger.getLogger(LoginController.class.getName()).log( 
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
 		}
 		return ERROR;
@@ -124,10 +124,10 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 			
 			return result;
 		}
-		catch(Exception ex)
+		catch(Exception e)
 		{
-			Logger.getLogger(LoginController.class.getName()).log( 
-                    Level.SEVERE, null, ex);
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
 		}
 		return ERROR;
 	}
@@ -173,18 +173,11 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
 		
-		if(username.equals(""))
+		if(!startup)
 		{
+			startup = true;
 			init();
 		}
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public String getNomeSondaggio() {

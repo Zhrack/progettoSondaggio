@@ -5,85 +5,75 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Utente - Pannello di controllo</title>
+<link href="statix/css/UtenteView.css" rel='stylesheet' type='text/css' />
+<script src="http://code.jquery.com/jquery-latest.min.js"type="text/javascript"></script>
+<title>Utente - Home</title>
 </head>
 <body>
- <h1>Pannello Utente</h1>
- <script src="http://code.jquery.com/jquery-latest.min.js"
-        type="text/javascript"></script>
-        <script>  
+<script>  
 		$(document).ready(function(){	
           $.ajax({  
         	  	 dataType: "json",
                  url:'getSurvey',
                  data: null,
                  success: function(response){  
-                	alert("fdsfsdf");
-                    alert("risposta: " + response.resultQuery);
-                    //$("#liID").text(response.resultQuery);
-                    //var array = JSON.parse("[" + response.resultQuery + "]");
-                    console.log(response)
-                    var obj = jQuery.parseJSON(response.resultQuery);
-                    alert("2222");
-                    alert(obj);
-                    for (var property in obj) {
-                        if (object.hasOwnProperty(property)) {
-                            // do stuff
-                            alert(property)
-                        }
-                    }
-					
-					
-                    alert(response.resultQuery);
-                     
-                     
-                    // DEVO CAPIRE COME TRASFORMARE LA STRINGA DI JSON IN ARRAY DI JAVASCRIPT
-                   
-					var array = response.resultQuery.split(",");
-					alert(array[0].toString());
-                     
-                  
-                     
-                    $('<li />', {html: response.resultQuery}).appendTo('ul.ulID')
+                    
+                	var obj = jQuery.parseJSON(response.resultQuery);
+                	console.log(obj);
+                 	for(var i in obj)
+                    	{
+                 			var id=obj[i][0];
+                 			var nomeSondaggio=obj[i][1];
+                 			var ammID=obj[i][2];
+                 			
+                    		$('<li>', {html: "<p>nome: "+nomeSondaggio+" ammID: "+ammID+" <a href='#'> Partecipa</a></p>"}).appendTo('ul.ulID')
+                    	}
                  }  
-});  
-});  
-
+			});  
+		});  
 </script> 
- 
- 
- 
- 
- 
- <!-- 
- <s:action name="getSurvey" executeResult="true">
- 	<s:property value="myBeanProperty" />
- </s:action>
- -->
- 
-<div>
+
+<div id="dsssss" style="display: inline-block; width:100%">
+
+	<div>
+		<h1>Pannello Utente</h1>
+	</div>
+	<div id="logout">
+   		<form action="logout" method="get">
+		<input type="submit" value="Logout"/>
+   	</form>
+   	</div>
+</div>
+
+
+
+
+<div style="text-align: center">
+	<div id="yourdiv" style="display: inline-block">
     <h3>Vuoi diventare Amministratore?</h3>
-   	<form action="effettuaPagamento" method="post">
+   	<form id="formID" action="effettuaPagamento" method="post">
 		Riscrivi il tuo username per sicurezza:<br>
 		<input type="text" name="username">
 		<br>
 		<input type="submit" value="Paga"/>
    	</form>
+   	</div>
 </div>
 
-<br><br><br>
+<br>
 
-<div>
+<div style="text-align: center">
+	<div id="yourdiv" style="display: inline-block">
+    <h3>Vuoi partecipare a un sondaggio?</h3>
+
 	<ul class="ulID">
-		<li id="liID">asdasdas</li>
 	</ul>
-</div>	
+	</div>
+</div>
 	
 	
 <div>
-	<form action="logout" method="get">
-		<input type="submit" value="Logout"/>
-   	</form>
+	
 </div>
 
 </body>

@@ -3,28 +3,25 @@
    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
    "http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
-<constant name="struts.devMode" value="true" />
-   <package name="helloworld" extends="struts-default">
-   <action name="loginSubmitted" 
+<constant name="struts.devMode" value="true" />   
+   <package name="default" namespace="/" extends="json-default">
+     	<interceptors>
+            <interceptor-stack name="jsonStackPersonale">
+            	<interceptor-ref name="defaultStack" />
+                <interceptor-ref name="json">
+                    <param name="enableSMD">true</param>
+             	</interceptor-ref>
+     		</interceptor-stack>
+    	</interceptors>
+	<default-interceptor-ref name="jsonStackPersonale" />
+	
+	<action name="loginSubmitted" 
             class="com.struts2.progettoSondaggio.VisitatoreAction" 
             method="execute">
             <result name="amministratoreSuccess">/AmministratoreView.jsp</result>
             <result name="utenteSuccess">/UtenteView.jsp</result>
             <result name="loginFallito">/LoginErrore.jsp</result>
       </action>
-   </package>
-   
-   
-   
-   <package name="default" namespace="/" extends="json-default">
-     <interceptors>
-            <interceptor-stack name="defaultStack">
-                <interceptor-ref name="json">
-                    <param name="enableSMD">true</param>
-                </interceptor-ref>
-            </interceptor-stack>
-        </interceptors>
-        <default-interceptor-ref name="defaultStack" />
         
       
       <action name="registrationSubmitted" 

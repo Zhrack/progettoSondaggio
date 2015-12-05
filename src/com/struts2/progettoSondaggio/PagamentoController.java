@@ -13,8 +13,11 @@ public class PagamentoController {
 		
 	}
 	
-	public boolean effettuaPagamento(String userID)
+	public boolean effettuaPagamento(String userID, String usernameInserito, String username)
 	{
+		if(!usernameInserito.equals(username))
+			return false;
+		
 		// Aggiorna data pagamento DB e torna true
 		String updatePagamento = "UPDATE utente SET dataPagamento=? WHERE userID=" + userID;
 		  try {

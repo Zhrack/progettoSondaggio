@@ -53,7 +53,7 @@
     <h3>Vuoi diventare Amministratore?</h3>
    	<form id="formID" action="effettuaPagamento" method="post">
 		Riscrivi il tuo username per sicurezza:<br>
-		<input type="text" name="username">
+		<input type="text" name="usernameSicurezza">
 		<br>
 		<input type="submit" value="Paga"/>
    	</form>

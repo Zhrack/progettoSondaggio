@@ -33,13 +33,19 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	private String nomeSondaggio;
 	private ArrayList<String> testiDomanda;
 	private ArrayList<ElencoRisposte> testiRisposta;
+	//---------
 	
 	// dati per modifica sondaggio
 	private String sondaggioIDScelto;
-	private SondaggioData modificaSondaggioData;
-	private ArrayList<DomandaData> modificaDomandeData;
-	private ArrayList<RispostaData> modificaRisposteData;
-
+	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato
+	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande già presenti, con le modifiche aggiornate
+	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte già presenti, con le modifiche aggiornate
+	
+	private String nomeSondaggioModifica;
+	private ArrayList<String> testiDomandaModifica;
+	private ArrayList<ElencoRisposte> testiRispostaModifica;
+	//---------
+	
 	private boolean startup;
 	public AmministratoreAction() throws Exception
 	{
@@ -77,6 +83,10 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		// inizializzo per modifica sondaggio
 		modificaDomandeData = new ArrayList<DomandaData>();
 		modificaRisposteData = new ArrayList<RispostaData>();
+
+		
+		testiDomandaModifica = new ArrayList<String>();
+		testiRispostaModifica = new ArrayList<ElencoRisposte>();
 	}
 	
 	public String creaSondaggio()
@@ -91,6 +101,27 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		{
 			Logger.getLogger(AmministratoreAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
+		}
+		return ERROR;
+	}
+	
+	public String modificaSondaggio()
+	{
+		try
+		{
+			if(sondaggioDB.cancellaSondaggio(sondaggioIDScelto))
+			{
+				return sondaggioDB.creaSondaggio(nomeSondaggioModifica, testiDomandaModifica, testiRispostaModifica);
+			}
+			else
+			{
+				System.out.println("errore cancellaSondaggio");
+			}
+		}
+		catch(Exception e)
+		{
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
 		}
 		return ERROR;
 	}
@@ -115,22 +146,24 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		}
 		return ERROR;
 	}
-	
-	public String modificaSondaggio()
-	{
-		try
-		{
-			String result = sondaggioDB.applicaModificaSondaggio(modificaSondaggioData, modificaDomandeData, modificaRisposteData);
-			
-			return result;
-		}
-		catch(Exception e)
-		{
-			Logger.getLogger(AmministratoreAction.class.getName()).log( 
-                    Level.SEVERE, null, e);
-		}
-		return ERROR;
-	}
+//	
+//	public String modificaSondaggio()
+//	{
+//		try
+//		{
+//			String result = sondaggioDB.applicaModificaSondaggio(
+//					modificaSondaggioData, modificaDomandeData, testiNuoveDomandeModifica, 
+//					modificaRisposteData, testiNuoveRisposteModifica);
+//			
+//			return result;
+//		}
+//		catch(Exception e)
+//		{
+//			Logger.getLogger(AmministratoreAction.class.getName()).log( 
+//                    Level.SEVERE, null, e);
+//		}
+//		return ERROR;
+//	}
 	
 	public String toCreaSondaggioView() throws Exception
 	{
@@ -209,6 +242,38 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		return sondaggioDB;
 	}
 
+	public String getSondaggioIDScelto() {
+		return sondaggioIDScelto;
+	}
+
+	public void setSondaggioIDScelto(String sondaggioIDScelto) {
+		this.sondaggioIDScelto = sondaggioIDScelto;
+	}
+
+	public String getNomeSondaggioModifica() {
+		return nomeSondaggioModifica;
+	}
+
+	public void setNomeSondaggioModifica(String nomeSondaggioModifica) {
+		this.nomeSondaggioModifica = nomeSondaggioModifica;
+	}
+
+	public ArrayList<String> getTestiDomandaModifica() {
+		return testiDomandaModifica;
+	}
+
+	public void setTestiDomandaModifica(ArrayList<String> testiDomandaModifica) {
+		this.testiDomandaModifica = testiDomandaModifica;
+	}
+
+	public ArrayList<ElencoRisposte> getTestiRispostaModifica() {
+		return testiRispostaModifica;
+	}
+
+	public void setTestiRispostaModifica(ArrayList<ElencoRisposte> testiRispostaModifica) {
+		this.testiRispostaModifica = testiRispostaModifica;
+	}
+
 	public SondaggioData getModificaSondaggioData() {
 		return modificaSondaggioData;
 	}
@@ -231,14 +296,6 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public void setModificaRisposteData(ArrayList<RispostaData> modificaRisposteData) {
 		this.modificaRisposteData = modificaRisposteData;
-	}
-
-	public String getSondaggioIDScelto() {
-		return sondaggioIDScelto;
-	}
-
-	public void setSondaggioIDScelto(String sondaggioIDScelto) {
-		this.sondaggioIDScelto = sondaggioIDScelto;
 	}
 
 }

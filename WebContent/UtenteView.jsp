@@ -26,7 +26,7 @@
                  			var nomeSondaggio=obj[i][1];
                  			var ammID=obj[i][2];
                  			
-                    		$('<li>', {html: "<p>nome: "+nomeSondaggio+" ammID: "+ammID+" <a href='#'> Partecipa</a></p>"}).appendTo('ul.ulID')
+                    		$('<li>', {html: "<p>nome: "+nomeSondaggio+" ammID: "+ammID+" <a href='Partecipazione.jsp'> Partecipa</a></p>"}).appendTo('ul.ulID')
                     	}
                  }  
 			});  

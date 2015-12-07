@@ -12,6 +12,34 @@
             <result name="utenteSuccess">/UtenteView.jsp</result>
             <result name="loginFallito">/LoginErrore.jsp</result>
       </action>
+       <action name="logout" 
+            class="com.struts2.progettoSondaggio.AmministratoreAction" 
+            method="logout">
+            <result name="success">/index.jsp</result>
+      </action>  
+      <action name="registrationSubmitted" 
+            class="com.struts2.progettoSondaggio.VisitatoreAction" 
+            method="execute">
+            <result name="success">/UtenteView.jsp</result>
+            <result name="erroreCampiRegistrazione">/RegistrazioneViewErrore.jsp</result>
+            <result name="registrazioneFallita">/RegistrazioneViewErrore.jsp</result>
+      </action>
+      <action name="effettuaPagamento" 
+            class="com.struts2.progettoSondaggio.UtenteAction" 
+            method="execute">
+            <result name="success">/AmministratoreView.jsp</result>
+            <result name="error">/UtenteView.jsp</result>
+      </action>
+      <action name="ToCreaSondaggio" 
+            class="com.struts2.progettoSondaggio.AmministratoreAction" 
+            method="toCreaSondaggioView">
+            <result name="success">/creaSondaggio.jsp</result>
+      </action>
+      <action name="creaSondaggio" 
+            class="com.struts2.progettoSondaggio.AmministratoreAction" 
+            method="creaSondaggio">
+            <result name="success">/AmministratoreView.jsp</result>
+      </action>
    </package>
    
    
@@ -25,47 +53,11 @@
             </interceptor-stack>
         </interceptors>
         <default-interceptor-ref name="defaultStack" />
-        
-      
-      <action name="registrationSubmitted" 
-            class="com.struts2.progettoSondaggio.VisitatoreAction" 
-            method="execute">
-            <result name="success">/UtenteView.jsp</result>
-            <result name="erroreCampiRegistrazione">/RegistrazioneViewErrore.jsp</result>
-            <result name="registrazioneFallita">/RegistrazioneViewErrore.jsp</result>
-      </action>
-      <action name="getSurvey" 
+       
+       <action name="getSurvey" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="getSurvey">
              <result type="json"></result>
-      </action>
-      <action name="effettuaPagamento" 
-            class="com.struts2.progettoSondaggio.UtenteAction" 
-            method="execute">
-            <result name="success">/AmministratoreView.jsp</result>
-            <result name="error">/UtenteView.jsp</result>
-      </action>
-      <action name="logout" 
-            class="com.struts2.progettoSondaggio.UtenteAction" 
-            method="logout">
-            <result name="success">/index.jsp</result>
-      </action>
-      
-      <action name="ToCreaSondaggio" 
-            class="com.struts2.progettoSondaggio.AmministratoreAction" 
-            method="toCreaSondaggioView">
-            <result name="success">/creaSondaggio.jsp</result>
-      </action>
-      <action name="logout" 
-            class="com.struts2.progettoSondaggio.AmministratoreAction" 
-            method="logout">
-            <result name="success">/index.jsp</result>
-      </action>
-      
-      <action name="creaSondaggio" 
-            class="com.struts2.progettoSondaggio.AmministratoreAction" 
-            method="creaSondaggio">
-            <result name="success">/AmministratoreView.jsp</result>
-      </action>
+      </action> 
       </package>
 </struts>

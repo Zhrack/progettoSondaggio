@@ -90,14 +90,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 }
 	
 	public String getSurvey() throws Exception {	
-		
-		
-		System.out.println("adaaad");
-		
-		
 		this.requestSurvey();
-		
-		
 		return SUCCESS;
 	}
 	
@@ -118,13 +111,9 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	          } 
 	          
 	          
-	          
-	          
-	          
+	          // creo l'oggetto JSON con il risultato della query, ovvero i sondaggi
 	          ResultSetMetaData metadata = (ResultSetMetaData) result.getMetaData();
 	          int numberOfColumns = metadata.getColumnCount();
-	          
-	          
 	          HashMap<Integer,String[]> resultQuery = new HashMap<Integer,String[]>();
 	          
 	          int i;
@@ -132,11 +121,9 @@ public class UtenteAction extends ActionSupport implements SessionAware{
               int k=0;
               
 	          while (result.next()) {              
-	                  	
 	                  i=0;
 	                  j=1;
 	                  String[] sondaggio = new String[3];
-	                  
 	                  
 	                  while(i < numberOfColumns) {
 	                	 
@@ -147,10 +134,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	                  
 	                  resultQuery.put(k,sondaggio);
 	                  k++;
-	                  
 	          }
-	          
-	          
 	          
 	          String[] sondaggio2 = new String[3];
 	          sondaggio2=resultQuery.get(1);

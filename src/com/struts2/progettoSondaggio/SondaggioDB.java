@@ -162,8 +162,19 @@ public class SondaggioDB {
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
         
-        // cancella tutte le risposte di questo sondaggio
+        // cancella tutte le partecipazioni di questo sondaggio
         PreparedStatement ps = con.prepareStatement(
+        		"DELETE FROM Partecipazione WHERE rispostaID_fk IN " +
+	"(SELECT rispostaID FROM Risposta WHERE domandaID_fk IN " +
+		"(SELECT domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID + "))");
+        if(ps.executeUpdate() == 0)
+		{
+			con.close();
+			return false;
+		}
+        
+        // cancella tutte le risposte di questo sondaggio
+        ps = con.prepareStatement(
         		"DELETE FROM Risposta WHERE domandaID_fk IN " +
         		"(SELECT domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID + ")");
         if(ps.executeUpdate() == 0)
@@ -172,16 +183,7 @@ public class SondaggioDB {
 			return false;
 		}
         
-        // cancella tutte le domande di questo sondaggio
-        ps = con.prepareStatement(
-        		"DELETE FROM Domanda WHERE sondaggioID_fk=" + sondaggioID);
-        if(ps.executeUpdate() == 0)
-		{
-			con.close();
-			return false;
-		}
-        
-     // cancella sondaggio
+        // cancella sondaggio
         ps = con.prepareStatement(
         		"DELETE FROM Sondaggio WHERE sondaggioID=" + sondaggioID);
         if(ps.executeUpdate() == 0)

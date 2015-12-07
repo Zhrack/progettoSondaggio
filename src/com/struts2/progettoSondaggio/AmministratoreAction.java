@@ -36,7 +36,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	//---------
 	
 	// dati per modifica sondaggio
-	private String sondaggioIDScelto;
+	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio
 	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato
 	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande già presenti, con le modifiche aggiornate
 	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte già presenti, con le modifiche aggiornate
@@ -135,7 +135,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 			modificaSondaggioData.setAutore(""); // non usato in questo caso
 			modificaDomandeData.clear();
 			modificaRisposteData.clear();
-			String result = sondaggioDB.prendiDatiSondaggio(sondaggioIDScelto, modificaSondaggioData, modificaDomandeData, modificaRisposteData);
+			String result = sondaggioDB.prendiDatiSondaggio(sondaggioIDScelto, modificaSondaggioData, modificaDomandeData,  modificaRisposteData);
 			
 			return result;
 		}
@@ -143,6 +143,28 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		{
 			Logger.getLogger(AmministratoreAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
+		}
+		return ERROR;
+	}
+	
+	public String cancellaSondaggio()
+	{
+		try
+		{
+			if(sondaggioDB.cancellaSondaggio(sondaggioIDScelto))
+			{
+				return SUCCESS;
+			}
+			else
+			{
+				System.out.println("errore cancellaSondaggio");
+				return ERROR;
+			}
+		}
+		catch(Exception e)
+		{
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
 		}
 		return ERROR;
 	}

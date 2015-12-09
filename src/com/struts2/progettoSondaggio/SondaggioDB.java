@@ -58,6 +58,7 @@ public class SondaggioDB {
 		else
 		{
 			System.out.println("sondaggioID == null");
+			errore = true;
 		}
 		if(!errore)
 		{
@@ -129,27 +130,71 @@ public class SondaggioDB {
         return res;
 	}
 	
-	public String applicaModificaSondaggio(SondaggioData sondaggioData, ArrayList<DomandaData> domandeData, ArrayList<RispostaData> risposteData) throws Exception
+//	public String applicaModificaSondaggio(
+//			SondaggioData sondaggioData,
+//			ArrayList<DomandaData> domandeModifcate, ArrayList<String> domandeAggiunte,
+//			ArrayList<RispostaData> risposteModificate, ArrayList<ElencoRisposte> risposteAggiunte
+//			) throws Exception
+//	{
+//		Class.forName("com.mysql.jdbc.Driver").newInstance();
+//        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+//        
+//        // aggiorna sondaggio
+//        PreparedStatement ps = con.prepareStatement(
+//        		"UPDATE Sondaggio SET nome='" + sondaggioData.getNomeSondaggio() + 
+//        		"' WHERE sondaggioID=" + sondaggioData.getSondaggioID()
+//        		);
+//        
+//		if(ps.executeUpdate() == 0)
+//		{
+//			con.close();
+//			return "error";
+//		}
+//		con.close();
+//		// aggiorna domande
+//		String res = domandaDB.applicaModificaDomande(sondaggioData, domandeModifcate, domandeAggiunte, risposteModificate, risposteAggiunte);
+//
+//		return res;
+//	}
+	
+	public boolean cancellaSondaggio(String sondaggioID) throws Exception
 	{
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
         
-        // aggiorna sondaggio
+        // cancella tutte le partecipazioni di questo sondaggio
         PreparedStatement ps = con.prepareStatement(
-        		"UPDATE Sondaggio SET nome='" + sondaggioData.getNomeSondaggio() + 
-        		"' WHERE sondaggioID=" + sondaggioData.getSondaggioID()
-        		);
-        
-		if(ps.executeUpdate() == 0)
+        		"DELETE FROM Partecipazione WHERE rispostaID_fk IN " +
+	"(SELECT rispostaID FROM Risposta WHERE domandaID_fk IN " +
+		"(SELECT domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID + "))");
+        if(ps.executeUpdate() == 0)
 		{
 			con.close();
-			return "error";
+			return false;
 		}
+        
+        // cancella tutte le risposte di questo sondaggio
+        ps = con.prepareStatement(
+        		"DELETE FROM Risposta WHERE domandaID_fk IN " +
+        		"(SELECT domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID + ")");
+        if(ps.executeUpdate() == 0)
+		{
+			con.close();
+			return false;
+		}
+        
+        // cancella sondaggio
+        ps = con.prepareStatement(
+        		"DELETE FROM Sondaggio WHERE sondaggioID=" + sondaggioID);
+        if(ps.executeUpdate() == 0)
+		{
+			con.close();
+			return false;
+		}
+        
 		con.close();
-		// aggiorna domande
-		String res = domandaDB.applicaModificaDomande(domandeData, risposteData);
-
-		return res;
+        
+        return true;
 	}
 	
 	public String prendiListaSondaggi(ArrayList<SondaggioData> sondaggi) throws Exception

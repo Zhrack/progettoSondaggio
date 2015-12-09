@@ -68,29 +68,47 @@ public class RispostaDB {
         return "success";
 	}
 	
-	public String applicaModificaRisposte(ArrayList<RispostaData> risposteData) throws Exception
-	{
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
-        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
-        
-        // aggiorna domande
-        for(int i = 0; i < risposteData.size(); ++i)
-        {
-        	PreparedStatement ps = con.prepareStatement(
-            		"UPDATE Risposta SET testoRisposta='" + risposteData.get(i).getTestoRisposta() + 
-            		"' WHERE rispostaID=" + risposteData.get(i).getRispostaID()
-            		);
-            
-    		if(ps.executeUpdate() == 0)
-    		{
-    			con.close();
-    			return "error";
-    		}
-        }
-		con.close();
-		
-		return "success";
-	}
+//	public String applicaModificaRisposte(
+//			SondaggioData sondaggioData,
+//			ArrayList<RispostaData> risposteModificate, ArrayList<ElencoRisposte> risposteAggiunte
+//			) throws Exception
+//	{
+//		Class.forName("com.mysql.jdbc.Driver").newInstance();
+//        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+//        
+//        // aggiorna risposte modificate
+//        for(int i = 0; i < risposteModificate.size(); ++i)
+//        {
+//        	PreparedStatement ps = con.prepareStatement(
+//            		"UPDATE Risposta SET testoRisposta='" + risposteModificate.get(i).getTestoRisposta() + 
+//            		"' WHERE rispostaID=" + risposteModificate.get(i).getRispostaID()
+//            		);
+//            
+//    		if(ps.executeUpdate() == 0)
+//    		{
+//    			con.close();
+//    			return "error";
+//    		}
+//        }
+//        
+//     // aggiungi nuove risposte
+//        for(int i = 0; i < risposteAggiunte.size(); ++i)
+//        {
+//        	PreparedStatement ps = con.prepareStatement(
+//            		"INSERT INTO Risposta(testoRisposta, domandaID_fk) VALUES ('" +
+//            		risposteAggiunte.get(i).getTestoRisposta() + "', " + risposteAggiunte.get(i).getDomandaID() + ")"
+//            		);
+//            
+//    		if(ps.executeUpdate() == 0)
+//    		{
+//    			con.close();
+//    			return "error";
+//    		}
+//        }
+//		con.close();
+//		
+//		return "success";
+//	}
 	
 	public String prendiInfoSondaggio(
 			String sondaggioID, ArrayList<RispostaData> testiRisposta) throws Exception 

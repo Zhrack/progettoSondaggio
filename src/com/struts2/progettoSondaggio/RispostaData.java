@@ -3,6 +3,7 @@ package com.struts2.progettoSondaggio;
 public class RispostaData {
 	private String rispostaID;
 	private String testoRisposta;
+	private String domandaID;
 	
 	public String getRispostaID() {
 		return rispostaID;
@@ -15,5 +16,11 @@ public class RispostaData {
 	}
 	public void setTestoRisposta(String testoRisposta) {
 		this.testoRisposta = testoRisposta;
+	}
+	public String getDomandaID() {
+		return domandaID;
+	}
+	public void setDomandaID(String domandaID) {
+		this.domandaID = domandaID;
 	}
 }

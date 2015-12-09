@@ -13,12 +13,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.struts2.interceptor.SessionAware;
+import com.opensymphony.xwork2.config.entities.Parameterizable;
 import org.json.*;
 
 import com.mysql.jdbc.ResultSetMetaData;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UtenteAction extends ActionSupport implements SessionAware{
+public class UtenteAction extends ActionSupport implements SessionAware,Parameterizable{
 	static final String url = "jdbc:mysql://localhost:3306/sondaggioDB";
 	static final String user = "root";
 	static final String psw = user;
@@ -39,7 +40,10 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	private ArrayList<String> testiDomandaUtente;
 	private ArrayList<RispostaData> testiRispostaUtente;
 	
+	
 	private boolean startup;
+	
+	private String usernameSicurezza;
 
 	public UtenteAction()
 	{
@@ -81,7 +85,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	
 	public String execute() {	
 		
-		if(pagamentoController.effettuaPagamento((String)this.ses.get("userID")))
+		if(pagamentoController.effettuaPagamento((String)this.ses.get("userID"), usernameSicurezza, (String)this.ses.get("username")))
 		{
 			System.out.println("pagamento true");
 			return SUCCESS;
@@ -96,7 +100,7 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	
 	
 	
-	
+	// metodo per richiedere i sondaggi da far vedere nell'utenteView
 	public boolean requestSurvey()
 	{
 		 try {
@@ -170,6 +174,12 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	// prende i dati da DB per partecipare ad un sondaggio
 	public String prendiInfoSondaggio() 
 	{	
+		System.out.println("asdasdasdasdas");
+		System.out.println(this.sondaggioIDScelto);
+		System.out.println(this.autoreSondaggioUtente);
+		System.out.println(this.nomeSondaggioUtente);
+		
+		
 		nomeSondaggioUtente = "";
 		autoreSondaggioUtente = "";
 		testiDomandaUtente.clear();
@@ -294,4 +304,33 @@ public class UtenteAction extends ActionSupport implements SessionAware{
 	public void setTestiRispostaUtente(ArrayList<RispostaData> testiRispostaUtente) {
 		this.testiRispostaUtente = testiRispostaUtente;
 	}
+
+	public String getUsernameSicurezza() {
+		return usernameSicurezza;
+	}
+
+	public void setUsernameSicurezza(String usernameSicurezza) {
+		this.usernameSicurezza = usernameSicurezza;
+	}
+	
+	
+
+	@Override
+	public void addParam(String arg0, String arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Map<String, String> getParams() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setParams(Map<String, String> arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

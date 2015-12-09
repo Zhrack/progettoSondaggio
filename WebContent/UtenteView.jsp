@@ -25,8 +25,17 @@
                  			var id=obj[i][0];
                  			var nomeSondaggio=obj[i][1];
                  			var ammID=obj[i][2];
+                 			var p_id=id+"_"+ammID+"_"+nomeSondaggio;
                  			
-                    		$('<li>', {html: "<p>nome: "+nomeSondaggio+" ammID: "+ammID+" <a href='Partecipazione.jsp'> Partecipa</a></p>"}).appendTo('ul.ulID')
+                 			//var link='<a href="<s:url action="mostraSondaggio"/>">Partecipa</a>';
+                 			var link2='<s:url id="url" action="mostraSondaggio">'+
+                 				'<s:param name="sondaggioIDScelto">'+id+'</s:param>'+
+                 				'<s:param name="nomeSondaggioUtente">'+nomeSondaggio+'</s:param>'+
+                 				'<s:param name="autoreSondaggioUtente">'+id+'</s:param>'+
+                 				'</s:url><s:a href="%{url}">Partecipa</s:a>';      
+                 		   
+                 			
+                    		$('<li>', {html: "<p id="+p_id+">nome: "+nomeSondaggio+" ammID: "+ammID+link2+"</p>"}).appendTo('ul.ulID')
                     	}
                  }  
 			});  
@@ -39,10 +48,11 @@
 		<h1>Pannello Utente</h1>
 	</div>
 	<div id="logout">
-   		<form action="logout" method="get">
-		<input type="submit" value="Logout"/>
+   		<form action="logoutUtente" method="get">
+		<input type="submit" value="Logout" id="inputLogout"/>
    	</form>
    	</div>
+	
 </div>
 
 
@@ -53,7 +63,7 @@
     <h3>Vuoi diventare Amministratore?</h3>
    	<form id="formID" action="effettuaPagamento" method="post">
 		Riscrivi il tuo username per sicurezza:<br>
-		<input type="text" name="username">
+		<input type="text" name="usernameSicurezza">
 		<br>
 		<input type="submit" value="Paga"/>
    	</form>

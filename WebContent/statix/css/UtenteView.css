@@ -104,6 +104,12 @@ input[type="submit"]:hover{
 
 #logout
 {
-	float:right;
+	text-align:center;
+}
+
+#inputLogout{
+background:#7B1406;
+width: 10%;
+padding: 1%;
 }
 

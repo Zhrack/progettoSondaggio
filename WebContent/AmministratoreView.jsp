@@ -15,7 +15,7 @@
    	</form>
 </div><br><br>
  <div>
-	<form action="logout" method="get">
+	<form action="logoutAmministratore" method="get">
 		<input type="submit" value="Logout"/>
    	</form>
 </div>

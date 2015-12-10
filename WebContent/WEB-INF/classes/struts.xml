@@ -67,10 +67,7 @@
       <action name="mostraSondaggio" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">
-            <param name="sondaggioIDScelto">${sondaggioIDScelto}</param>
-            <param name="nomeSondaggioUtente">${nomeSondaggioUtente}</param>
-            <param name="autoreSondaggioUtente">${autoreSondaggioUtente}</param>
-            <result name="success">/AmministratoreView.jsp</result>
+            <result name="success">/Partecipazione.jsp</result>
             <result name="error">/AmministratoreView.jsp</result>
       </action>
       </package>

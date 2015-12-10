@@ -27,19 +27,26 @@
                  			var ammID=obj[i][2];
                  			var p_id=id+"_"+ammID+"_"+nomeSondaggio;
                  			
-                 			//var link='<a href="<s:url action="mostraSondaggio"/>">Partecipa</a>';
-                 			var link2='<s:url id="url" action="mostraSondaggio">'+
-                 				'<s:param name="sondaggioIDScelto">'+id+'</s:param>'+
-                 				'<s:param name="nomeSondaggioUtente">'+nomeSondaggio+'</s:param>'+
-                 				'<s:param name="autoreSondaggioUtente">'+id+'</s:param>'+
-                 				'</s:url><s:a href="%{url}">Partecipa</s:a>';      
-                 		   
                  			
-                    		$('<li>', {html: "<p id="+p_id+">nome: "+nomeSondaggio+" ammID: "+ammID+link2+"</p>"}).appendTo('ul.ulID')
+                 			
+                 		   
+                 		   
+                 			//var link='<a href="<s:url action="mostraSondaggio"/>">Partecipa</a>';
+                 			var form='<form action="mostraSondaggio"><s:hidden name="sondaggioIDScelto" value="'+id+'"/><s:hidden name="nomeSondaggioUtente" value="'+nomeSondaggio+'"/><s:hidden name="autoreSondaggioUtente" value="'+ammID+'"/><input type="submit" value="Partecipa" ></form>';	
+                 			
+                 			
+                 			
+                    	  $('<li>', {html: "<p id="+p_id+">nome: "+nomeSondaggio+" ammID: "+ammID+form+"</p>"}).appendTo('ul.ulID')
                     	}
                  }  
 			});  
 		});  
+		
+		
+		
+		function a_onClick() {
+			   alert('a_onClick');
+			  }
 </script> 
 
 <div id="dsssss" style="display: inline-block; width:100%">

@@ -137,14 +137,12 @@ public class DomandaDB {
 //	}
 	
 	public String prendiInfoSondaggio(
-			String sondaggioID,	ArrayList<String> testiDomanda, ArrayList<RispostaData> testiRisposta) throws Exception 
+			String sondaggioID,	ArrayList<String> testiDomanda,ArrayList<String> domandaID, ArrayList<RispostaData> testiRisposta,ArrayList<String> testiRispostaStringa) throws Exception 
 	{	
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
-        
         Statement stmt = con.createStatement();
-
-        ResultSet result = stmt.executeQuery("SELECT testoDomanda FROM Domanda WHERE sondaggioID_fk=" + sondaggioID);
+        ResultSet result = stmt.executeQuery("SELECT testoDomanda,domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID);
         
         if (!result.isBeforeFirst() ) 
         {    
@@ -152,16 +150,24 @@ public class DomandaDB {
       	  	return "error";
         } 
         
+        
+        System.out.println("555555");
+        
         while(result.next())
         {
         	testiDomanda.add(result.getString("testoDomanda"));
+        	System.out.println(result.getString("domandaID"));
+        	
+        	domandaID.add(result.getString("domandaID"));
         }
 
+        
+        System.out.println("domandaID--"+domandaID);
         
         con.close();
         
         // prendi dati per testiDomanda e testiRisposta
-        String res = rispostaDB.prendiInfoSondaggio(sondaggioID, testiRisposta);
+        String res = rispostaDB.prendiInfoSondaggio(sondaggioID, testiRisposta,testiRispostaStringa);
         
         return res;
 	}

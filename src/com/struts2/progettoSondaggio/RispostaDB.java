@@ -111,15 +111,16 @@ public class RispostaDB {
 //	}
 	
 	public String prendiInfoSondaggio(
-			String sondaggioID, ArrayList<RispostaData> testiRisposta) throws Exception 
+			String sondaggioID, ArrayList<RispostaData> testiRisposta,ArrayList<String> testiRispostaStringa) throws Exception 
 	{	
+		System.out.println("444444");
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
         
         Statement stmt = con.createStatement();
 
         ResultSet result = stmt.executeQuery(
-        		"SELECT R.rispostaID, R.testoRisposta FROM Domanda D, Risposta R " +
+        		"SELECT R.rispostaID, R.testoRisposta,R.domandaID_fk FROM Domanda D, Risposta R " +
         		"WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=" + sondaggioID
         		);
         
@@ -134,9 +135,17 @@ public class RispostaDB {
         	RispostaData data = new RispostaData();
         	data.setRispostaID(result.getString("rispostaID"));
         	data.setTestoRisposta(result.getString("testoRisposta"));
+        	data.setDomandaID(result.getString("domandaID_fk"));
+        	System.out.println("testoRisposta---"+data.getDomandaID());
         	testiRisposta.add(data);
+        	testiRispostaStringa.add(data.getRispostaID()+"-"+data.getTestoRisposta()+"-"+data.getDomandaID());
         }
         con.close();
+        
+        
+        
+        System.out.println(testiRispostaStringa.get(0));
+        
         
         return "success";
 	}

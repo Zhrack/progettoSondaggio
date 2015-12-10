@@ -24,7 +24,7 @@ public class SondaggioDB {
 		this.amm = null;
 		
 		this.ses = ses;
-		domandaDB = null;
+		domandaDB =  new DomandaDB(ses);
 	}
 
 	public SondaggioDB(AmministratoreAction amm, ArrayList<String> testiDomanda, ArrayList<ElencoRisposte> testiRisposta, Map<String, Object> ses)
@@ -227,18 +227,18 @@ public class SondaggioDB {
 	
 	public String prendiInfoSondaggio(
 			String sondaggioID, String nomeSondaggio, String autoreSondaggio, 
-			ArrayList<String> testiDomanda, ArrayList<RispostaData> testiRisposta) throws Exception 
+			ArrayList<String> testiDomanda,ArrayList<String> domandaID, ArrayList<RispostaData> testiRisposta,ArrayList<String> testiRispostaStringa) throws Exception 
 	{	
+		
+		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
-        
-        Statement stmt = con.createStatement();
-
+        Statement stmt = con.createStatement();    
         ResultSet result = stmt.executeQuery("SELECT S.nome, U.nickname FROM Sondaggio S, Utente U WHERE S.amministratore_fk=U.userID" +
         		" AND S.sondaggioID=" + sondaggioID);
         
         if (!result.isBeforeFirst() ) 
-        {    
+        {
         	con.close();
       	  	return "error";
         } 
@@ -246,10 +246,11 @@ public class SondaggioDB {
         nomeSondaggio = result.getString("nome");
         autoreSondaggio = result.getString("nickname");
         
+        
         con.close();
         
         // prendi dati per testiDomanda e testiRisposta
-        String res = domandaDB.prendiInfoSondaggio(sondaggioID, testiDomanda, testiRisposta);
+        String res = domandaDB.prendiInfoSondaggio(sondaggioID, testiDomanda,domandaID, testiRisposta,testiRispostaStringa);
         
         return res;
 	}

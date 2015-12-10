@@ -38,9 +38,12 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	private String nomeSondaggioUtente;
 	private String autoreSondaggioUtente;
 	private ArrayList<String> testiDomandaUtente;
+	private ArrayList<String> domandaID;
 	private ArrayList<RispostaData> testiRispostaUtente;
+	private ArrayList<String> testiRispostaUtenteInStringa;
 	
 	
+
 	private boolean startup;
 	
 	private String usernameSicurezza;
@@ -76,7 +79,9 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		}
 		
 		testiDomandaUtente = new ArrayList<String>();
+		domandaID=new ArrayList<String>();
 		testiRispostaUtente = new ArrayList<RispostaData>();
+		testiRispostaUtenteInStringa=new ArrayList<String>();
 		
 		sondaggioDB = new SondaggioDB(ses);
 		partecipazioneDB = new PartecipazioneDB(ses);
@@ -174,18 +179,18 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	// prende i dati da DB per partecipare ad un sondaggio
 	public String prendiInfoSondaggio() 
 	{	
-		System.out.println("asdasdasdasdas");
 		System.out.println(this.sondaggioIDScelto);
 		System.out.println(this.autoreSondaggioUtente);
 		System.out.println(this.nomeSondaggioUtente);
 		
 		
-		nomeSondaggioUtente = "";
-		autoreSondaggioUtente = "";
+		//nomeSondaggioUtente = "";
+		//autoreSondaggioUtente = "";
 		testiDomandaUtente.clear();
 		testiRispostaUtente.clear();
+		testiRispostaUtenteInStringa.clear();
 		try {
-			return sondaggioDB.prendiInfoSondaggio(sondaggioIDScelto, nomeSondaggioUtente, autoreSondaggioUtente, testiDomandaUtente, testiRispostaUtente);
+			return sondaggioDB.prendiInfoSondaggio(sondaggioIDScelto, nomeSondaggioUtente, autoreSondaggioUtente, testiDomandaUtente,domandaID,testiRispostaUtente,testiRispostaUtenteInStringa);
 		} catch (Exception e) {
 			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, e);
@@ -313,8 +318,26 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		this.usernameSicurezza = usernameSicurezza;
 	}
 	
-	
 
+	public ArrayList<String> getTestiRispostaUtenteInStringa() {
+		return testiRispostaUtenteInStringa;
+	}
+
+	public void setTestiRispostaUtenteInStringa(ArrayList<String> testiRispostaUtenteInStringa) {
+		this.testiRispostaUtenteInStringa = testiRispostaUtenteInStringa;
+	}
+
+	
+	public ArrayList<String> getDomandaID() {
+		return domandaID;
+	}
+
+	public void setDomandaID(ArrayList<String> domandaID) {
+		this.domandaID = domandaID;
+	}
+
+	
+	
 	@Override
 	public void addParam(String arg0, String arg1) {
 		// TODO Auto-generated method stub

@@ -27,7 +27,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
 
-	// PAPPA per generare la lista di sondaggi disponibili
+	// varibili per generare la lista di sondaggi disponibili
 	private ArrayList<SondaggioData> sondaggiDisponibili;
 	
 	private SondaggioDB sondaggioDB;

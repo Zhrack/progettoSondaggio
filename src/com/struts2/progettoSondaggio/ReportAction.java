@@ -21,7 +21,7 @@ public class ReportAction extends ActionSupport implements SessionAware{
 	private String sondaggioIDReport; 
 	
 	private String nomeSondaggio;
-	
+	 
 	// dati per percentuale
 	private float percentualeMaschi;
 	private float percentualeFemmine;
@@ -109,7 +109,7 @@ public class ReportAction extends ActionSupport implements SessionAware{
         return false;        
 	}
 	
-	public boolean creaStatisticheDomande()
+	public void creaStatisticheDomande()
 	{
 		// prendi domande del sondaggio
 		

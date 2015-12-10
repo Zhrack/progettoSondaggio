@@ -73,32 +73,29 @@
 		console.log(domandaIDParsato);
 		console.log("asdasdasdasdsa");
 		
+		
+		
 		for(var i in domandaIDParsato)
     	{
- 			
- 			
- 			
- 			
- 			
- 			var html={};
+ 			var html="";
  			for(var j in objRisp)
  				{
  					
- 					if(objRisp[j].rispostaDomandaID==domandaIDParsato[j])
+ 					if(objRisp[j].rispostaDomandaID==domandaIDParsato[i])
  						{
- 						console.log("111111");
+ 						console.log(" ");
  	 					console.log(objRisp[j].rispostaDomandaID);
- 	 					console.log(domandaIDParsato[j]);
  	 					console.log(objRisp[j].rispostaTesto);
- 	 					console.log("222222");
+ 	 					console.log(" ");
  						  html+='<input type="radio" name="sex" value="female" id="male" />'+
  							'<label for="male">'+objRisp[j].rispostaTesto+'</label>';
  						 
  						}
- 					//console.log(html);
+ 					console.log(html);
  				}
  			
  			
+ 			console.log(testiDomanda[i]);
  			var html2='<legend>'+testiDomanda[i]+'</legend>';
  			$('<fieldset>',{html: html2+html}).appendTo("#formDomande");
  			

@@ -143,7 +143,7 @@ public class ReportAction extends ActionSupport implements SessionAware{
 			// prendi tutte le id delle risposte e la domanda legata
 			result = stmt.executeQuery(
 					"SELECT DISTINCT R.rispostaID, D.testoDomanda, D.domandaID FROM Risposta R, Domanda D" +
-					"WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=" + sondaggioIDReport +
+					" WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=" + sondaggioIDReport +
 					" ORDER BY R.rispostaID"
 					);
 			

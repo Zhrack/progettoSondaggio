@@ -4,25 +4,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<meta charset="utf-8" />
 		<link href="http://fonts.googleapis.com/css?family=Cantarell:regular,italic,bold,bolditalic" rel="stylesheet" />
 		<link href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" rel="stylesheet" />
 		<link href="statix/css/Partecipazione.css" rel='stylesheet' type='text/css' />
 		<script src="http://code.jquery.com/jquery-latest.min.js"type="text/javascript"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<style type="text/css">
+			.bs-example{
+				margin: 20px;
+				}
+		</style>
+<script src="http://code.jquery.com/jquery-latest.min.js"type="text/javascript"></script>
 		<title>Partecipazione</title>
 	</head>
 	<body>
+	
+
 		<div  style="display: inline-block; width:100%">
 				<h1><s:property value="nomeSondaggioUtente"/></h1>
+				<h2><s:property value="prova"/></h2>
 		</div>
 		
 		
 		<div id="main">
-		
-		
-		
 		<script type="text/javascript">
+		
+		
 		var testiDomanda='<s:property value="testiDomandaUtente"/>';
 		testiDomanda=testiDomanda.split("[").pop();
 		testiDomanda = testiDomanda.substring(0, testiDomanda.length - 1);
@@ -99,7 +110,7 @@
 		<form action="aggiungiPartecipazione" method="post">
 				<s:hidden id="risultato" name="listaRisultatoPartecipazione" value=""/>
 						<div class="submit">
-							<input type="submit" onclick="settaListaRisultatoPartecipazione()" value="Invia" >
+							<input type="submit" onclick="return settaListaRisultatoPartecipazione()" value="Invia" >
 					</div>	 			
 		</form>
 		
@@ -122,7 +133,11 @@
 				// setto listaRisultatoPartecipazione
 				$(listaRisultatoPartecipazione).val(string);
 
-				
+				if(risultati.length==0)
+					{
+						alert("Per inviare la tua partecipazione devi selezionare almeno una risposta");
+						return false;
+					}
 			}
 		</script>
 		

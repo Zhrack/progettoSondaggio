@@ -34,7 +34,8 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	private String nome;
 	private String cognome;
 	private String sesso;
-	
+	private String messaggioSuccessoPartecipazione="hidden";
+	private String messaggioErrorePartecipazione="hidden";
 	private String option;
 	
 	private Map<String, Object> ses;
@@ -98,6 +99,20 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			
 	}
 
+	
+	
+	public String successoPartecipazione()
+	{
+		this.messaggioSuccessoPartecipazione="visible";
+		return "success";
+	}
+
+	public String errorePartecipazione()
+	{
+		this.messaggioErrorePartecipazione="visible";
+		return "success";
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -151,5 +166,22 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
 	}
-	
+
+	public String getMessaggioSuccessoPartecipazione() {
+		return messaggioSuccessoPartecipazione;
+	}
+
+	public void setMessaggioSuccessoPartecipazione(String messaggioSuccessoPartecipazione) {
+		this.messaggioSuccessoPartecipazione = messaggioSuccessoPartecipazione;
+	}
+
+	public String getMessaggioErrorePartecipazione() {
+		return messaggioErrorePartecipazione;
+	}
+
+	public void setMessaggioErrorePartecipazione(String messaggioErrorePartecipazione) {
+		this.messaggioErrorePartecipazione = messaggioErrorePartecipazione;
+	}
+
+
 }

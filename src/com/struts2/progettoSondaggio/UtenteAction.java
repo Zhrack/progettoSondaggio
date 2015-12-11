@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 
 import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.interceptor.SessionAware;
+
+import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.Parameterizable;
 import org.json.*;
 
@@ -55,6 +57,9 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	{
 		startup = false;
 	}
+	
+
+	
 	
 	public void init()
 	{
@@ -188,8 +193,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		System.out.println(this.nomeSondaggioUtente);
 		
 		
-		//nomeSondaggioUtente = "";
-		//autoreSondaggioUtente = "";
+		
 		testiDomandaUtente.clear();
 		testiRispostaUtente.clear();
 		testiRispostaUtenteInStringa.clear();
@@ -214,7 +218,6 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		// se non ha selezionato niente do errore
 		if(listaRisultatoPartecipazione.length()==2)
 		{
-			System.out.println("ssss");
 			return "error";
 		}
 		
@@ -245,7 +248,6 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		return "error";
 	}
 
-	
 	
 
 	
@@ -398,5 +400,8 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
 
 }

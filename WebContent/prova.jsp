@@ -9,10 +9,7 @@
 </head>
 <body>
 <h1>Welcome To Struts 2!</h1>
-<p><a href="<s:url action='hello'/>">Hello World</a></p>
-<s:action name="effettuaPagamento" executeResult="false"> 
-    <s:param name="switch">true</s:param>
-</s:action>
-<s:property value="myVariable" />
+
+
 </body>
 </html>

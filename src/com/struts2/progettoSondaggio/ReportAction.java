@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -28,7 +29,8 @@ public class ReportAction extends ActionSupport implements SessionAware{
 	private int totalePartecipanti;
 	
 	// dati domande
-	private HashMap<String, ArrayList<Float>> percentualiDomande;
+	private HashMap<Integer, PercentualeData> percentualiDomande;
+	private String jsonQuery;
 
 	private boolean startup;
 	public ReportAction()
@@ -38,12 +40,13 @@ public class ReportAction extends ActionSupport implements SessionAware{
 	
 	public void init()
 	{
-		setPercentualiDomande(new HashMap<String, ArrayList<Float>>());
+		setPercentualiDomande(new HashMap<Integer, PercentualeData>());
 
 	}
 	
 	public String generaReport()
 	{
+		percentualiDomande.clear();
 		if(this.percentualeSesso() && this.creaStatisticheDomande())
 			return SUCCESS;
 		else
@@ -109,12 +112,100 @@ public class ReportAction extends ActionSupport implements SessionAware{
         return false;        
 	}
 	
-	public void creaStatisticheDomande()
+	public boolean creaStatisticheDomande()
 	{
-		// prendi domande del sondaggio
-		
-		
-		// prendi le loro risposte
+		// totalePartecipanti già trovato, 
+		// cerca per ogni risposta del sondaggio il numero di partecipanti
+		ResultSet result;
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+	        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+	        
+	        Statement stmt = con.createStatement();
+	        
+	        // prendi numero di partecipanti al sondaggio
+	        
+	        // numero di risposte nel db per quel sondaggio e il nome del sondaggio
+			result = stmt.executeQuery(
+					"SELECT COUNT(*) AS numero, S.nome AS nomeSondaggio FROM Risposta R, Domanda D, Sondaggio S" +
+					"WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=S.sondaggioID AND S.sondaggioID=" + sondaggioIDReport
+					);
+			
+			if (!result.isBeforeFirst() ) 
+	        {    
+	        	con.close();
+	      	  	return false;
+	        } 
+			result.next();
+			int numeroRisposte = result.getInt("numero");
+			nomeSondaggio = result.getString("nomeSondaggio");
+			
+			// prendi tutte le id delle risposte e la domanda legata
+			result = stmt.executeQuery(
+					"SELECT DISTINCT R.rispostaID, D.testoDomanda, D.domandaID FROM Risposta R, Domanda D" +
+					"WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=" + sondaggioIDReport +
+					" ORDER BY R.rispostaID"
+					);
+			
+			if (!result.isBeforeFirst() ) 
+	        {    
+	        	con.close();
+	      	  	return false;
+	        } 
+			
+			int rispostaID, domandaID, numeroPartecipanti;
+			float percentualePartecipanti;
+			String testoDomanda = "";
+			PercentualeData perc;
+			while(result.next())
+			{
+				rispostaID = result.getInt("rispostaID");
+				testoDomanda = result.getString("testoDomanda");
+				domandaID = result.getInt("domandaID");
+				
+				if(percentualiDomande.containsKey(domandaID))
+				{
+					perc = percentualiDomande.get(domandaID);
+				}
+				else
+				{
+					perc = new PercentualeData();
+					percentualiDomande.put(domandaID, perc);
+				}
+				// trova il numero di partecipanti a questa risposta
+				result = stmt.executeQuery(
+						"SELECT COUNT(*) AS numero FROM (" +
+						"SELECT DISTINCT U.userID FROM Utente U, Partecipazione P" +
+						"WHERE U.userID=P.userID_fk AND P.rispostaID_fk=" + rispostaID +
+						") AS Partecipanti"
+						);
+				
+				if (!result.isBeforeFirst() ) 
+		        {    
+		        	con.close();
+		      	  	return false;
+		        } 
+				result.next();
+				numeroPartecipanti = result.getInt("numero");
+				// calcola percentuale su totale partecipanti
+				percentualePartecipanti = (numeroPartecipanti * 100.0f) / totalePartecipanti;
+				
+				// aggiungi percentuale ad array
+				perc.setTestoDomanda(testoDomanda);
+				perc.getIdRisposte().add(rispostaID);
+				perc.getPercentuali().add(percentualePartecipanti);
+			} // while
+			
+			JSONObject JSONobj = new JSONObject(percentualiDomande);
+	        this.jsonQuery = JSONobj.toString();
+			
+	        con.close();
+	        return true;
+		} catch (Exception e) {
+			Logger.getLogger(ReportAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+        return false;        
 	}
 
 	public String getSondaggioIDReport() {
@@ -168,11 +259,19 @@ public class ReportAction extends ActionSupport implements SessionAware{
 		this.totalePartecipanti = totalePartecipanti;
 	}
 
-	public HashMap<String, ArrayList<Float>> getPercentualiDomande() {
+	public HashMap<Integer, PercentualeData> getPercentualiDomande() {
 		return percentualiDomande;
 	}
 
-	public void setPercentualiDomande(HashMap<String, ArrayList<Float>> percentualiDomande) {
+	public void setPercentualiDomande(HashMap<Integer, PercentualeData> percentualiDomande) {
 		this.percentualiDomande = percentualiDomande;
+	}
+
+	public String getJsonQuery() {
+		return jsonQuery;
+	}
+
+	public void setJsonQuery(String jsonQuery) {
+		this.jsonQuery = jsonQuery;
 	}
 }

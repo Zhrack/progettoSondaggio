@@ -7,7 +7,7 @@
 		<meta charset="utf-8" />
 		<link href="http://fonts.googleapis.com/css?family=Cantarell:regular,italic,bold,bolditalic" rel="stylesheet" />
 		<link href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" rel="stylesheet" />
-		<link rel="stylesheet" href="statix/css/grey.css" />
+		
 		<script src="http://code.jquery.com/jquery-latest.min.js"type="text/javascript"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Partecipazione</title>
@@ -16,7 +16,7 @@
 		<div id="dsssss" style="display: inline-block; width:100%">
 				<h1><s:property value="nomeSondaggioUtente"/></h1>
 		</div>
-		<form id="formDomande">
+		
 		<script type="text/javascript">
 		
 		var testiDomanda='<s:property value="testiDomandaUtente"/>';
@@ -43,7 +43,7 @@
  			var rispostaDomandaID=lista[2];
  			
  			var obj={
- 					rispostaID : rispostaID,
+ 					rispostaID : parseInt(rispostaID),
  					rispostaTesto : rispostaTesto,
  					rispostaDomandaID : rispostaDomandaID,
  			};
@@ -70,8 +70,6 @@
 			k++;
     	}
 		
-		console.log(domandaIDParsato);
-		console.log("asdasdasdasdsa");
 		
 		
 		
@@ -83,45 +81,49 @@
  					
  					if(objRisp[j].rispostaDomandaID==domandaIDParsato[i])
  						{
- 						console.log(" ");
- 	 					console.log(objRisp[j].rispostaDomandaID);
- 	 					console.log(objRisp[j].rispostaTesto);
- 	 					console.log(" ");
- 						  html+='<input type="radio" name="sex" value="female" id="male" />'+
- 							'<label for="male">'+objRisp[j].rispostaTesto+'</label>';
+ 						  html+='<p><input type="radio" name="domandaID_'+domandaIDParsato[i]+'" value="'+objRisp[j].rispostaID+'" />'+
+ 							'<label for="'+j+'">'+objRisp[j].rispostaTesto+'</label></p>';
  						 
  						}
- 					console.log(html);
  				}
  			
  			
  			console.log(testiDomanda[i]);
  			var html2='<legend>'+testiDomanda[i]+'</legend>';
- 			$('<fieldset>',{html: html2+html}).appendTo("#formDomande");
- 			
+ 			var form=$('<form>',{html: html2+html}).appendTo("body");
+ 			$('<p class="nolabel">',{html: '<button>invia</button>'}).appendTo(form);
     	}
 		
+		</script>		
+		<form action="aggiungiPartecipazione" method="post">
+				<s:hidden id="risultato" name="listaRisultatoPartecipazione" value=""/>
+						<div class="submit">
+							<input type="submit" onclick="rabba()" value="Invia Partecipazione" >
+					</div>	 			
+		</form>
+		
+		<script type="text/javascript">
+			function rabba()
+			{
+				var listaRisultatoPartecipazione=$("#risultato");
+							
+				var risultati=[];
+				$("input:checked").each(function () {
+					 var rispostaID=$(this).val();
+					 risultati.push(rispostaID);
+					});
+				
+				var string = JSON.stringify(risultati);
+				$(listaRisultatoPartecipazione).val(string);
+
+				
+			}
 		</script>
 		
-			<fieldset>
-				<legend><s:property value="testiDomandaUtente[0]"/></legend>
-				<p>
-					<input type="radio" name="sex" value="female" id="male" />
-					<label for="male"><s:property value="testiRispostaUtente[0].toString()"/></label>
-				</p>
-				<p>
-					<input type="radio" name="sex" value="male" id="female" />
-					<label for="female">Female</label>
-				</p>
-			</fieldset>
-			
-			
-			<p class="nolabel">
-				<button>button</button>
-			</p>
-		</form>
-		<script src="statix/js/modernizr-1.5.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
-		<script src="statix/js/main.js" type="text/javascript"></script>
+		
 </body>
 </html>
+
+
+
+

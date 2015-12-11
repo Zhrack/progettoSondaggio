@@ -20,16 +20,21 @@ public class PartecipazioneDB{
 		this.ses = ses;
 	}
 	
-	public String aggiungiPartecipazione(ArrayList<RispostaData> risposte) throws Exception
+	public String aggiungiPartecipazione(ArrayList<String> risposte) throws Exception
 	{
+		System.out.println("rarararara");
+		
+		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
 
         String userID = (String)ses.get("userID");
+        System.out.println(ses.size());
+        
         for(int i = 0; i < risposte.size(); ++i)
         {
-	        PreparedStatement ps = con.prepareStatement("INSERT INTO Partecipazione(userID_fk, rispostaID_fk) VALUES ('" + userID + "', '" +
-	        		risposte.get(i).getRispostaID() + "')");
+	        PreparedStatement ps = con.prepareStatement("INSERT INTO Partecipazione(userID_fk, rispostaID_fk) VALUES (1, '" +
+	        		risposte.get(i) + "')");
 	        if(ps.executeUpdate() == 0)
 	        {
 	        	con.close();
@@ -38,6 +43,7 @@ public class PartecipazioneDB{
         }
         con.close();
     	return "success";
+    	
 	}
 
 }

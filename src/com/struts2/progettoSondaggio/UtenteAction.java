@@ -41,8 +41,10 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	private ArrayList<String> domandaID;
 	private ArrayList<RispostaData> testiRispostaUtente;
 	private ArrayList<String> testiRispostaUtenteInStringa;
+	private String listaRisultatoPartecipazione;
 	
 	
+
 
 	private boolean startup;
 	
@@ -82,6 +84,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		domandaID=new ArrayList<String>();
 		testiRispostaUtente = new ArrayList<RispostaData>();
 		testiRispostaUtenteInStringa=new ArrayList<String>();
+	
 		
 		sondaggioDB = new SondaggioDB(ses);
 		partecipazioneDB = new PartecipazioneDB(ses);
@@ -198,10 +201,45 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		return "error";
 	}
 	//aggiorna la tabella Partecipazione nel DB
-	public String aggiungiPartecipazione() 
+	public String aggiungiPartecipazione() throws JSONException 
 	{
+		ArrayList<String> listdata = new ArrayList<String>();
+		System.out.println("arrarar");
+		System.out.println("------"+listaRisultatoPartecipazione);
+		listaRisultatoPartecipazione=listaRisultatoPartecipazione.substring(0, listaRisultatoPartecipazione.length()-1);
+		listaRisultatoPartecipazione=listaRisultatoPartecipazione.substring(1);
+		System.out.println("------"+listaRisultatoPartecipazione);
+		
+		 String strArray[] = listaRisultatoPartecipazione.split(",");
+
+		
+		 
+		 
+		 for( int i = 0; i <= strArray.length - 1; i++)
+		 {
+			 strArray[i]=strArray[i].substring(0, strArray[i].length()-1);
+			 strArray[i]=strArray[i].substring(1);
+			 listdata.add(strArray[i]);
+		 }
+		 
+		 
+		this.ses.get("userID");     
+		
+		
+				
+		
+		String userID = (String)ses.get("userID");
+		System.out.println(userID);
+		
+		
+		
+		for (String s : listdata)
+		{
+			System.out.println("<<<"+s);
+		}
+		
 		try {
-			return partecipazioneDB.aggiungiPartecipazione(testiRispostaUtente);
+			return partecipazioneDB.aggiungiPartecipazione(listdata);
 		} catch (Exception e) {
 			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, e);
@@ -337,7 +375,14 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	}
 
 	
-	
+
+	public String getListaRisultatoPartecipazione() {
+		return listaRisultatoPartecipazione;
+	}
+
+	public void setListaRisultatoPartecipazione(String listaRisultatoPartecipazione) {
+		this.listaRisultatoPartecipazione = listaRisultatoPartecipazione;
+	}
 	@Override
 	public void addParam(String arg0, String arg1) {
 		// TODO Auto-generated method stub

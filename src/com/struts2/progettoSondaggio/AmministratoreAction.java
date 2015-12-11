@@ -34,12 +34,6 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	private ArrayList<String> testiDomanda;
 	private ArrayList<ElencoRisposte> testiRisposta;
 	//---------
-	
-	// dati per modifica sondaggio
-	private String sondaggioIDScelto;
-	private SondaggioData modificaSondaggioData;
-	private ArrayList<DomandaData> modificaDomandeData;
-	private ArrayList<RispostaData> modificaRisposteData;
 
 	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio
 	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato

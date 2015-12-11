@@ -73,8 +73,8 @@
       <action name="aggiungiPartecipazione" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="aggiungiPartecipazione">
-            <result name="success">/Partecipazione.jsp</result>
-            <result name="error">/AmministratoreView.jsp</result>
+            <result name="success">/UtenteViewDopoPartecipazione.jsp</result>
+            <result name="error">/PartecipazioneErrore.jsp</result>
       </action>
       </package>
 </struts>

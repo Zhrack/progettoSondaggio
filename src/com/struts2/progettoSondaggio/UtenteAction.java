@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apache.struts2.dispatcher.Dispatcher;
 import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.config.entities.Parameterizable;
 import org.json.*;
@@ -200,44 +201,41 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		}
 		return "error";
 	}
+	
+	
+	
 	//aggiorna la tabella Partecipazione nel DB
 	public String aggiungiPartecipazione() throws JSONException 
 	{
-		ArrayList<String> listdata = new ArrayList<String>();
-		System.out.println("arrarar");
-		System.out.println("------"+listaRisultatoPartecipazione);
+		System.out.println("listaRisultatoPartecipazione"+listaRisultatoPartecipazione);
+		System.out.println("length"+listaRisultatoPartecipazione.length());
+		
+		
+		// se non ha selezionato niente do errore
+		if(listaRisultatoPartecipazione.length()==2)
+		{
+			System.out.println("ssss");
+			return "error";
+		}
+		
+		
+		// creo l'array delle risposte selezionate parsando la stringa
 		listaRisultatoPartecipazione=listaRisultatoPartecipazione.substring(0, listaRisultatoPartecipazione.length()-1);
 		listaRisultatoPartecipazione=listaRisultatoPartecipazione.substring(1);
-		System.out.println("------"+listaRisultatoPartecipazione);
+		String strArray[] = listaRisultatoPartecipazione.split(",");
 		
-		 String strArray[] = listaRisultatoPartecipazione.split(",");
-
 		
-		 
-		 
-		 for( int i = 0; i <= strArray.length - 1; i++)
+		// ora dall'array di stringhe appena create mi creo un'arrayList
+		ArrayList<String> listdata = new ArrayList<String>();	 
+		for( int i = 0; i <= strArray.length - 1; i++)
 		 {
 			 strArray[i]=strArray[i].substring(0, strArray[i].length()-1);
 			 strArray[i]=strArray[i].substring(1);
 			 listdata.add(strArray[i]);
 		 }
 		 
-		 
-		this.ses.get("userID");     
 		
-		
-				
-		
-		String userID = (String)ses.get("userID");
-		System.out.println(userID);
-		
-		
-		
-		for (String s : listdata)
-		{
-			System.out.println("<<<"+s);
-		}
-		
+		// faccio la query con l'arrayList con le risposte selezionate
 		try {
 			return partecipazioneDB.aggiungiPartecipazione(listdata);
 		} catch (Exception e) {

@@ -7,18 +7,22 @@
 		<meta charset="utf-8" />
 		<link href="http://fonts.googleapis.com/css?family=Cantarell:regular,italic,bold,bolditalic" rel="stylesheet" />
 		<link href="http://fonts.googleapis.com/css?family=Droid+Serif:regular,italic,bold,bolditalic" rel="stylesheet" />
-		
+		<link href="statix/css/Partecipazione.css" rel='stylesheet' type='text/css' />
 		<script src="http://code.jquery.com/jquery-latest.min.js"type="text/javascript"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		<title>Partecipazione</title>
 	</head>
 	<body>
-		<div id="dsssss" style="display: inline-block; width:100%">
+		<div  style="display: inline-block; width:100%">
 				<h1><s:property value="nomeSondaggioUtente"/></h1>
 		</div>
 		
-		<script type="text/javascript">
 		
+		<div id="main">
+		
+		
+		
+		<script type="text/javascript">
 		var testiDomanda='<s:property value="testiDomandaUtente"/>';
 		testiDomanda=testiDomanda.split("[").pop();
 		testiDomanda = testiDomanda.substring(0, testiDomanda.length - 1);
@@ -33,6 +37,9 @@
 		console.log(testiRisposta);
 		var objRisp={};
 		
+		
+		// creo "objRisp" che mi servira per salvari oggetti con dentro tutte le cose che mi
+		// servono della risposte (ID,testo,domandaID)
 		var k=0;
 		for(var i in testiRisposta)
     	{
@@ -54,14 +61,12 @@
 		
 		
 		
-		
+		// creo l'array "domandaIDParsato" che contiene tutti gli ID delle domande
 		var domandaID='<s:property value="domandaID"/>';
 		console.log(domandaID);
 		domandaID=domandaID.split("[").pop();
 		domandaID = domandaID.substring(0, domandaID.length - 1);
 		domandaID=domandaID.substring().split(",");
-		
-		
 		var domandaIDParsato=[];
 		var k=0;
 		for(var i in domandaID)
@@ -71,56 +76,57 @@
     	}
 		
 		
-		
-		
+	
 		for(var i in domandaIDParsato)
     	{
+			// per ogni domanda creo tutti gli input con le possibili risposte
+			// relative a quella specifica domanda
  			var html="";
  			for(var j in objRisp)
  				{
- 					
  					if(objRisp[j].rispostaDomandaID==domandaIDParsato[i])
  						{
  						  html+='<p><input type="radio" name="domandaID_'+domandaIDParsato[i]+'" value="'+objRisp[j].rispostaID+'" />'+
  							'<label for="'+j+'">'+objRisp[j].rispostaTesto+'</label></p>';
- 						 
  						}
  				}
  			
- 			
- 			console.log(testiDomanda[i]);
- 			var html2='<legend>'+testiDomanda[i]+'</legend>';
- 			var form=$('<form>',{html: html2+html}).appendTo("body");
- 			$('<p class="nolabel">',{html: '<button>invia</button>'}).appendTo(form);
-    	}
-		
-		</script>		
+ 			var html2='<h3>'+testiDomanda[i]+'</h3>';
+ 			var form=$('<form>',{html: html2+html}).appendTo("#main");
+    	}		
+		</script>
+				
 		<form action="aggiungiPartecipazione" method="post">
 				<s:hidden id="risultato" name="listaRisultatoPartecipazione" value=""/>
 						<div class="submit">
-							<input type="submit" onclick="rabba()" value="Invia Partecipazione" >
+							<input type="submit" onclick="settaListaRisultatoPartecipazione()" value="Invia" >
 					</div>	 			
 		</form>
 		
 		<script type="text/javascript">
-			function rabba()
+			function settaListaRisultatoPartecipazione()
 			{
-				var listaRisultatoPartecipazione=$("#risultato");
-							
+				// prendo il campo s:hidden risultato dove mettero' "listaRisultatoPartecipazione"
+				var listaRisultatoPartecipazione=$("#risultato");		
+				
+				// prendo tutte le risposte selezionate
 				var risultati=[];
 				$("input:checked").each(function () {
 					 var rispostaID=$(this).val();
 					 risultati.push(rispostaID);
 					});
-				
 				var string = JSON.stringify(risultati);
+				
+				
+				
+				// setto listaRisultatoPartecipazione
 				$(listaRisultatoPartecipazione).val(string);
 
 				
 			}
 		</script>
 		
-		
+		</div>
 </body>
 </html>
 

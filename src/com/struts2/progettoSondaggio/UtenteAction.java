@@ -156,7 +156,6 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	          
 	          String[] sondaggio2 = new String[3];
 	          sondaggio2=resultQuery.get(1);
-	          System.out.println(sondaggio2[1]);
 	          JSONObject JSONobj = new JSONObject(resultQuery);
 	          this.resultQuery=JSONobj.toString();
 	          
@@ -188,9 +187,9 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	// prende i dati da DB per partecipare ad un sondaggio
 	public String prendiInfoSondaggio() 
 	{	
-		System.out.println(this.sondaggioIDScelto);
-		System.out.println(this.autoreSondaggioUtente);
-		System.out.println(this.nomeSondaggioUtente);
+		System.out.println("sondaggioIDScelto:"+this.sondaggioIDScelto);
+		System.out.println("autoreSondaggioUtente:"+this.autoreSondaggioUtente);
+		System.out.println("nomeSondaggioUtente:"+this.nomeSondaggioUtente);
 		
 		
 		
@@ -212,7 +211,6 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	public String aggiungiPartecipazione() throws JSONException 
 	{
 		System.out.println("listaRisultatoPartecipazione"+listaRisultatoPartecipazione);
-		System.out.println("length"+listaRisultatoPartecipazione.length());
 		
 		
 		// se non ha selezionato niente do errore

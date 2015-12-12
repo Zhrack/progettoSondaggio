@@ -43,7 +43,7 @@ public class SondaggioDB {
 		// Crea domanda
 		if(sondaggioID != null)
 		{
-			System.out.println("sondaggioID " + sondaggioID);
+			System.out.println("sondaggioID:" + sondaggioID);
 			//scorri domande
 			for(int i = 0; i < testiDomanda.size(); ++i)
 			{
@@ -57,7 +57,6 @@ public class SondaggioDB {
 		}
 		else
 		{
-			System.out.println("sondaggioID == null");
 			errore = true;
 		}
 		if(!errore)

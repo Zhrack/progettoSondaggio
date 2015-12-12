@@ -63,22 +63,12 @@
                  			var p_id=id+"_"+ammID+"_"+nomeSondaggio;
                  		
                  		   
-                 			//var link='<a href="<s:url action="mostraSondaggio"/>">Partecipa</a>';
-                 			var form='<form action="mostraSondaggio"><s:hidden name="sondaggioIDScelto" value="'+id+'"/><s:hidden name="nomeSondaggioUtente" value="'+nomeSondaggio+'"/><s:hidden name="autoreSondaggioUtente" value="'+ammID+'"/><input type="submit" value="Partecipa" ></form>';	
-                 			
-                 			
-                 			
-                    	  $('<li>', {html: "<p id="+p_id+">nome: "+nomeSondaggio+" ammID: "+ammID+form+"</p>"}).appendTo('ul.ulID')
+                 			var form='<form action="mostraSondaggio"><s:hidden name="sondaggioIDScelto" value="'+id+'"/><s:hidden name="nomeSondaggioUtente" value="'+nomeSondaggio+'"/><s:hidden name="autoreSondaggioUtente" value="'+ammID+'"/><input type="submit" value="Partecipa" ></form>';	  
+                    	    $('<li>', {html: "<p id="+p_id+">nome: "+nomeSondaggio+" ammID: "+ammID+form+"</p>"}).appendTo('ul.ulID')
                     	}
                  }  
 			});  
 		});  
-		
-		
-		
-		function a_onClick() {
-			   alert('a_onClick');
-			  }
 </script> 
 
 <div id="dsssss" style="display: inline-block; width:100%">

@@ -45,6 +45,9 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	private ArrayList<ElencoRisposte> testiRispostaModifica;
 	//---------
 	
+	// dati per prendere lista sondaggi dato l'id amministratore
+	private ArrayList<SondaggioData> listaSondaggiAmministratore;
+	
 	private boolean startup;
 	public AmministratoreAction() throws Exception
 	{
@@ -86,6 +89,8 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		
 		testiDomandaModifica = new ArrayList<String>();
 		testiRispostaModifica = new ArrayList<ElencoRisposte>();
+		
+		listaSondaggiAmministratore = new ArrayList<SondaggioData>();
 	}
 	
 	public String creaSondaggio()
@@ -167,24 +172,23 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		}
 		return ERROR;
 	}
-//	
-//	public String modificaSondaggio()
-//	{
-//		try
-//		{
-//			String result = sondaggioDB.applicaModificaSondaggio(
-//					modificaSondaggioData, modificaDomandeData, testiNuoveDomandeModifica, 
-//					modificaRisposteData, testiNuoveRisposteModifica);
-//			
-//			return result;
-//		}
-//		catch(Exception e)
-//		{
-//			Logger.getLogger(AmministratoreAction.class.getName()).log( 
-//                    Level.SEVERE, null, e);
-//		}
-//		return ERROR;
-//	}
+
+	public String prendiListaSondaggiAmministratore()
+	{
+		try
+		{
+			listaSondaggiAmministratore.clear();
+			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
+			
+			return result;
+		}
+		catch(Exception ex)
+		{
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
+                    Level.SEVERE, null, ex);
+		}
+		return ERROR;
+	}
 	
 	public String toCreaSondaggioView() throws Exception
 	{
@@ -317,6 +321,15 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public void setModificaRisposteData(ArrayList<RispostaData> modificaRisposteData) {
 		this.modificaRisposteData = modificaRisposteData;
+	}
+
+	public ArrayList<SondaggioData> getListaSondaggiAmministratore() {
+		return listaSondaggiAmministratore;
+	}
+
+	public void setListaSondaggiAmministratore(
+			ArrayList<SondaggioData> listaSondaggiAmministratore) {
+		this.listaSondaggiAmministratore = listaSondaggiAmministratore;
 	}
 
 }

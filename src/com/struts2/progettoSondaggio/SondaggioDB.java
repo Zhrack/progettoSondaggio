@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SondaggioDB {
 	
@@ -227,7 +229,8 @@ public class SondaggioDB {
 	
 	public String prendiInfoSondaggio(
 			String sondaggioID, String nomeSondaggio, String autoreSondaggio, 
-			ArrayList<String> testiDomanda,ArrayList<String> domandaID, ArrayList<RispostaData> testiRisposta,ArrayList<String> testiRispostaStringa) throws Exception 
+			ArrayList<String> testiDomanda, ArrayList<String> domandaID,
+			ArrayList<RispostaData> testiRisposta, ArrayList<String> testiRispostaStringa) throws Exception 
 	{	
 		
 		
@@ -253,5 +256,30 @@ public class SondaggioDB {
         String res = domandaDB.prendiInfoSondaggio(sondaggioID, testiDomanda,domandaID, testiRisposta,testiRispostaStringa);
         
         return res;
+	}
+	
+	public String prendiListaSondaggiAmministratore(ArrayList<SondaggioData> listaSondaggiAmministratore) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+        Statement stmt = con.createStatement();    
+        ResultSet result = stmt.executeQuery("SELECT * FROM Sondaggio WHERE amministratore_fk=" + (String)this.ses.get("userID"));
+        
+        if (!result.isBeforeFirst() ) 
+        {
+        	con.close();
+      	  	return "error";
+        } 
+        while(result.next())
+        {
+        	SondaggioData data = new SondaggioData();
+        	data.setSondaggioID(result.getString("sondaggioID"));
+        	data.setNomeSondaggio(result.getString("nome"));
+        	data.setAutore(result.getString("amministratore_fk"));
+        	
+        	listaSondaggiAmministratore.add(data);
+        }
+        
+        return "success";
 	}
 }

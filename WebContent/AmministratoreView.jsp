@@ -33,8 +33,9 @@
 	<li>cacca</li>
 	<li>forcio</li>
 </ul>
-<script type="text/javascript">
 
+
+<script type="text/javascript">
  $('#inputPartecipaSondaggi').on("click",function() {
 	  	
 	 	// setto l'username e la password con quelli della sessione 
@@ -42,6 +43,8 @@
 	    var tagUsername=$("#tagUsername");
 	 	var username='<s:property value="username"/>';
 	 	$(tagUsername).val(username);
+	 	
+	 	
 	 	
 	 	
 	 	var tagPassword=$("#tagPassword");

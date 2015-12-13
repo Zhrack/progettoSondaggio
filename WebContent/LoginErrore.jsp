@@ -8,7 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <html>
 <head>
-	<title>The Entrar-shadow Website form | w3layouts</title>
+	<title>Progetto Sondaggio</title>
 		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">

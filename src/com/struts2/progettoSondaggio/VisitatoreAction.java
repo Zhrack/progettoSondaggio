@@ -59,15 +59,17 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			{
 				System.out.println("Login OK " + loginData.isAmministratore);
 				System.out.println("accessoAmministratoreComeUtente :" + accessoAmministratoreComeUtente);
+				
+				ses.put("username", username);
+				ses.put("password", password);
+				
 				if(loginData.isAmministratore && this.accessoAmministratoreComeUtente.equals("0"))
-				{
-					ses.put("username", username);
+				{					
 					System.out.println("Session username: " + (String)this.ses.get("username"));
 					return "amministratoreSuccess";
 				}
 				else 
 				{
-					ses.put("username", username);
 					return "utenteSuccess";
 				}
 			}
@@ -101,6 +103,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			
 	}
 
+	
 	
 	
 	public String successoPartecipazione()

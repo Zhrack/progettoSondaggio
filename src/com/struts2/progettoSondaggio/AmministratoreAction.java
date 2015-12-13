@@ -26,7 +26,8 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	private Map<String, Object> ses;
 	
 	private SondaggioDB sondaggioDB;
-	
+	private String username;
+	private String password;
 
 	
 	// dati per creazione sondaggio
@@ -37,8 +38,8 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio
 	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato
-	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande già presenti, con le modifiche aggiornate
-	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte già presenti, con le modifiche aggiornate
+	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande giï¿½ presenti, con le modifiche aggiornate
+	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte giï¿½ presenti, con le modifiche aggiornate
 	
 	private String nomeSondaggioModifica;
 	private ArrayList<String> testiDomandaModifica;
@@ -57,8 +58,10 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public void init()
 	{
-		String username = (String)this.ses.get("username");
+		username = (String)this.ses.get("username");
+		password = (String)this.ses.get("password");
 		System.out.println("Session username: " + username);
+		System.out.println("Session password: " + password);
 		
 		String userID;
 		try {
@@ -180,6 +183,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 			listaSondaggiAmministratore.clear();
 			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
 			
+			System.out.println("lista sondaggi amm:"+result);
 			return result;
 		}
 		catch(Exception ex)
@@ -330,6 +334,22 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	public void setListaSondaggiAmministratore(
 			ArrayList<SondaggioData> listaSondaggiAmministratore) {
 		this.listaSondaggiAmministratore = listaSondaggiAmministratore;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

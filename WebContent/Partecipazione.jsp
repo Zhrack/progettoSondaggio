@@ -128,10 +128,12 @@
 				
 				// setto listaRisultatoPartecipazione
 				$(listaRisultatoPartecipazione).val(string);
-
-				if(risultati.length==0)
+				
+				// controlle se ha risposto a tutte le domande altrimenti non invio la partecipazione
+				var numeroDomande=$("form").length-1;
+				if(numeroDomande!=risultati.length)
 					{
-						alert("Per inviare la tua partecipazione devi selezionare almeno una risposta");
+						alert("Devi rispondere a tutte le domande prima di inviare la tua partecipazione.")
 						return false;
 					}
 			}

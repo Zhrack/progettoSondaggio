@@ -16,15 +16,19 @@
     	</interceptors>
 	<default-interceptor-ref name="jsonStackPersonale" />
 	
+	
+	
 	<action name="loginSubmitted" 
             class="com.struts2.progettoSondaggio.VisitatoreAction" 
             method="execute">
-            <result name="amministratoreSuccess">/AmministratoreView.jsp</result>
+            <result type="redirectAction" name="amministratoreSuccess">mostraListaSondaggiAmministratore</result>
+            <!-- <result name="amministratoreSuccess">/AmministratoreView.jsp</result>  -->
             <result name="utenteSuccess">/UtenteView.jsp</result>
             <result name="loginFallito">/LoginErrore.jsp</result>
       </action>
-        
-      
+      <action name="mostraListaSondaggiAmministratore" class="com.struts2.progettoSondaggio.AmministratoreAction" method="prendiListaSondaggiAmministratore">
+   		<result name="success"> /AmministratoreView.jsp</result>
+	  </action>
       <action name="registrationSubmitted" 
             class="com.struts2.progettoSondaggio.VisitatoreAction" 
             method="execute">
@@ -48,7 +52,6 @@
             method="logout">
             <result name="success">/index.jsp</result>
       </action>
-      
       <action name="ToCreaSondaggio" 
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="toCreaSondaggioView">
@@ -59,12 +62,22 @@
             method="logout">
             <result name="success">/index.jsp</result>
       </action> 
+      
+      
+      
+      
+      
       <action name="creaSondaggio" 
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="creaSondaggio">
             <result name="success">/AmministratoreView.jsp</result>
             <result name="error">/AmministratoreView.jsp</result>
       </action>
+       
+      
+      
+      
+      
       <action name="mostraSondaggio" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">

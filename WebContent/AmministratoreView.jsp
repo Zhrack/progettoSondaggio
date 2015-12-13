@@ -29,11 +29,16 @@
    	</form>
 </div><br><br>
 <h2>Lista dei sondaggi creati</h2>
-<ul id="ulID">
-	<li>cacca</li>
-	<li>forcio</li>
-</ul>
 
+
+<ul id="listaSondaggi">
+<s:iterator value="listaSondaggiAmministratore">
+	<li>
+		<s:property value="nomeSondaggio"/> 
+		<s:hidden name="sondaggioID" value="sondaggioID"/><br/>
+	</li>
+</s:iterator>
+</ul>
 
 <script type="text/javascript">
  $('#inputPartecipaSondaggi').on("click",function() {
@@ -43,8 +48,6 @@
 	    var tagUsername=$("#tagUsername");
 	 	var username='<s:property value="username"/>';
 	 	$(tagUsername).val(username);
-	 	
-	 	
 	 	
 	 	
 	 	var tagPassword=$("#tagPassword");

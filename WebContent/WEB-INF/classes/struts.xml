@@ -22,11 +22,12 @@
             class="com.struts2.progettoSondaggio.VisitatoreAction" 
             method="execute">
             <result type="redirectAction" name="amministratoreSuccess">mostraListaSondaggiAmministratore</result>
-            <!-- <result name="amministratoreSuccess">/AmministratoreView.jsp</result>  -->
             <result name="utenteSuccess">/UtenteView.jsp</result>
             <result name="loginFallito">/LoginErrore.jsp</result>
       </action>
-      <action name="mostraListaSondaggiAmministratore" class="com.struts2.progettoSondaggio.AmministratoreAction" method="prendiListaSondaggiAmministratore">
+    <action name="mostraListaSondaggiAmministratore" 
+      		class="com.struts2.progettoSondaggio.AmministratoreAction" 
+      		method="prendiListaSondaggiAmministratore">
    		<result name="success"> /AmministratoreView.jsp</result>
 	  </action>
       <action name="registrationSubmitted" 
@@ -62,27 +63,17 @@
             method="logout">
             <result name="success">/index.jsp</result>
       </action> 
-      
-      
-      
-      
-      
       <action name="creaSondaggio" 
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="creaSondaggio">
             <result name="success">/AmministratoreView.jsp</result>
             <result name="error">/AmministratoreView.jsp</result>
       </action>
-       
-      
-      
-      
-      
       <action name="mostraSondaggio" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">
             <result name="success">/Partecipazione.jsp</result>
-            <result name="error">/AmministratoreView.jsp</result>
+            <result name="error">/HelloWorld.jsp</result>
       </action>
       <action name="aggiungiPartecipazione" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
@@ -90,10 +81,14 @@
             <result type="redirectAction" name="success">mostraSuccessoPartecipazione</result>
             <result type="redirectAction" name="error">mostraErrorePartecipazione</result>
       </action>
-	  <action name="mostraSuccessoPartecipazione" class="com.struts2.progettoSondaggio.VisitatoreAction" method="successoPartecipazione">
+	 <action name="mostraSuccessoPartecipazione" 
+	  		 class="com.struts2.progettoSondaggio.VisitatoreAction" 
+	  		 method="successoPartecipazione">
    		<result name="success"> /UtenteView.jsp</result>
 	  </action>
-	  <action name="mostraErrorePartecipazione" class="com.struts2.progettoSondaggio.VisitatoreAction" method="errorePartecipazione">
+	  <action name="mostraErrorePartecipazione" 
+	          class="com.struts2.progettoSondaggio.VisitatoreAction" 
+	          method="errorePartecipazione">
    		<result name="success"> /UtenteView.jsp</result>
 	  </action>
       </package>

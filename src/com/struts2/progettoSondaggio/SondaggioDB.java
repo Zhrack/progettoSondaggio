@@ -274,14 +274,13 @@ public class SondaggioDB {
         	SondaggioData data = new SondaggioData();
         	data.setSondaggioID(result.getString("sondaggioID"));
         	data.setNomeSondaggio(result.getString("nome"));
-        	System.out.println(result.getString("nome"));
-        	data.setAutore(result.getString("amministratore_fk"));
+        	//data.setAutore(result.getString("amministratore_fk"));
         	
         	listaSondaggiAmministratore.add(data);
         }
         
         
-        System.out.println(listaSondaggiAmministratore.get(0));
+
         
         return "success";
 	}

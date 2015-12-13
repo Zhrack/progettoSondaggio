@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link href="statix/css/CreaSondaggio.css" rel='stylesheet' type='text/css' />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <title>Crea Sondaggio</title>
 
@@ -64,9 +65,14 @@
 <body>
 <h1>Crea un Sondaggio</h1>
 
-<form action="creaSondaggio" method="post">
+<form action="creaSondaggio" method="post" id="formCreaSondaggio">
+		<div id="divLeft">
 		Nome Sondaggio
 		<input name="nomeSondaggio" type="text" class="text" value="Nome Sondaggio" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome Sondaggio';}" >
+		</div>
+		<div class="submit" id="divRight">
+			<input type="submit" onclick="return controlloCreaSondaggio()" value="Crea" >
+		</div>
 		<br><br>
 		<div id='divDomande'>
 			<div id='divDomanda0'>
@@ -79,11 +85,119 @@
 			</div>
 		</div>
 		<input type="button" value="Nuova domanda" onClick="aggiungiDomanda('divDomande');"> 
-		<div class="submit">
-			<input type="submit" onclick="myFunction()" value="Crea" >
-		</div>	 
+			 
 </form>
 
+
+
+
+<form method="POST">
+     <div id="dynamicInput">
+     </div>
+     <input type="button" value="Aggiungi una Risposta" onClick="addRisposta('dynamicInput');">
+     <input type="button" value="Aggiungi una domanda" onClick="addDomanda('dynamicInput');">
+</form>
+
+
+<script language="Javascript" type="text/javascript">
+var counterDomande = 0;
+var counterRisposte = 0;
+var limit = 15;
+function addDomanda(divName){
+	
+	if(controlloNumeroRisposteDomanda()==false)
+		{
+			return;
+		}
+		
+		
+     if (counterDomande == limit)  {
+          alert("Hai superato il limite di domande da inserire");
+     }
+     else {
+    	 counterRisposte=0;
+    	 counterDomande++;
+          var newdiv = document.createElement('div');
+          $(newdiv).attr('id', 'domanda_'+counterDomande);
+
+          newdiv.innerHTML = "Domanda " + (counterDomande) + " <br><input type='text' name='myInputs[]'>";
+          document.getElementById(divName).appendChild(newdiv);
+     }
+}
+
+
+//----------------------------------------------------------------------------------------------------------------
+function addRisposta(divName){
+	if(counterDomande==0)
+		{
+			alert("Prima di inserire una risposta devi inserire una domanda");
+		}
+	else if (counterRisposte == limit)  {
+    	 alert("Hai superato il limite di risposte da inserire");
+    }
+    else {
+    	 counterRisposte++;
+    	 var newdiv = document.createElement('div');
+    	 $(newdiv).attr('class', 'domanda_'+counterDomande);
+         newdiv.innerHTML = "Risp " + (counterRisposte) + " <br><input type='text' name='myInputs[]'>";
+         document.getElementById(divName).appendChild(newdiv);
+         
+    }
+}
+
+
+
+//----------------------------------------------------------------------------------------------------------------
+function controlloNumeroRisposteDomanda(){
+	console.log("numero risposte della domanda_"+counterDomande+":"+$(".domanda_"+counterDomande).length);
+		if($(".domanda_"+counterDomande).length==0 && counterDomande>0)
+			{
+				alert("Per ogni domanda devi inserire almeno una risposta");
+				return false;
+			}
+		else
+			return true;
+	}
+	
+	
+//----------------------------------------------------------------------------------------------------------------
+function controlloNumeroDomande()
+	{
+		if(counterDomande==0)
+			{
+				alert("Per ogni sondaggio devi inserire almeno una domanda");
+				return false;
+			}
+		else
+		{ 
+			if(controlloNumeroRisposteDomanda()==false)
+				{
+					return false;
+				}
+		}
+	}
+	
+function controlloCreaSondaggio(){
+		if(controlloNumeroDomande()==false)
+			return false;
+		else
+			{
+			var data=new Array(counterDomande);;
+			var i=1;
+			k=0;
+			for(i=0;i<counterDomande;i++)
+			{
+			     for(k=0;k<$(".domanda_"+i).length;k++)
+			    {
+			        var testoRisposta=$(".domanda_"+i+":nth("+k+") input").val();
+			         alert(testoRisposta);
+			         data[i][k]= testoRisposta;
+			    }
+			  }
+			// STAVO QUA DEVO mettere tutte le risposte dentro un oggetto da passare al server
+			}
+	}
+</script>
 
 </body>
 </html>

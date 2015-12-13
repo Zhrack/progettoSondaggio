@@ -98,10 +98,12 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String creaSondaggio()
 	{
+		System.out.println("creaSondaggio");
+		System.out.println("testiDomanda"+testiDomanda.get(0));
+		
 		try
 		{
 			String result = sondaggioDB.creaSondaggio(nomeSondaggio, testiDomanda, testiRisposta);
-			
 			return result;
 		}
 		catch(Exception ex)
@@ -178,12 +180,14 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public String prendiListaSondaggiAmministratore()
 	{
+		System.out.println("prendiListaSondaggiAmministratore");
 		try
 		{
 			listaSondaggiAmministratore.clear();
 			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
 			
-			System.out.println("lista sondaggi amm:"+result);
+			System.out.println("ritorno :"+result);
+			System.out.println("ritorno :"+listaSondaggiAmministratore.get(0).getNomeSondaggio());
 			return result;
 		}
 		catch(Exception ex)

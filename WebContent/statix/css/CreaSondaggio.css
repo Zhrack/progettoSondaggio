@@ -1,0 +1,23 @@
+body
+{
+	text-align: center;
+}
+
+#formCreaSondaggio
+{
+	display: inline-block;
+    width: 81%;
+    background-color: red;
+}
+
+
+#divLeft
+{
+	float:left;
+}
+
+
+#divRight
+{
+	float:right;
+}

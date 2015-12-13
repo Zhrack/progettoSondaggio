@@ -37,6 +37,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	private String messaggioSuccessoPartecipazione="hidden";
 	private String messaggioErrorePartecipazione="hidden";
 	private String option;
+	private String accessoAmministratoreComeUtente="0";
 	
 	private Map<String, Object> ses;
 		
@@ -57,7 +58,8 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			if(loginController.login(loginData))
 			{
 				System.out.println("Login OK " + loginData.isAmministratore);
-				if(loginData.isAmministratore)
+				System.out.println("accessoAmministratoreComeUtente :" + accessoAmministratoreComeUtente);
+				if(loginData.isAmministratore && this.accessoAmministratoreComeUtente.equals("0"))
 				{
 					ses.put("username", username);
 					System.out.println("Session username: " + (String)this.ses.get("username"));
@@ -181,6 +183,14 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 
 	public void setMessaggioErrorePartecipazione(String messaggioErrorePartecipazione) {
 		this.messaggioErrorePartecipazione = messaggioErrorePartecipazione;
+	}
+
+	public String getAccessoAmministratoreComeUtente() {
+		return accessoAmministratoreComeUtente;
+	}
+
+	public void setAccessoAmministratoreComeUtente(String accessoAmministratoreComeUtente) {
+		this.accessoAmministratoreComeUtente = accessoAmministratoreComeUtente;
 	}
 
 

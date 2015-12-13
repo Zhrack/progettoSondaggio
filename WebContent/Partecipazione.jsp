@@ -22,14 +22,10 @@
 		<title>Partecipazione</title>
 	</head>
 	<body>
-	
-
 		<div  style="display: inline-block; width:100%">
 				<h1><s:property value="nomeSondaggioUtente"/></h1>
 				<h2><s:property value="prova"/></h2>
 		</div>
-		
-		
 		<div id="main">
 		<script type="text/javascript">
 		

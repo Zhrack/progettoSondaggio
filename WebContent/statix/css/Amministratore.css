@@ -1,0 +1,51 @@
+h1
+{
+	text-align:center;
+}
+
+h2
+{
+	text-align:center;
+}
+
+
+#divLogout
+{
+	text-align:center;
+}
+
+
+
+#top
+{
+	margin-top:3%;
+	display:inline-block;
+	width:100%;	
+}
+
+
+#formNuovoSondaggio
+{
+	float:left;
+	margin-left:25%;
+}
+
+
+
+#formPartecipaSondaggio
+{
+	float:right;
+	margin-right:25%;
+}
+
+
+.formTop
+{
+	
+}
+
+#listaSondaggi
+{
+ list-style-type: none;
+ text-align:center;
+ }

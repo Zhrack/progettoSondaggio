@@ -6,12 +6,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -33,6 +39,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	// dati per creazione sondaggio
 	private String nomeSondaggio;
 	private ArrayList<String> testiDomanda;
+	private String oggettoJSON;
 	private ArrayList<ElencoRisposte> testiRisposta;
 	//---------
 
@@ -96,13 +103,40 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		listaSondaggiAmministratore = new ArrayList<SondaggioData>();
 	}
 	
-	public String creaSondaggio()
+	public String creaSondaggio() throws JSONException
 	{
-		System.out.println("creaSondaggio");
-		System.out.println("testiDomanda"+testiDomanda.get(0));
+		System.out.println("nome sondaggio"+this.nomeSondaggio);
+		System.out.println("testiDomanda"+oggettoJSON);
 		
+		
+		// ottengo l'HashMap dalla stringa JSON passata da Javascript
+		JSONObject ob=new JSONObject(oggettoJSON);
+		HashMap<String, HashMap<String,ArrayList<String>>> hash= (HashMap) this.jsonToMap(ob);
+		
+	
+		
+		// ciclo nell'HashMap per settare gli ArrayList:
+		// 1 ->this.testiDomanda
+		// 2 ->this.testiRisposta
+		Iterator entries = hash.entrySet().iterator();
+		while (entries.hasNext()) 
+		{
+		  Entry thisEntry = (Entry) entries.next();
+		  String key = thisEntry.getKey().toString();
+		  HashMap<String,ArrayList<String>> mappa = (HashMap<String,ArrayList<String>>) thisEntry.getValue();
+		  String domanda=mappa.get("domanda").get(0);
+		  this.testiDomanda.add(domanda);
+		  ArrayList<String> risposte=mappa.get("risposte");
+		  ElencoRisposte elencoRisposte=new ElencoRisposte();  
+		  elencoRisposte.setRisposte(risposte);
+		  this.testiRisposta.add(elencoRisposte);
+		}
+
+	    	
+	
 		try
 		{
+			// salvo nel db i dati del nuovo sondaggio ("nomeSondaggio" lo setto dal jsp con struts)
 			String result = sondaggioDB.creaSondaggio(nomeSondaggio, testiDomanda, testiRisposta);
 			return result;
 		}
@@ -112,6 +146,51 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
                     Level.SEVERE, null, ex);
 		}
 		return ERROR;
+	}
+	
+	public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
+	    Map<String, Object> retMap = new HashMap<String, Object>();
+
+	    if(json != JSONObject.NULL) {
+	        retMap = toMap(json);
+	    }
+	    return retMap;
+	}
+
+	public static Map<String, Object> toMap(JSONObject object) throws JSONException {
+	    Map<String, Object> map = new HashMap<String, Object>();
+
+	    Iterator<String> keysItr = object.keys();
+	    while(keysItr.hasNext()) {
+	        String key = keysItr.next();
+	        Object value = object.get(key);
+
+	        if(value instanceof JSONArray) {
+	            value = toList((JSONArray) value);
+	        }
+
+	        else if(value instanceof JSONObject) {
+	            value = toMap((JSONObject) value);
+	        }
+	        map.put(key, value);
+	    }
+	    return map;
+	}
+
+	public static List<Object> toList(JSONArray array) throws JSONException {
+	    List<Object> list = new ArrayList<Object>();
+	    for(int i = 0; i < array.length(); i++) {
+	        Object value = array.get(i);
+	        if(value instanceof JSONArray) {
+	            value = toList((JSONArray) value);
+	        }
+
+	        else if(value instanceof JSONObject) {
+	            value = toMap((JSONObject) value);
+	        }
+	        list.add(value);
+	    }
+	    return list;
 	}
 	
 	public String modificaSondaggio()
@@ -354,6 +433,14 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getOggettoJSON() {
+		return oggettoJSON;
+	}
+
+	public void setOggettoJSON(String oggettoJSON) {
+		this.oggettoJSON = oggettoJSON;
 	}
 
 }

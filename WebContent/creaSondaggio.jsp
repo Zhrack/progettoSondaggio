@@ -8,89 +8,21 @@
 <link href="statix/css/CreaSondaggio.css" rel='stylesheet' type='text/css' />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <title>Crea Sondaggio</title>
-
-<SCRIPT language="javascript">
-
-        function aggiungiDomanda(tableID) 
-        {
-                var table = document.getElementById(tableID);
-
-                var rowCount = table.rows.length;
-                var row = table.insertRow(rowCount);
-                var counts = rowCount - 1;
-
-                var cell1 = row.insertCell(0);
-                var houseNo = document.createElement("input");
-                houseNo.type = "text";
-                houseNo.name = "addresses[" + counts + "].houseNo";
-                cell1.appendChild(houseNo);
-
-                var cell2 = row.insertCell(1);
-                var street = document.createElement("input");
-                street.type = "text";
-                street.name = "addresses[" + counts + "].street";
-                cell2.appendChild(street);
-
-                var cell3 = row.insertCell(2);
-                var city = document.createElement("input");
-                city.type = "text";
-                city.name = "addresses[" + counts + "].city";
-                cell3.appendChild(city);
-
-                var cell4 = row.insertCell(3);
-                var country = document.createElement("input");
-                country.type = "text";
-                country.name = "addresses[" + counts + "].country";
-                cell4.appendChild(country);
-
-        }
-        
-        function aggiungiRisposta(divDomanda, divRisposta) 
-        {
-                var domanda = document.getElementById(divDomanda);
-                var risposta = document.getElementById(divRisposta);
-
-                var rowCountDomanda = $("#divDomanda > div").length;
-                var countsDomanda = rowCountDomanda - 1;
-                
-                var rowCountRisposta = $("#divRisposta > input").length;
-                var rowRisposta = risposta.insertRow(rowCountRisposta);
-                var countsRisposta = rowCountRisposta - 1;
-
-                
-
-        }
-</SCRIPT>
 </head>
 <body>
 <h1>Crea un Sondaggio</h1>
 
+<!-- Form bottone crea sondaggio -->
 <form action="creaSondaggio" method="post" id="formCreaSondaggio">
-		<div id="divLeft">
-		Nome Sondaggio
-		<input name="nomeSondaggio" type="text" class="text" value="Nome Sondaggio" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome Sondaggio';}" >
-		</div>
-		<div class="submit" id="divRight">
+		<s:hidden id="oggettoJSON" name="oggettoJSON" value=""/>
+		<s:hidden id="nomeSondaggioHidden" name="nomeSondaggio" value=""/>
+		<div class="submit">
 			<input type="submit" onclick="return controlloCreaSondaggio()" value="Crea" >
-		</div>
-		<br><br>
-		<div id='divDomande'>
-			<div id='divDomanda0'>
-				Domanda: <input type="text" name="testiDomanda[0]" ><br><br>
-				
-				- Risposta: <input type="text" name="testiRisposta[0].risposte[0]" ><br>
-				
-				<br>
-				<input type="button" value="Nuova risposta" onClick="aggiungiRisposta('divDomanda0');"> 
-			</div>
-		</div>
-		<input type="button" value="Nuova domanda" onClick="aggiungiDomanda('divDomande');"> 
-			 
+		</div>	 
 </form>
 
 
-
-
+<!-- Form bottoni dinamici aggiungi risposte e domande -->
 <form method="POST">
      <div id="dynamicInput">
      </div>
@@ -177,24 +109,41 @@ function controlloNumeroDomande()
 		}
 	}
 	
+	
+//----------------------------------------------------------------------------------------------------------------
+// Questa funzione viene chiamata quando l'utente clicca sul bottone "Crea", controlla che i dati
+// sono stati inseriti correttamente e poi setta gli attributi della action (che mi serviranno)
+// per salvare i dati del nuovo sondaggio nel DB
 function controlloCreaSondaggio(){
 		if(controlloNumeroDomande()==false)
 			return false;
 		else
 			{
-			var data=new Array(counterDomande);;
-			var i=1;
-			k=0;
-			for(i=0;i<counterDomande;i++)
-			{
-			     for(k=0;k<$(".domanda_"+i).length;k++)
-			    {
-			        var testoRisposta=$(".domanda_"+i+":nth("+k+") input").val();
-			         alert(testoRisposta);
-			         data[i][k]= testoRisposta;
-			    }
-			  }
-			// STAVO QUA DEVO mettere tutte le risposte dentro un oggetto da passare al server
+				
+			 // creo l'oggetto con le domande e risposte
+			 var data={};
+			 var z;
+			 for(var i=0;i<counterDomande;i++)
+					{
+						z=i+1;
+						data[i]={};
+						data[i].domanda=[];
+						data[i].domanda.push(($("#domanda_"+z+" input").val()));
+						data[i].risposte=[];
+						
+					    for(var k=0;k<$(".domanda_"+z).length;k++)
+					    {
+					         var el=$(".domanda_"+z+":nth("+k+") input");
+					         var text=$(el).val();
+							 data[i].risposte.push(text);
+					    }
+					  }
+				var testiDomanda=$("#oggettoJSON");
+				$(testiDomanda).val(JSON.stringify(data));
+				
+				// setto l'attributo dell'action "nome del sondaggio" 
+				var nomeSondaggio=$("#nomeSondaggioInput").val();
+				$("#nomeSondaggioHidden").val(nomeSondaggio); 				
 			}
 	}
 </script>

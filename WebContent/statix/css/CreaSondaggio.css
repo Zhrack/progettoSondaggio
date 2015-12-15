@@ -5,9 +5,8 @@ body
 
 #formCreaSondaggio
 {
-	display: inline-block;
-    width: 81%;
-    background-color: red;
+	text-align: center;
+    margin-bottom:3%;
 }
 
 
@@ -17,7 +16,3 @@ body
 }
 
 
-#divRight
-{
-	float:right;
-}

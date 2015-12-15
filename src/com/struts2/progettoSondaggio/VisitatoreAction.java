@@ -39,12 +39,21 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	private String option;
 	private String accessoAmministratoreComeUtente="0";
 	
+	
+	// Android output data
+	private boolean isMobile = false;
+	private boolean loginSuccessful = false;
+	private boolean registrazioneSuccessful = false;
+	
+	// ----
+
 	private Map<String, Object> ses;
 		
 	public VisitatoreAction()
 	{
 		loginController = new LoginController();
 		loginData = new LoginData("", "", false);
+		System.out.println("Visitatore Ctor");
 	}
 
 	public String execute() throws Exception {		
@@ -62,6 +71,8 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 				
 				ses.put("username", username);
 				ses.put("password", password);
+				ses.put("isMobile", isMobile);
+				loginSuccessful = true;
 				
 				if(loginData.isAmministratore && this.accessoAmministratoreComeUtente.equals("0"))
 				{					
@@ -73,7 +84,11 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 					return "utenteSuccess";
 				}
 			}
-			else return "loginFallito";
+			else 
+			{
+				loginSuccessful = false;
+				return "loginFallito";
+			}
 		}
 		else if(option.equals("registrazione"))
 		{
@@ -81,6 +96,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			// controllo se i campi della registrazione non contengono valori strani
 			if(!(loginController.checkFieldsRegistration(username, password, nome, cognome, sesso)))
 			{
+				registrazioneSuccessful = false;
 				return "erroreCampiRegistrazione";
 			}
 		
@@ -90,9 +106,14 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			{
 				ses.put("username", username);
 				System.out.println("Reg OK");
+				registrazioneSuccessful = true;
 				return SUCCESS;
 			}
-			else return "registrazioneFallita";
+			else 
+			{
+				registrazioneSuccessful = false;
+				return "registrazioneFallita";
+			}
 		
 		}
 		else
@@ -103,7 +124,14 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			
 	}
 
-	
+	public String executeAndroid() throws Exception {		
+		System.out.println("Android: " + option);
+		isMobile = true;
+		execute();
+		
+		return SUCCESS;
+		
+	}
 	
 	
 	public String successoPartecipazione()
@@ -171,6 +199,10 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	public void setSession(Map<String, Object> arg0) {
 		this.ses = arg0;
 	}
+	
+	public Map<String, Object> getSession() {
+		return this.ses;
+	}
 
 	public String getMessaggioSuccessoPartecipazione() {
 		return messaggioSuccessoPartecipazione;
@@ -196,5 +228,28 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		this.accessoAmministratoreComeUtente = accessoAmministratoreComeUtente;
 	}
 
+	public boolean isLoginSuccessful() {
+		return loginSuccessful;
+	}
+
+	public void setLoginSuccessful(boolean loginSuccessful) {
+		this.loginSuccessful = loginSuccessful;
+	}
+
+	public boolean isRegistrazioneSuccessful() {
+		return registrazioneSuccessful;
+	}
+
+	public void setRegistrazioneSuccessful(boolean registrazioneSuccessful) {
+		this.registrazioneSuccessful = registrazioneSuccessful;
+	}
+
+	public boolean isMobile() {
+		return isMobile;
+	}
+
+	public void setMobile(boolean isMobile) {
+		this.isMobile = isMobile;
+	}
 
 }

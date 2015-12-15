@@ -25,6 +25,11 @@
             <result name="utenteSuccess">/UtenteView.jsp</result>
             <result name="loginFallito">/LoginErrore.jsp</result>
       </action>
+      <action name="loginSubmittedAndroid" 
+            class="com.struts2.progettoSondaggio.VisitatoreAction" 
+            method="executeAndroid">
+            <result type="json"/>
+      </action>
     <action name="mostraListaSondaggiAmministratore" 
       		class="com.struts2.progettoSondaggio.AmministratoreAction" 
       		method="prendiListaSondaggiAmministratore">
@@ -36,6 +41,11 @@
             <result name="success">/UtenteView.jsp</result>
             <result name="erroreCampiRegistrazione">/RegistrazioneViewErrore.jsp</result>
             <result name="registrazioneFallita">/RegistrazioneViewErrore.jsp</result>
+      </action>
+      <action name="registrationSubmittedAndroid" 
+            class="com.struts2.progettoSondaggio.VisitatoreAction" 
+            method="executeAndroid">
+            <result type="json"/>
       </action>
       <action name="getSurvey" 
             class="com.struts2.progettoSondaggio.UtenteAction" 

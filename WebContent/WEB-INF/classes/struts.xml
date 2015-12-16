@@ -60,7 +60,11 @@
       <action name="prendiListaSondaggiAndroid" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiListaSondaggiAndroid">
-             <result type="json"></result>
+             <result type="json">
+				 <param name="root">
+				    sondaggiDisponibili
+				 </param>
+			 </result>
       </action>
       <action name="effettuaPagamento" 
             class="com.struts2.progettoSondaggio.UtenteAction" 

@@ -186,6 +186,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	
 	public String prendiListaSondaggiAndroid() 
 	{	
+		System.out.println("prendiListaSondaggiAndroid");
 		prendiListaSondaggi();
 		return SUCCESS;
 	}

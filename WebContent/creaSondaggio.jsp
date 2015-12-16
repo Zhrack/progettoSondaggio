@@ -14,6 +14,10 @@
 
 <!-- Form bottone crea sondaggio -->
 <form action="creaSondaggio" method="post" id="formCreaSondaggio">
+		<div id="divNomeSondaggio">
+		Nome Sondaggio
+		<input name="nomeSondaggio" type="text" class="text" value="Nome Sondaggio" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Nome Sondaggio';}" >
+		</div>
 		<s:hidden id="oggettoJSON" name="oggettoJSON" value=""/>
 		<s:hidden id="nomeSondaggioHidden" name="nomeSondaggio" value=""/>
 		<div class="submit">

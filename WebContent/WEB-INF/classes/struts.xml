@@ -91,7 +91,6 @@
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="creaSondaggio">
             <result type="redirectAction" name="success">mostraListaSondaggiAmministratore</result>
-            <!--   <result name="success">/creaSondaggio.jsp</result>-->
             <result name="error">/AmministratoreView.jsp</result>
       </action>
       <action name="mostraSondaggio" 
@@ -131,6 +130,11 @@
 	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
 	          method="mostraBoxErrore">
 	    <result name="success">/AmministratoreView.jsp</result>
+	  </action>
+	  <action name="modificaSondaggio" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="modificaSondaggio">
+	    <result name="success">/modificaSondaggio.jsp</result>
 	  </action>
       </package>
 </struts>

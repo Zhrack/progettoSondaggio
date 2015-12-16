@@ -160,18 +160,31 @@ public class SondaggioDB {
 	
 	public boolean cancellaSondaggio(String sondaggioID) throws Exception
 	{
+		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+		
+       
+       // cancella tutte le partecipazioni di questo sondaggio
+       PreparedStatement ps = con.prepareStatement(
+       		"SET SQL_SAFE_UPDATES = 0;");
+       if(ps.executeUpdate() == 0)
+		{
+    	   	System.out.println("errore 0");
+			//con.close();
+			//return false;
+		}
         
         // cancella tutte le partecipazioni di questo sondaggio
-        PreparedStatement ps = con.prepareStatement(
+        ps= con.prepareStatement(
         		"DELETE FROM Partecipazione WHERE rispostaID_fk IN " +
 	"(SELECT rispostaID FROM Risposta WHERE domandaID_fk IN " +
 		"(SELECT domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID + "))");
         if(ps.executeUpdate() == 0)
 		{
-			con.close();
-			return false;
+        	System.out.println("errore 1");
+			//con.close();
+			//return false;
 		}
         
         // cancella tutte le risposte di questo sondaggio
@@ -180,8 +193,9 @@ public class SondaggioDB {
         		"(SELECT domandaID FROM Domanda WHERE sondaggioID_fk=" + sondaggioID + ")");
         if(ps.executeUpdate() == 0)
 		{
-			con.close();
-			return false;
+        	System.out.println("errore 2");
+			//con.close();
+			//return false;
 		}
         
         // cancella sondaggio
@@ -189,8 +203,9 @@ public class SondaggioDB {
         		"DELETE FROM Sondaggio WHERE sondaggioID=" + sondaggioID);
         if(ps.executeUpdate() == 0)
 		{
-			con.close();
-			return false;
+        	System.out.println("errore 3");
+			//con.close();
+			//return false;
 		}
         
 		con.close();

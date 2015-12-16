@@ -50,3 +50,20 @@ h2
 }
 
 
+.contanierOption
+{
+	display:inline-block
+}
+
+.leftDiv
+{
+	float:left;
+}
+
+
+.rightDiv
+{
+	float:right;
+}
+
+

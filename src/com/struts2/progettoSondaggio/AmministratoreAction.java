@@ -39,11 +39,12 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	// dati per creazione sondaggio
 	private String nomeSondaggio;
 	private ArrayList<String> testiDomanda;
-	private String oggettoJSON;
+	private String oggettoJSON; // usato per passare un'oggetto con tutte le domande e le risposte da salvare del nuovo sondaggio
 	private ArrayList<ElencoRisposte> testiRisposta;
 	//---------
 
 	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio
+	private String esitoCancSond="-1"; // usato per aggiornare il jsp dopo aver cancellato il sondaggio
 	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato
 	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande gi� presenti, con le modifiche aggiornate
 	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte gi� presenti, con le modifiche aggiornate
@@ -131,8 +132,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		  elencoRisposte.setRisposte(risposte);
 		  this.testiRisposta.add(elencoRisposte);
 		}
-
-	    	
+	
 	
 		try
 		{
@@ -237,16 +237,19 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String cancellaSondaggio()
 	{
+		System.out.println("nomeSondaggio da cancellare:"+this.sondaggioIDScelto);
+		
+	
 		try
 		{
 			if(sondaggioDB.cancellaSondaggio(sondaggioIDScelto))
 			{
-				return SUCCESS;
+				return "success";
 			}
 			else
 			{
 				System.out.println("errore cancellaSondaggio");
-				return ERROR;
+				return "error";
 			}
 		}
 		catch(Exception e)
@@ -254,9 +257,29 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 			Logger.getLogger(AmministratoreAction.class.getName()).log( 
                     Level.SEVERE, null, e);
 		}
-		return ERROR;
+	
+		
+		return "error";
+		
+	}
+	
+	
+	public String mostraBoxSuccesso()
+	{
+		this.esitoCancSond="1";
+		System.out.println("this.esitoCancSond:"+this.esitoCancSond);
+		this.prendiListaSondaggiAmministratore();
+		return "success";
+	}
+	public String mostraBoxErrore()
+	{
+		this.esitoCancSond="0";
+		System.out.println("this.esitoCancSond:"+this.esitoCancSond);
+		this.prendiListaSondaggiAmministratore();
+		return "success";
 	}
 
+	
 	public String prendiListaSondaggiAmministratore()
 	{
 		System.out.println("prendiListaSondaggiAmministratore");
@@ -441,6 +464,14 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public void setOggettoJSON(String oggettoJSON) {
 		this.oggettoJSON = oggettoJSON;
+	}
+
+	public String getEsitoCancSond() {
+		return esitoCancSond;
+	}
+
+	public void setEsitoCancSond(String esitoCancSond) {
+		this.esitoCancSond = esitoCancSond;
 	}
 
 }

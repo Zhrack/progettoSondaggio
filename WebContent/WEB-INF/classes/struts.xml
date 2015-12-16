@@ -76,7 +76,8 @@
       <action name="creaSondaggio" 
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="creaSondaggio">
-            <result name="success">/AmministratoreView.jsp</result>
+            <result type="redirectAction" name="success">mostraListaSondaggiAmministratore</result>
+            <!--   <result name="success">/creaSondaggio.jsp</result>-->
             <result name="error">/AmministratoreView.jsp</result>
       </action>
       <action name="mostraSondaggio" 
@@ -100,6 +101,22 @@
 	          class="com.struts2.progettoSondaggio.VisitatoreAction" 
 	          method="errorePartecipazione">
    		<result name="success"> /UtenteView.jsp</result>
+	  </action>
+	  <action name="cancellaSondaggio" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="cancellaSondaggio">
+	          <result type="redirectAction" name="success">esitoCancellazioneSondaggioSuccesso</result>
+	    	  <result type="redirectAction" name="error">esitoCancellazioneSondaggioErrore</result>
+	  </action>
+	  <action name="esitoCancellazioneSondaggioSuccesso" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="mostraBoxSuccesso">
+	    <result name="success">/AmministratoreView.jsp</result>
+	  </action>
+	  <action name="esitoCancellazioneSondaggioErrore" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="mostraBoxErrore">
+	    <result name="success">/AmministratoreView.jsp</result>
 	  </action>
       </package>
 </struts>

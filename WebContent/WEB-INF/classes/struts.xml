@@ -57,6 +57,11 @@
             method="getSurvey">
              <result type="json"></result>
       </action>
+      <action name="prendiListaSondaggiAndroid" 
+            class="com.struts2.progettoSondaggio.UtenteAction" 
+            method="prendiListaSondaggiAndroid">
+             <result type="json"></result>
+      </action>
       <action name="effettuaPagamento" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="execute">

@@ -84,7 +84,7 @@
 			<form method="get" class="leftDiv">
 				<input type="submit" value="Report" class="inputReport"/>
    			</form>
-   			<form action="logoutUtente" method="get" class="leftDiv">
+   			<form action="modificaSondaggio" method="get" class="leftDiv">
 				<input type="submit" value="Modifica" id="inputModifica"/>
    			</form>
    			<form action="cancellaSondaggio" method="get" class="rightDiv">

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -108,6 +109,20 @@ public class LoginController {
 		return false;
 	}
 	
+	public boolean checkUsernameInUso(String username) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+		Connection con = DriverManager.getConnection(url, user, psw);
+
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT * FROM utente WHERE nickname='" + username + "'");
+        if (!result.isBeforeFirst() ) 
+        {    
+      	  return true;
+        } 
+        return false;
+	}
 	
 	
 	public boolean checkFieldsRegistration(String username, String password, String nome, String cognome, String sesso)

@@ -47,6 +47,11 @@
             method="executeAndroid">
             <result type="json"/>
       </action>
+      <action name="checkUsernameAndroid" 
+            class="com.struts2.progettoSondaggio.VisitatoreAction" 
+            method="checkUsernameAndroid">
+            <result type="json"/>
+      </action>
       <action name="getSurvey" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="getSurvey">

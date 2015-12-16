@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -44,6 +46,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	private boolean isMobile = false;
 	private boolean loginSuccessful = false;
 	private boolean registrazioneSuccessful = false;
+	private boolean usernameAvailable = false;
 	
 	// ----
 
@@ -124,15 +127,31 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			
 	}
 
-	public String executeAndroid() throws Exception {		
+	public String executeAndroid() {		
 		System.out.println("Android: " + option);
 		isMobile = true;
-		execute();
+		try {
+			execute();
+		} catch (Exception e) {
+			Logger.getLogger(VisitatoreAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
 		
 		return SUCCESS;
-		
 	}
 	
+	public String checkUsernameAndroid() {		
+		System.out.println("checkUsernameAndroid");
+		isMobile = true;
+		try {
+			usernameAvailable = loginController.checkUsernameInUso(username);
+		} catch (Exception e) {
+			Logger.getLogger(VisitatoreAction.class.getName()).log( 
+                    Level.SEVERE, null, e);
+		}
+		
+		return SUCCESS;
+	}	
 	
 	public String successoPartecipazione()
 	{
@@ -234,6 +253,14 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 
 	public void setLoginSuccessful(boolean loginSuccessful) {
 		this.loginSuccessful = loginSuccessful;
+	}
+
+	public boolean isUsernameAvailable() {
+		return usernameAvailable;
+	}
+
+	public void setUsernameAvailable(boolean isUsernameAvailable) {
+		this.usernameAvailable = isUsernameAvailable;
 	}
 
 	public boolean isRegistrazioneSuccessful() {

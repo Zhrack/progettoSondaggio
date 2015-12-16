@@ -184,6 +184,12 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		return "error";
 	}
 	
+	public String prendiListaSondaggiAndroid() 
+	{	
+		prendiListaSondaggi();
+		return SUCCESS;
+	}
+	
 	// prende i dati da DB per partecipare ad un sondaggio
 	public String prendiInfoSondaggio() 
 	{	

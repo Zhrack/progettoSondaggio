@@ -217,7 +217,6 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	public String prendiInfoSondaggioAndroid() 
 	{	
 		System.out.println("prendiInfoSondaggioAndroid");
-		sondaggioIDScelto = "1";
 		prendiInfoSondaggio();
 		return SUCCESS;
 	}

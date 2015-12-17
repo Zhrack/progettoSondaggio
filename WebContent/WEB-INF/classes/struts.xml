@@ -60,7 +60,11 @@
       <action name="prendiListaSondaggiAndroid" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiListaSondaggiAndroid">
-             <result type="json"></result>
+             <result type="json">
+				 <param name="root">
+				    sondaggiDisponibili
+				 </param>
+			 </result>
       </action>
       <action name="effettuaPagamento" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
@@ -87,6 +91,7 @@
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="creaSondaggio">
             <result type="redirectAction" name="success">mostraListaSondaggiAmministratore</result>
+            <!--   <result name="success">/creaSondaggio.jsp</result>-->
             <result name="error">/AmministratoreView.jsp</result>
       </action>
       <action name="mostraSondaggio" 
@@ -94,6 +99,11 @@
             method="prendiInfoSondaggio">
             <result name="success">/Partecipazione.jsp</result>
             <result name="error">/HelloWorld.jsp</result>
+      </action>
+      <action name="prendiInfoSondaggioAndroid" 
+            class="com.struts2.progettoSondaggio.UtenteAction" 
+            method="prendiInfoSondaggioAndroid">
+            <result type="json"/>
       </action>
       <action name="aggiungiPartecipazione" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
@@ -126,11 +136,6 @@
 	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
 	          method="mostraBoxErrore">
 	    <result name="success">/AmministratoreView.jsp</result>
-	  </action>
-	  <action name="modificaSondaggio" 
-	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
-	          method="modificaSondaggio">
-	    <result name="success">/modificaSondaggio.jsp</result>
 	  </action>
       </package>
 </struts>

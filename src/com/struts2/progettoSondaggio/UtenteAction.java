@@ -186,6 +186,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	
 	public String prendiListaSondaggiAndroid() 
 	{	
+		System.out.println("prendiListaSondaggiAndroid");
 		prendiListaSondaggi();
 		return SUCCESS;
 	}
@@ -202,8 +203,10 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		testiDomandaUtente.clear();
 		testiRispostaUtente.clear();
 		testiRispostaUtenteInStringa.clear();
+		nomeSondaggioUtente = "";
+		autoreSondaggioUtente = "";
 		try {
-			return sondaggioDB.prendiInfoSondaggio(sondaggioIDScelto, nomeSondaggioUtente, autoreSondaggioUtente, testiDomandaUtente,domandaID,testiRispostaUtente,testiRispostaUtenteInStringa);
+			return sondaggioDB.prendiInfoSondaggio(sondaggioIDScelto, testiDomandaUtente, domandaID, testiRispostaUtente, testiRispostaUtenteInStringa, this);
 		} catch (Exception e) {
 			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, e);
@@ -211,7 +214,13 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		return "error";
 	}
 	
-	
+	public String prendiInfoSondaggioAndroid() 
+	{	
+		System.out.println("prendiInfoSondaggioAndroid");
+		sondaggioIDScelto = "1";
+		prendiInfoSondaggio();
+		return SUCCESS;
+	}
 	
 	//aggiorna la tabella Partecipazione nel DB
 	public String aggiungiPartecipazione() throws JSONException 

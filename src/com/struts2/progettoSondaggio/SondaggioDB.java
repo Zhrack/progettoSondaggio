@@ -242,9 +242,8 @@ public class SondaggioDB {
 	}
 	
 	public String prendiInfoSondaggio(
-			String sondaggioID, String nomeSondaggio, String autoreSondaggio, 
-			ArrayList<String> testiDomanda, ArrayList<String> domandaID,
-			ArrayList<RispostaData> testiRisposta, ArrayList<String> testiRispostaStringa) throws Exception 
+			String sondaggioID,	ArrayList<String> testiDomanda, ArrayList<String> domandaID,
+			ArrayList<RispostaData> testiRisposta, ArrayList<String> testiRispostaStringa, UtenteAction context) throws Exception 
 	{	
 		
 		
@@ -260,8 +259,8 @@ public class SondaggioDB {
       	  	return "error";
         } 
         result.next();
-        nomeSondaggio = result.getString("nome");
-        autoreSondaggio = result.getString("nickname");
+        context.setNomeSondaggioUtente(result.getString("nome"));
+        context.setAutoreSondaggioUtente(result.getString("nickname"));
         
         
         con.close();

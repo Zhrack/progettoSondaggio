@@ -128,6 +128,8 @@ public class SondaggioDB {
         // aggiorna domandaData
         String res = domandaDB.prendiDatiDomande(sondaggioID, domandeData, risposteData);
         
+        System.out.println("prendiDatiSondaggio() sondaggioData:"+sondaggioData.getNomeSondaggio());
+        System.out.println("res da prendiDatiSondaggio():"+res);
         return res;
 	}
 	

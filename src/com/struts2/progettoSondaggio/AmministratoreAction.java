@@ -124,7 +124,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		{
 		  Entry thisEntry = (Entry) entries.next();
 		  String key = thisEntry.getKey().toString();
-		  HashMap<String,ArrayList<String>> mappa = (HashMap<String,ArrayList<String>>) thisEntry.getValue();
+		  HashMap<String, ArrayList<String>> mappa = (HashMap<String,ArrayList<String>>) thisEntry.getValue();
 		  String domanda=mappa.get("domanda").get(0);
 		  this.testiDomanda.add(domanda);
 		  ArrayList<String> risposte=mappa.get("risposte");
@@ -195,6 +195,14 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String modificaSondaggio()
 	{
+		
+		System.out.println("cacca");
+		System.out.println("----"+this.sondaggioIDScelto);
+		
+		this.prendiDatiSondaggio();
+		
+		
+		
 		try
 		{
 			if(sondaggioDB.cancellaSondaggio(sondaggioIDScelto))
@@ -218,12 +226,15 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	{
 		try
 		{
+			modificaSondaggioData=new SondaggioData();
 			modificaSondaggioData.setNomeSondaggio("");
 			modificaSondaggioData.setSondaggioID("");
 			modificaSondaggioData.setAutore(""); // non usato in questo caso
 			modificaDomandeData.clear();
 			modificaRisposteData.clear();
 			String result = sondaggioDB.prendiDatiSondaggio(sondaggioIDScelto, modificaSondaggioData, modificaDomandeData,  modificaRisposteData);
+			
+			System.out.println("result:"+result);
 			
 			return result;
 		}

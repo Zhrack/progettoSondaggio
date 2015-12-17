@@ -85,7 +85,8 @@
 				<input type="submit" value="Report" class="inputReport"/>
    			</form>
    			<form action="modificaSondaggio" method="get" class="leftDiv">
-				<input type="submit" value="Modifica" id="inputModifica"/>
+   				<s:hidden id="%{sondaggioID}" name="sondaggioIDScelto" value=""/>
+				<input type="submit" value="Modifica" class="inputModifica"/>
    			</form>
    			<form action="cancellaSondaggio" method="get" class="rightDiv">
    				<s:hidden id="%{sondaggioID}" name="sondaggioIDScelto" value=""/>
@@ -116,7 +117,19 @@
  
  
 //-----------------------------------------------------------------------------------------------------
+// setto l'attributo della action "sondaggioIDscelto" per cancellarlo
  $('.inputCancella').on("click",function() {
+	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val()
+	 alert(sondaggioIDscelto);
+	 
+	 $("#"+sondaggioIDscelto).val(sondaggioIDscelto);
+	});
+ 
+ 
+ 
+//-----------------------------------------------------------------------------------------------------
+//setto l'attributo della action "sondaggioIDscelto" per modificarlo
+ $('.inputModifica').on("click",function() {
 	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val()
 	 alert(sondaggioIDscelto);
 	 

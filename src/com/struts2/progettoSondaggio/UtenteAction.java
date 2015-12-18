@@ -47,6 +47,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	private String listaRisultatoPartecipazione;
 	
 	
+	private String userID = "";
 
 
 	private boolean startup;
@@ -221,8 +222,15 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		return SUCCESS;
 	}
 	
+	public String aggiungiPartecipazioneAndroid() 
+	{
+		System.out.println("aggiungiPartecipazioneAndroid");
+		aggiungiPartecipazione();
+		return SUCCESS;
+	}
+	
 	//aggiorna la tabella Partecipazione nel DB
-	public String aggiungiPartecipazione() throws JSONException 
+	public String aggiungiPartecipazione() 
 	{
 		System.out.println("listaRisultatoPartecipazione"+listaRisultatoPartecipazione);
 		
@@ -252,7 +260,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		
 		// faccio la query con l'arrayList con le risposte selezionate
 		try {
-			return partecipazioneDB.aggiungiPartecipazione(listdata);
+			return partecipazioneDB.aggiungiPartecipazione(listdata, userID);
 		} catch (Exception e) {
 			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, e);
@@ -411,6 +419,20 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	public void setParams(Map<String, String> arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+
+
+	public String getUserID() {
+		return userID;
+	}
+
+
+
+
+	public void setUserID(String userID) {
+		this.userID = userID;
 	}
 
 

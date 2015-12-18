@@ -13,22 +13,25 @@
 <h1>Modifica Sondaggio</h1>
 
 <!-- Form bottone crea sondaggio -->
-<form action="creaSondaggio" method="post" id="formCreaSondaggio">
+<form action="modificaSondaggio" method="post" id="formCreaSondaggio">
 		<div id="divNomeSondaggio">
 		Nome Sondaggio
 		<input id="nomeSondaggioInput" type="text" class="text" >
+		<s:hidden id="sondaggioIDHidden" name="sondaggioIDSceltoPerModifica" value=""/>
 		<script type="text/javascript">
 			var nomeSondaggioDaModificare='<s:property value="%{modificaSondaggioData.nomeSondaggio}"/>';
 			$("#nomeSondaggioInput").val(nomeSondaggioDaModificare);
+			
+			var sondaggioIDDaModificare='<s:property value="%{modificaSondaggioData.sondaggioID}"/>';
+			$("#sondaggioIDHidden").val(sondaggioIDDaModificare);
 		</script>
 		</div>
 		<s:hidden id="oggettoJSON" name="oggettoJSON" value=""/>
-		<s:hidden id="nomeSondaggioHidden" name="nomeSondaggio" value=""/>
+		<s:hidden id="nomeSondaggioHidden" name="nomeSondaggioModifica" value=""/>
 		<div class="submit">
-			<input type="submit" onclick="return controlloCreaSondaggio()" value="Modifica" >
+			<input type="submit" onclick="return controlloModificaSondaggio()" value="Modifica" >
 		</div>	 
 </form>
-
 
 
 
@@ -37,30 +40,35 @@
 <ul id="listaSondaggi">
 <s:iterator value="modificaDomandeData">
 	<li>
-	<s:hidden id="hiddenDomandaID" name="prova" value=""/>
-	<script text="text/javascript">
-		var prova=$("#hiddenDomandaID");
-		var domandaID='<s:property value="%{domandaID}"/>';
-		$(prova).val(domandaID);
-		// STAVO QUA
-		
-	</script>
-		<s:property value="testo"/>
-		cacca
+	<s:hidden id="hiddenDomandaID" name="prova"/>
+		<input type='text'>
 		<s:iterator value="modificaRisposteData">
-			<li>
-				<s:if test="%{domandaID=='54'}">
-				This is Struts 2
-				<s:property value="testoRisposta"/>
-				asdad
-				</s:if>
-				
-			</li>
+			<s:if test="%{domandaID==domandaIDPerModificaSondaggio}">
+				<div>
+					<input type='text' id="%{domandaID}">
+					<s:hidden id="%{rispostaID}"/>
+					<script text="text/javascript">
+						// scrivo le risposte nei textfield
+						var rispostaID='<s:property value="%{rispostaID}"/>';
+						var testoRisposta='<s:property value="testoRisposta"/>';
+						$("#"+rispostaID).parent().find("input").val(testoRisposta);
+						
+						
+						
+						// scrivo il testo della domanda nel textfield
+						var testoDomanda='<s:property value="testo"/>';			
+						$("#"+rispostaID).parent().parent().find("input:nth(1)").val(testoDomanda);
+					</script>
+					<script text="text/javascript">
+			
+		</script>
+				</div>
+			</s:if>
 		</s:iterator>
 	</li>
+	<br>
 </s:iterator>
 </ul>
-
 <!-- -------------------- -->
 
 
@@ -83,6 +91,8 @@
 var counterDomande = 0;
 var counterRisposte = 0;
 var limit = 15;
+var data={};
+var data2={};
 function addDomanda(divName){
 	
 	if(controlloNumeroRisposteDomanda()==false)
@@ -162,14 +172,151 @@ function controlloNumeroDomande()
 // Questa funzione viene chiamata quando l'utente clicca sul bottone "Crea", controlla che i dati
 // sono stati inseriti correttamente e poi setta gli attributi della action (che mi serviranno)
 // per salvare i dati del nuovo sondaggio nel DB
-function controlloCreaSondaggio(){
+function controlloModificaSondaggio(){
+		
+	 if(aggiuntaNuoveDomande()==true)
+		 {
+		 	uniscoDomandeRisposte();
+		 	return true;
+		 }
+	 else
+		 {
+		 	alert("non ha aggiunto nessuna domanda nuova"); 	
+		 	var i=0;
+		 	data={};
+		 	$("#listaSondaggi li").each(function(index){
+		 		data[i]={};
+				data[i].domanda=[];
+				data[i].domanda.push($(this).find("input:nth(1)").val());
+				data[i].risposte=[];
+		 		
+		 		var that=$(this);
+		 		that.find("div").each(function(index){
+				 		var that2=$(this)
+				 		console.log(that2.find("input:nth(0)").val());
+				 		var testoRisposta=that2.find("input:nth(0)").val();
+				 		data[i].risposte.push(testoRisposta);
+		 			})
+		 			
+		 		i++;	
+		 	});
+		 	
+		 	console.log(data);
+		 	var testiDomanda=$("#oggettoJSON");
+			$(testiDomanda).val(JSON.stringify(data));
+			console.log($(testiDomanda));
+			
+			// setto l'attributo dell'action "nome del sondaggio" 
+			var nomeSondaggio=$("#nomeSondaggioInput").val();
+			$("#nomeSondaggioHidden").val(nomeSondaggio);
+			console.log($("#nomeSondaggioHidden"));
+			
+			return true;		
+		 }
+	 
+	 
+}
+
+
+//----------------------------------------------------------------------------------------------------------------
+function aggiuntaNuoveDomande(){
+	 data={};
+	 // creo l'oggetto con le domande e risposte
+	 var z;
+	 for(var i=0;i<counterDomande;i++)
+			{
+				z=i+1;
+				data[i]={};
+				data[i].domanda=[];
+				data[i].domanda.push(($("#domanda_"+z+" input").val()));
+				data[i].risposte=[];
+				
+			    for(var k=0;k<$(".domanda_"+z).length;k++)
+			    {
+			         var el=$(".domanda_"+z+":nth("+k+") input");
+			         var text=$(el).val();
+					 data[i].risposte.push(text);
+			    }
+			  }
+	 
+	 if($.isEmptyObject(data)==true)
+		 {
+		 	return false;
+		 }
+	 else
+		 {
+		 	return true;
+		 }
+}
+
+
+// creo l'oggetto con le domande e risposte da passare al DB
+//----------------------------------------------------------------------------------------------------------------
+function uniscoDomandeRisposte()
+{
+	 alert("hai aggiunto nuove domande");
+	 data={};
+	 
+	 // l'oggetto con le domande nuove aggiunte 
+	 var z;
+	 for(var i=0;i<counterDomande;i++)
+			{
+				z=i+1;
+				data[i]={};
+				data[i].domanda=[];
+				data[i].domanda.push(($("#domanda_"+z+" input").val()));
+				data[i].risposte=[];
+				
+			    for(var k=0;k<$(".domanda_"+z).length;k++)
+			    {
+			         var el=$(".domanda_"+z+":nth("+k+") input");
+			         var text=$(el).val();
+					 data[i].risposte.push(text);
+			    }
+			  }
+
+	  // l'oggetto con le domande vecchie
+	  $("#listaSondaggi li").each(function(index){
+	 		data[i]={};
+	 		data[i].domanda=[];
+	 		data[i].domanda.push($(this).find("input:nth(1)").val());
+	 		data[i].risposte=[];
+	 		
+	 		var that=$(this);
+	 		that.find("div").each(function(index){
+			 		var that2=$(this)
+			 		console.log(that2.find("input:nth(0)").val());
+			 		var testoRisposta=that2.find("input:nth(0)").val();
+			 		data[i].risposte.push(testoRisposta);
+	 			})
+	 			
+	 		i++;	
+	 	});
+	 	
+		// setto l'attributo dell'action per passare le domande e risposte
+	 	var testiDomanda=$("#oggettoJSON");
+		$(testiDomanda).val(JSON.stringify(data));
+		console.log($(testiDomanda));
+		
+		// setto l'attributo dell'action "nome del sondaggio" 
+		var nomeSondaggio=$("#nomeSondaggioInput").val();
+		$("#nomeSondaggioHidden").val(nomeSondaggio);
+		console.log($("#nomeSondaggioHidden"));
+}
+
+//----------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------------------
+// Questa funzione viene chiamata quando l'utente clicca sul bottone "Crea", controlla che i dati
+// sono stati inseriti correttamente e poi setta gli attributi della action (che mi serviranno)
+// per salvare i dati del nuovo sondaggio nel DB
+function controlloNuoveDomande(){
 		if(controlloNumeroDomande()==false)
 			return false;
 		else
 			{
-				
+			
+			 data={};
 			 // creo l'oggetto con le domande e risposte
-			 var data={};
 			 var z;
 			 for(var i=0;i<counterDomande;i++)
 					{
@@ -191,7 +338,8 @@ function controlloCreaSondaggio(){
 				
 				// setto l'attributo dell'action "nome del sondaggio" 
 				var nomeSondaggio=$("#nomeSondaggioInput").val();
-				$("#nomeSondaggioHidden").val(nomeSondaggio); 				
+				$("#nomeSondaggioHidden").val(nomeSondaggio);
+				
 			}
 	}
 </script>

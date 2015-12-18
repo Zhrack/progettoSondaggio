@@ -92,6 +92,7 @@ public class DomandaDB {
         	DomandaData data = new DomandaData();
         	data.setDomandaID(result.getString("domandaID"));
         	data.setTesto(result.getString("testoDomanda"));
+        	data.setDomandaIDPerModificaSondaggio(result.getString("domandaID"));
         	System.out.println("prendiDatiDomande(): testoDomanda->"+result.getString("testoDomanda"));
         	domandeData.add(data);
         }        

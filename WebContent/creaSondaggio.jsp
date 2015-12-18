@@ -142,6 +142,9 @@ function controlloCreaSondaggio(){
 							 data[i].risposte.push(text);
 					    }
 					  }
+			 
+			 	console.log(data);
+			 
 				var testiDomanda=$("#oggettoJSON");
 				$(testiDomanda).val(JSON.stringify(data));
 				

@@ -199,10 +199,45 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String modificaSondaggio()
 	{
+		System.out.println("modificaSondaggio(): id del sondaggio da modificare->"+this.sondaggioIDSceltoPerModifica);
+		System.out.println("bfdbdfbdfbd");
+		
+		
+		
 		try
 		{
 			if(sondaggioDB.cancellaSondaggio(sondaggioIDSceltoPerModifica))
 			{
+				System.out.println("cancellazione riuscita");
+				
+				System.out.println("nome sondaggio"+this.nomeSondaggioModifica);
+				System.out.println("testiDomanda"+oggettoJSON);
+				
+				
+				// ottengo l'HashMap dalla stringa JSON passata da Javascript
+				JSONObject ob=new JSONObject(oggettoJSON);
+				HashMap<String, HashMap<String,ArrayList<String>>> hash= (HashMap) this.jsonToMap(ob);
+				
+			
+				
+				// ciclo nell'HashMap per settare gli ArrayList:
+				// 1 ->this.testiDomanda
+				// 2 ->this.testiRisposta
+				Iterator entries = hash.entrySet().iterator();
+				while (entries.hasNext()) 
+				{
+				  Entry thisEntry = (Entry) entries.next();
+				  String key = thisEntry.getKey().toString();
+				  HashMap<String, ArrayList<String>> mappa = (HashMap<String,ArrayList<String>>) thisEntry.getValue();
+				  String domanda=mappa.get("domanda").get(0);
+				  this.testiDomandaModifica.add(domanda);
+				  ArrayList<String> risposte=mappa.get("risposte");
+				  ElencoRisposte elencoRisposte=new ElencoRisposte();  
+				  elencoRisposte.setRisposte(risposte);
+				  this.testiRispostaModifica.add(elencoRisposte);
+				}
+			
+				
 				return sondaggioDB.creaSondaggio(nomeSondaggioModifica, testiDomandaModifica, testiRispostaModifica);
 			}
 			else

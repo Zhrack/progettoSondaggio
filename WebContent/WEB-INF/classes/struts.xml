@@ -139,9 +139,15 @@
 	          method="mostraBoxErrore">
 	    <result name="success">/AmministratoreView.jsp</result>
 	  </action>
-	  <action name="modificaSondaggio" 
+	  <action name="mostraPaginaModificaSondaggio" 
 	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
 	          method="prendiDatiSondaggio">
+	          <result name="success">/modificaSondaggio.jsp</result>
+	    	  <result name="error">/AmministratoreView.jsp</result>
+	  </action>
+	  <action name="modificaSondaggio" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="modificaSondaggio">
 	          <result name="success">/modificaSondaggio.jsp</result>
 	    	  <result name="error">/AmministratoreView.jsp</result>
 	  </action>

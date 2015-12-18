@@ -84,7 +84,7 @@
 			<form method="get" class="leftDiv">
 				<input type="submit" value="Report" class="inputReport"/>
    			</form>
-   			<form action="modificaSondaggio" method="get" class="leftDiv">
+   			<form action="mostraPaginaModificaSondaggio" method="get" class="leftDiv">
    				<s:hidden id="%{sondaggioIDPerModifica}" name="sondaggioIDSceltoPerModifica" value=""/>
 				<input type="submit" value="Modifica" class="inputModifica"/>
    			</form>

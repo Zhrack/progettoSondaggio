@@ -20,9 +20,15 @@ public class PartecipazioneDB{
 		this.ses = ses;
 	}
 	
-	public String aggiungiPartecipazione(ArrayList<String> risposte) throws Exception
+	public String aggiungiPartecipazione(ArrayList<String> risposte, String userIDAndroid) throws Exception
 	{
 		String userID = (String)ses.get("userID");
+		
+		if(userID == null)
+		{
+			// siamo su Android
+			userID = userIDAndroid;
+		}
 		
 		
 		Class.forName("com.mysql.jdbc.Driver").newInstance();

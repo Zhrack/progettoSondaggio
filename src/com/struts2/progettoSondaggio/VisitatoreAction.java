@@ -1,5 +1,9 @@
 package com.struts2.progettoSondaggio;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -73,6 +77,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 				System.out.println("accessoAmministratoreComeUtente :" + accessoAmministratoreComeUtente);
 				
 				ses.put("username", username);
+				ses.put("userID", userIDFromNickname(username));
 				ses.put("password", password);
 				ses.put("isMobile", isMobile);
 				loginSuccessful = true;
@@ -108,6 +113,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			if(loginController.registrazione(username, password, nome, cognome, sesso))
 			{
 				ses.put("username", username);
+				ses.put("userID", userIDFromNickname(username));
 				System.out.println("Reg OK");
 				registrazioneSuccessful = true;
 				return SUCCESS;
@@ -152,6 +158,27 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		
 		return SUCCESS;
 	}	
+	
+	private String userIDFromNickname(String username) throws Exception
+	{
+		Class.forName("com.mysql.jdbc.Driver").newInstance();
+        Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
+
+        Statement stmt = con.createStatement();
+
+        ResultSet result = stmt.executeQuery("SELECT userID FROM utente WHERE nickname='" + username + "'");
+        if (!result.isBeforeFirst() ) 
+        {    
+        	con.close();
+      	  	return null;
+        } 
+        result.next();
+        
+        String res = result.getString("userID");
+        con.close();
+        
+		return res;
+	}
 	
 	public String successoPartecipazione()
 	{

@@ -44,10 +44,14 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	//---------
 
 	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio
+	private String sondaggioIDSceltoPerCancellazione;
+	private String sondaggioIDSceltoPerModifica;
 	private String esitoCancSond="-1"; // usato per aggiornare il jsp dopo aver cancellato il sondaggio
 	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato
 	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande gi� presenti, con le modifiche aggiornate
 	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte gi� presenti, con le modifiche aggiornate
+	private String prova;
+	
 	
 	private String nomeSondaggioModifica;
 	private ArrayList<String> testiDomandaModifica;
@@ -195,17 +199,9 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String modificaSondaggio()
 	{
-		
-		System.out.println("cacca");
-		System.out.println("----"+this.sondaggioIDScelto);
-		
-		this.prendiDatiSondaggio();
-		
-		
-		
 		try
 		{
-			if(sondaggioDB.cancellaSondaggio(sondaggioIDScelto))
+			if(sondaggioDB.cancellaSondaggio(sondaggioIDSceltoPerModifica))
 			{
 				return sondaggioDB.creaSondaggio(nomeSondaggioModifica, testiDomandaModifica, testiRispostaModifica);
 			}
@@ -224,6 +220,10 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String prendiDatiSondaggio()
 	{
+		System.out.println("modificaSondaggio");
+		System.out.println("----"+this.sondaggioIDSceltoPerModifica);
+		
+		
 		try
 		{
 			modificaSondaggioData=new SondaggioData();
@@ -232,7 +232,9 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 			modificaSondaggioData.setAutore(""); // non usato in questo caso
 			modificaDomandeData.clear();
 			modificaRisposteData.clear();
-			String result = sondaggioDB.prendiDatiSondaggio(sondaggioIDScelto, modificaSondaggioData, modificaDomandeData,  modificaRisposteData);
+			String result = sondaggioDB.prendiDatiSondaggio(sondaggioIDSceltoPerModifica, modificaSondaggioData, modificaDomandeData,  modificaRisposteData);
+			
+			
 			
 			System.out.println("result:"+result);
 			
@@ -248,12 +250,12 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	public String cancellaSondaggio()
 	{
-		System.out.println("nomeSondaggio da cancellare:"+this.sondaggioIDScelto);
+		System.out.println("cancellaSondaggio :"+this.sondaggioIDSceltoPerCancellazione);
+		System.out.println("nomeSondaggio da cancellare:"+this.sondaggioIDSceltoPerCancellazione);
 		
-	
 		try
 		{
-			if(sondaggioDB.cancellaSondaggio(sondaggioIDScelto))
+			if(sondaggioDB.cancellaSondaggio(sondaggioIDSceltoPerCancellazione))
 			{
 				return "success";
 			}
@@ -270,8 +272,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		}
 	
 		
-		return "error";
-		
+		return "error";	
 	}
 	
 	
@@ -300,7 +301,8 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
 			
 			System.out.println("ritorno :"+result);
-			System.out.println("ritorno :"+listaSondaggiAmministratore.get(0).getNomeSondaggio());
+			
+			
 			return result;
 		}
 		catch(Exception ex)
@@ -483,6 +485,30 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public void setEsitoCancSond(String esitoCancSond) {
 		this.esitoCancSond = esitoCancSond;
+	}
+
+	public String getSondaggioIDSceltoPerCancellazione() {
+		return sondaggioIDSceltoPerCancellazione;
+	}
+
+	public void setSondaggioIDSceltoPerCancellazione(String sondaggioIDSceltoPerCancellazione) {
+		this.sondaggioIDSceltoPerCancellazione = sondaggioIDSceltoPerCancellazione;
+	}
+
+	public String getSondaggioIDSceltoPerModifica() {
+		return sondaggioIDSceltoPerModifica;
+	}
+
+	public void setSondaggioIDSceltoPerModifica(String sondaggioIDSceltoPerModifica) {
+		this.sondaggioIDSceltoPerModifica = sondaggioIDSceltoPerModifica;
+	}
+
+	public String getProva() {
+		return prova;
+	}
+
+	public void setProva(String prova) {
+		this.prova = prova;
 	}
 
 }

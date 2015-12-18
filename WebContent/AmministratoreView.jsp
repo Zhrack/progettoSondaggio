@@ -85,11 +85,11 @@
 				<input type="submit" value="Report" class="inputReport"/>
    			</form>
    			<form action="modificaSondaggio" method="get" class="leftDiv">
-   				<s:hidden id="%{sondaggioID}" name="sondaggioIDScelto" value=""/>
+   				<s:hidden id="%{sondaggioIDPerModifica}" name="sondaggioIDSceltoPerModifica" value=""/>
 				<input type="submit" value="Modifica" class="inputModifica"/>
    			</form>
    			<form action="cancellaSondaggio" method="get" class="rightDiv">
-   				<s:hidden id="%{sondaggioID}" name="sondaggioIDScelto" value=""/>
+   				<s:hidden id="%{sondaggioIDPerCancellazione}" name="sondaggioIDSceltoPerCancellazione" value=""/>
 				<input type="submit" value="Cancella" class="inputCancella"/>
    			</form>
 		</div>	
@@ -122,7 +122,7 @@
 	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val()
 	 alert(sondaggioIDscelto);
 	 
-	 $("#"+sondaggioIDscelto).val(sondaggioIDscelto);
+	 $("#c_"+sondaggioIDscelto).val(sondaggioIDscelto);
 	});
  
  
@@ -132,8 +132,9 @@
  $('.inputModifica').on("click",function() {
 	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val()
 	 alert(sondaggioIDscelto);
+	 console.log($("#m_"+sondaggioIDscelto));
+	 $("#m_"+sondaggioIDscelto).val(sondaggioIDscelto);
 	 
-	 $("#"+sondaggioIDscelto).val(sondaggioIDscelto);
 	});
  </script>
 </body>

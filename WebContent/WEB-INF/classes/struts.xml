@@ -34,6 +34,7 @@
       		class="com.struts2.progettoSondaggio.AmministratoreAction" 
       		method="prendiListaSondaggiAmministratore">
    		<result name="success"> /AmministratoreView.jsp</result>
+   		<result name="error"> /AmministratoreView.jsp</result>
 	  </action>
       <action name="registrationSubmitted" 
             class="com.struts2.progettoSondaggio.VisitatoreAction" 
@@ -124,7 +125,8 @@
 	  <action name="cancellaSondaggio" 
 	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
 	          method="cancellaSondaggio">
-	          <result type="redirectAction" name="success">esitoCancellazioneSondaggioSuccesso</result>
+	          <result name="success">/AmministratoreView.jsp</result>
+	          <result type="redirectAction" name="success">esitoCancellazioneSondaggioSuccesso</result> 
 	    	  <result type="redirectAction" name="error">esitoCancellazioneSondaggioErrore</result>
 	  </action>
 	  <action name="esitoCancellazioneSondaggioSuccesso" 
@@ -137,5 +139,12 @@
 	          method="mostraBoxErrore">
 	    <result name="success">/AmministratoreView.jsp</result>
 	  </action>
+	  <action name="modificaSondaggio" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="prendiDatiSondaggio">
+	          <result name="success">/modificaSondaggio.jsp</result>
+	    	  <result name="error">/AmministratoreView.jsp</result>
+	  </action>
       </package>
+      
 </struts>

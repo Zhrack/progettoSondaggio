@@ -70,33 +70,39 @@ public class DomandaDB {
         
         Statement stmt = con.createStatement();
 
-        System.out.println("prendiDatiDomande(): sondaggioID"+sondaggioID);
+        System.out.println("prendiDatiDomande(): sondaggioID->"+sondaggioID);
         
         // STAVO QUA
         
         
-        ResultSet result = stmt.executeQuery("SELECT D.domandaID, D.testoDomanda FROM Sondaggio, Domanda D WHERE sondaggioID=" + sondaggioID);
-        System.out.println("SELECT D.domandaID, D.testoDomanda FROM Sondaggio, Domanda D WHERE sondaggioID=" + sondaggioID);
+        ResultSet result = stmt.executeQuery("SELECT distinct D.domandaID, D.testoDomanda FROM Sondaggio, Domanda D WHERE sondaggioID_fk=" + sondaggioID);
+        System.out.println("SELECT distinct D.domandaID, D.testoDomanda FROM Sondaggio, Domanda D WHERE sondaggioID=" + sondaggioID);
         if (!result.isBeforeFirst() ) 
         {    
+        	System.out.println("NESSUNA DOMANDA PER QUESTO SONDAGGIO");
         	con.close();
       	  	return "error";
         } 
+        
+        
+        
         
         while(result.next())
         {
         	DomandaData data = new DomandaData();
         	data.setDomandaID(result.getString("domandaID"));
         	data.setTesto(result.getString("testoDomanda"));
-        	System.out.println("prendiDatiDomande(): testoDomanda"+result.getString("testoDomanda"));
+        	System.out.println("prendiDatiDomande(): testoDomanda->"+result.getString("testoDomanda"));
         	domandeData.add(data);
         }        
         con.close();
         
         
         
-        System.out.println("prendiDatiDomande(): prima domanda da -->"+domandeData.get(0).getTesto());
         
+        
+        
+
         // aggiorna domandaData
         String res = rispostaDB.prendiDatiRisposte(sondaggioID, risposteData);
         

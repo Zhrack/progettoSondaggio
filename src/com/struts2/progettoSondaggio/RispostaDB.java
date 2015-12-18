@@ -46,7 +46,7 @@ public class RispostaDB {
         Statement stmt = con.createStatement();
 
         ResultSet result = stmt.executeQuery(
-        		"SELECT R.rispostaID, R.testoRisposta" +
+        		"SELECT R.rispostaID, R.testoRisposta, R.domandaID_fk" +
         		" FROM Risposta R, Domanda D, Sondaggio WHERE sondaggioID=" + sondaggioID + 
         		" AND sondaggioID=sondaggioID_fk AND D.domandaID=R.domandaID_fk");
         
@@ -61,6 +61,8 @@ public class RispostaDB {
         	RispostaData data = new RispostaData();
         	data.setRispostaID(result.getString("rispostaID"));
         	data.setTestoRisposta(result.getString("testoRisposta"));
+        	data.setDomandaID(result.getString("domandaID_fk"));
+        	System.out.println("prendiDatiRisposte(): testoRisposta->"+result.getString("testoRisposta"));
         	risposteData.add(data);
         }        
         con.close();

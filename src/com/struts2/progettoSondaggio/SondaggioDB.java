@@ -104,6 +104,7 @@ public class SondaggioDB {
 	// amministratore ha cliccato su "modifica" di un sondaggio, raccogli i dati del sondaggio
 	public String prendiDatiSondaggio(String sondaggioID, SondaggioData sondaggioData, ArrayList<DomandaData> domandeData, ArrayList<RispostaData> risposteData) throws Exception
 	{
+		
 		// aggiorna sondaggioData
 		sondaggioData.setSondaggioID(sondaggioID);
 		
@@ -124,6 +125,10 @@ public class SondaggioDB {
         sondaggioData.setNomeSondaggio(nome);
         
         con.close();
+        
+        
+        
+        System.out.println("prendiDatiSondaggio(): nome sondaggio da modificare->"+nome);
         
         // aggiorna domandaData
         String res = domandaDB.prendiDatiDomande(sondaggioID, domandeData, risposteData);
@@ -290,7 +295,9 @@ public class SondaggioDB {
         	SondaggioData data = new SondaggioData();
         	data.setSondaggioID(result.getString("sondaggioID"));
         	data.setNomeSondaggio(result.getString("nome"));
-        	//data.setAutore(result.getString("amministratore_fk"));
+        	data.setSondaggioIDPerCancellazione("c_"+result.getString("sondaggioID"));
+        	data.setSondaggioIDPerModifica("m_"+result.getString("sondaggioID"));
+        	data.setAutore(result.getString("amministratore_fk"));
         	
         	listaSondaggiAmministratore.add(data);
         }

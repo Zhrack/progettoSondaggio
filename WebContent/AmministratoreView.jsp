@@ -81,7 +81,8 @@
 		<s:hidden id="hiddenSondaggioID" name="sondaggioID" value="%{sondaggioID}"/>
 		<br>
 		<div class="contanierOption">
-			<form method="get" class="leftDiv">
+			<form action="mostraReport" method="get" class="leftDiv">
+				<s:hidden name="sondaggioIDReport" value="%{sondaggioID}"/>
 				<input type="submit" value="Report" class="inputReport"/>
    			</form>
    			<form action="mostraPaginaModificaSondaggio" method="get" class="leftDiv">

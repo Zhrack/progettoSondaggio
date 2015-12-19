@@ -7,6 +7,15 @@ public class PercentualeData {
 	private ArrayList<Integer> idRisposte;
 	private ArrayList<Float> percentuali;
 	
+	
+	public PercentualeData() 
+	{
+		this.testoDomanda="";
+		this.idRisposte=new ArrayList<Integer>();
+		this.percentuali=new ArrayList<Float>();
+	}
+	
+	
 	public String getTestoDomanda() {
 		return testoDomanda;
 	}

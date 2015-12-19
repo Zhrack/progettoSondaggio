@@ -156,6 +156,12 @@
 	          <result name="success">/modificaSondaggio.jsp</result>
 	    	  <result name="error">/AmministratoreView.jsp</result>
 	  </action>
+	  <action name="mostraReport" 
+	          class="com.struts2.progettoSondaggio.ReportAction" 
+	          method="mostraReport">
+	          <result name="success">/ReportView.jsp</result>
+	    	  <result name="error">/prova.jsp</result>
+	  </action>
       </package>
       
 </struts>

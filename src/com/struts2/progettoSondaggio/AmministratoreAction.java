@@ -43,20 +43,25 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	private ArrayList<ElencoRisposte> testiRisposta;
 	//---------
 
-	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio
-	private String sondaggioIDSceltoPerCancellazione;
-	private String sondaggioIDSceltoPerModifica;
-	private String esitoCancSond="-1"; // usato per aggiornare il jsp dopo aver cancellato il sondaggio
+	
+	private String sondaggioIDScelto; // usato anche per cancellare il sondaggio 
 	private SondaggioData modificaSondaggioData;// possiede i dati del sondaggio aggiornato
 	private ArrayList<DomandaData> modificaDomandeData;// possiede le domande gi� presenti, con le modifiche aggiornate
 	private ArrayList<RispostaData> modificaRisposteData;// possiede le risposte gi� presenti, con le modifiche aggiornate
 	private String prova;
 	
 	
+	// usate per la modifica sondaggio
+	private String sondaggioIDSceltoPerModifica;
 	private String nomeSondaggioModifica;
 	private ArrayList<String> testiDomandaModifica;
 	private ArrayList<ElencoRisposte> testiRispostaModifica;
 	//---------
+	
+	
+	// usate per la cancellazione del sondaggio
+	private String sondaggioIDSceltoPerCancellazione;
+	private String esitoCancSond="-1";
 	
 	// dati per prendere lista sondaggi dato l'id amministratore
 	private ArrayList<SondaggioData> listaSondaggiAmministratore;
@@ -197,11 +202,30 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	    return list;
 	}
 	
+	public String prendiListaSondaggiAmministratore()
+	{
+		System.out.println("prendiListaSondaggiAmministratore");
+		try
+		{
+			listaSondaggiAmministratore.clear();
+			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
+			
+			System.out.println("ritorno :"+result);
+			
+			
+			return result;
+		}
+		catch(Exception ex)
+		{
+			Logger.getLogger(AmministratoreAction.class.getName()).log( 
+                    Level.SEVERE, null, ex);
+		}
+		return ERROR;
+	}
+
 	public String modificaSondaggio()
 	{
 		System.out.println("modificaSondaggio(): id del sondaggio da modificare->"+this.sondaggioIDSceltoPerModifica);
-		System.out.println("bfdbdfbdfbd");
-		
 		
 		
 		try
@@ -238,6 +262,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 				}
 			
 				
+				// ora crea il nuovo sondaggio con le modifiche
 				return sondaggioDB.creaSondaggio(nomeSondaggioModifica, testiDomandaModifica, testiRispostaModifica);
 			}
 			else
@@ -253,6 +278,11 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		return ERROR;
 	}
 	
+	public String toCreaSondaggioView() throws Exception
+	{
+		return SUCCESS;
+	}
+
 	public String prendiDatiSondaggio()
 	{
 		System.out.println("modificaSondaggio");
@@ -310,7 +340,6 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		return "error";	
 	}
 	
-	
 	public String mostraBoxSuccesso()
 	{
 		this.esitoCancSond="1";
@@ -318,6 +347,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		this.prendiListaSondaggiAmministratore();
 		return "success";
 	}
+	
 	public String mostraBoxErrore()
 	{
 		this.esitoCancSond="0";
@@ -326,32 +356,6 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		return "success";
 	}
 
-	
-	public String prendiListaSondaggiAmministratore()
-	{
-		System.out.println("prendiListaSondaggiAmministratore");
-		try
-		{
-			listaSondaggiAmministratore.clear();
-			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
-			
-			System.out.println("ritorno :"+result);
-			
-			
-			return result;
-		}
-		catch(Exception ex)
-		{
-			Logger.getLogger(AmministratoreAction.class.getName()).log( 
-                    Level.SEVERE, null, ex);
-		}
-		return ERROR;
-	}
-	
-	public String toCreaSondaggioView() throws Exception
-	{
-		return SUCCESS;
-	}
 	
 	public String logout() throws Exception
 	{

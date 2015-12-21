@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class PercentualeData {
 	private String testoDomanda;
+	private ArrayList<String> testoRisposte;
 	private ArrayList<Integer> idRisposte;
 	private ArrayList<Float> percentuali;
 	
@@ -12,6 +13,7 @@ public class PercentualeData {
 	{
 		this.testoDomanda="";
 		this.idRisposte=new ArrayList<Integer>();
+		this.testoRisposte=new ArrayList<String>();
 		this.percentuali=new ArrayList<Float>();
 	}
 	
@@ -33,6 +35,16 @@ public class PercentualeData {
 	}
 	public void setIdRisposte(ArrayList<Integer> idRisposte) {
 		this.idRisposte = idRisposte;
+	}
+
+
+	public ArrayList<String> getTestoRisposte() {
+		return testoRisposte;
+	}
+
+
+	public void setTestoRisposte(ArrayList<String> testoRisposte) {
+		this.testoRisposte = testoRisposte;
 	}
 	
 }

@@ -172,7 +172,7 @@ public class ReportAction extends ActionSupport implements SessionAware{
 			
 			
 			
-			String query2="SELECT DISTINCT R.rispostaID, D.testoDomanda, D.domandaID FROM Risposta R, Domanda D" +
+			String query2="SELECT DISTINCT R.rispostaID, R.testoRisposta, D.testoDomanda, D.domandaID FROM Risposta R, Domanda D" +
 					" WHERE R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=" + sondaggioIDReport +
 					" ORDER BY R.rispostaID";
 			System.out.println(query2);
@@ -191,11 +191,13 @@ public class ReportAction extends ActionSupport implements SessionAware{
 			int rispostaID, domandaID, numeroPartecipanti;
 			float percentualePartecipanti;
 			String testoDomanda = "";
+			String testoRisposta="";
 			PercentualeData perc;
 			while(result.next())
 			{
 				System.out.println("**********");
 				rispostaID = result.getInt("rispostaID");
+				testoRisposta = result.getString("testoRisposta");
 				testoDomanda = result.getString("testoDomanda");
 				domandaID = result.getInt("domandaID");
 				
@@ -251,6 +253,7 @@ public class ReportAction extends ActionSupport implements SessionAware{
 					// aggiungi percentuale ad array
 					perc.setTestoDomanda(testoDomanda);
 					perc.getIdRisposte().add(rispostaID);
+					perc.getTestoRisposte().add(testoRisposta);
 					perc.getPercentuali().add(percentualePartecipanti);
 				}
 				
@@ -260,7 +263,7 @@ public class ReportAction extends ActionSupport implements SessionAware{
 	        this.jsonQuery = JSONobj.toString();
 	        
 	        
-	        printMap(percentualiDomande);
+	        
 	        System.out.println("creaStatisticheDomande(): jsonQuery->"+jsonQuery);
 			
 	        con.close();

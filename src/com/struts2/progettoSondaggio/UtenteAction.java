@@ -29,7 +29,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	public String resultQuery;
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
-
+	
 	// varibili per generare la lista di sondaggi disponibili
 	private ArrayList<SondaggioData> sondaggiDisponibili;
 	
@@ -108,7 +108,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		else return ERROR;
 }
 	
-	public String getSurvey() throws Exception {	
+	public String getSurvey() throws Exception {
 		this.requestSurvey();
 		return SUCCESS;
 	}
@@ -123,7 +123,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	          Connection con = DriverManager.getConnection(url, user, psw);
 	          Statement stmt = con.createStatement();
 
-	          ResultSet result = stmt.executeQuery("SELECT * FROM sondaggioDB.Sondaggio;");
+	          ResultSet result = stmt.executeQuery("SELECT S.sondaggioID, S.nome, U.nickname FROM Sondaggio S, Utente U WHERE S.amministratore_fk=U.userID");
 	          if (!result.isBeforeFirst() ) 
 	          {    
 	        	  return false;
@@ -434,6 +434,10 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
+
+
+
+
 
 
 

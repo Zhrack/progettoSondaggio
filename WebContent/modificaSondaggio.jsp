@@ -29,7 +29,7 @@
 		<s:hidden id="oggettoJSON" name="oggettoJSON" value=""/>
 		<s:hidden id="nomeSondaggioHidden" name="nomeSondaggioModifica" value=""/>
 		<div class="submit">
-			<input type="submit" onclick="return controlloModificaSondaggio()" value="Modifica" >
+			<input class="inputTop" type="submit" onclick="return controlloModificaSondaggio()" value="Modifica" >
 		</div>	 
 </form>
 
@@ -82,8 +82,8 @@
 <form method="POST">
      <div id="dynamicInput">
      </div>
-     <input type="button" value="Aggiungi una Risposta" onClick="addRisposta('dynamicInput');">
-     <input type="button" value="Aggiungi una domanda" onClick="addDomanda('dynamicInput');">
+     <input class="inputButton" type="button" value="Aggiungi una Risposta" onClick="addRisposta('dynamicInput');">
+     <input class="inputButton" type="button" value="Aggiungi una domanda" onClick="addDomanda('dynamicInput');">
 </form>
 
 
@@ -139,7 +139,6 @@ function addRisposta(divName){
 
 //----------------------------------------------------------------------------------------------------------------
 function controlloNumeroRisposteDomanda(){
-	console.log("numero risposte della domanda_"+counterDomande+":"+$(".domanda_"+counterDomande).length);
 		if($(".domanda_"+counterDomande).length==0 && counterDomande>0)
 			{
 				alert("Per ogni domanda devi inserire almeno una risposta");
@@ -181,7 +180,6 @@ function controlloModificaSondaggio(){
 		 }
 	 else
 		 {
-		 	alert("non ha aggiunto nessuna domanda nuova"); 	
 		 	var i=0;
 		 	data={};
 		 	$("#listaSondaggi li").each(function(index){
@@ -254,7 +252,6 @@ function aggiuntaNuoveDomande(){
 //----------------------------------------------------------------------------------------------------------------
 function uniscoDomandeRisposte()
 {
-	 alert("hai aggiunto nuove domande");
 	 data={};
 	 
 	 // l'oggetto con le domande nuove aggiunte 
@@ -296,12 +293,10 @@ function uniscoDomandeRisposte()
 		// setto l'attributo dell'action per passare le domande e risposte
 	 	var testiDomanda=$("#oggettoJSON");
 		$(testiDomanda).val(JSON.stringify(data));
-		console.log($(testiDomanda));
 		
 		// setto l'attributo dell'action "nome del sondaggio" 
 		var nomeSondaggio=$("#nomeSondaggioInput").val();
 		$("#nomeSondaggioHidden").val(nomeSondaggio);
-		console.log($("#nomeSondaggioHidden"));
 }
 
 //----------------------------------------------------------------------------------------------------------------
@@ -341,6 +336,16 @@ function controlloNuoveDomande(){
 				$("#nomeSondaggioHidden").val(nomeSondaggio);
 				
 			}
+	}
+</script>
+
+
+
+<script language="Javascript" type="text/javascript">
+var esitoModificaSondaggio='<s:property value="esitoCreazioneSondaggio"/>';
+if(esitoModificaSondaggio=="0")
+	{
+		alert("Spiacente, errore nella modifica del sondaggio.");		
 	}
 </script>
 

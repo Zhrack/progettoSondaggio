@@ -1,6 +1,6 @@
 body
 {
- 	font-family: 'Open Sans', sans-serif;
+ 	    font-family: "Myriad Pro",Helvetica,Arial,sans-serif !important;
  	background: rgba(246,41,12,1);
 background: -moz-linear-gradient(left, rgba(246,41,12,1) 0%, rgba(255,255,255,1) 0%, rgba(255,246,204,1) 8%, rgba(250,231,147,1) 51%, rgba(247,218,85,1) 100%);
 background: -webkit-gradient(left top, right top, color-stop(0%, rgba(246,41,12,1)), color-stop(0%, rgba(255,255,255,1)), color-stop(8%, rgba(255,246,204,1)), color-stop(51%, rgba(250,231,147,1)), color-stop(100%, rgba(247,218,85,1)));

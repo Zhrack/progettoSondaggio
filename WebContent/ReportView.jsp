@@ -28,14 +28,19 @@
 	
 	for(var domandaID in obj)
 	{
+		var objDomanda=obj[domandaID];
 		var testoDomanda=objDomanda.testoDomanda;
 		testoDomande.push(testoDomanda);
+		var testoDomanda=objDomanda.testoDomanda;
 		var percentuali=objDomanda.percentuali;		
+		var idRisposte =objDomanda.idRisposte;
 		var testoRisposte= objDomanda.testoRisposte;
 		var chartData=[];
 
 		for(var i in idRisposte)
 			{
+                console.log(testoDomanda);
+				console.log(i+"------"+idRisposte[i]+"------"+ percentuali[i]+"------"+testoRisposte[i]);
  				chartData.push({
  					"testoRisposta":testoRisposte[i],
  					"voto":percentuali[i]
@@ -79,13 +84,12 @@
 		
 		chartSex.addGraph(graph);
 		chartSex.write('chartSexDiv');
-		//------------------------------------------
-		//------------------------------------------
+		// --------------------------
+		// --------------------------
 
 		
 		
-		
-		// statistiche delle domande
+		// statistiche delle risposte
 		for(var i in chartDataArray)
 			{
 				var chart = new AmCharts.AmSerialChart();
@@ -116,7 +120,8 @@
 				
 		
 				chart.write(idChartDiv);
-			}	
+			}
+
 	});
 	
 </script>

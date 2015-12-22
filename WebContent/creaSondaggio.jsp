@@ -21,7 +21,7 @@
 		<s:hidden id="oggettoJSON" name="oggettoJSON" value=""/>
 		<s:hidden id="nomeSondaggioHidden" name="nomeSondaggio" value=""/>
 		<div class="submit">
-			<input type="submit" onclick="return controlloCreaSondaggio()" value="Crea" >
+			<input class="inputTop" type="submit" onclick="return controlloCreaSondaggio()" value="Crea" >
 		</div>	 
 </form>
 
@@ -30,8 +30,8 @@
 <form method="POST">
      <div id="dynamicInput">
      </div>
-     <input type="button" value="Aggiungi una Risposta" onClick="addRisposta('dynamicInput');">
-     <input type="button" value="Aggiungi una domanda" onClick="addDomanda('dynamicInput');">
+     <input class="inputButton" type="button" value="Aggiungi una Risposta" onClick="addRisposta('dynamicInput');">
+     <input class="inputButton" type="button" value="Aggiungi una domanda" onClick="addDomanda('dynamicInput');">
 </form>
 
 
@@ -75,7 +75,7 @@ function addRisposta(divName){
     	 counterRisposte++;
     	 var newdiv = document.createElement('div');
     	 $(newdiv).attr('class', 'domanda_'+counterDomande);
-         newdiv.innerHTML = "Risp " + (counterRisposte) + " <br><input type='text' name='myInputs[]'>";
+         newdiv.innerHTML = "Risposta " + (counterRisposte) + " <br><input type='text' name='myInputs[]'>";
          document.getElementById(divName).appendChild(newdiv);
          
     }
@@ -86,9 +86,9 @@ function addRisposta(divName){
 //----------------------------------------------------------------------------------------------------------------
 function controlloNumeroRisposteDomanda(){
 	console.log("numero risposte della domanda_"+counterDomande+":"+$(".domanda_"+counterDomande).length);
-		if($(".domanda_"+counterDomande).length==0 && counterDomande>0)
+		if($(".domanda_"+counterDomande).length<2 && counterDomande>0)
 			{
-				alert("Per ogni domanda devi inserire almeno una risposta");
+				alert("Per ogni domanda devi inserire due risposte");
 				return false;
 			}
 		else
@@ -153,6 +153,16 @@ function controlloCreaSondaggio(){
 				$("#nomeSondaggioHidden").val(nomeSondaggio); 				
 			}
 	}
+</script>
+
+<script language="Javascript" type="text/javascript">
+var esitoCreazioneSondaggio='<s:property value="esitoCreazioneSondaggio"/>';
+if(esitoCreazioneSondaggio=="0")
+	{
+		alert("Spiacente, errore nella creazione del sondaggio.");		
+	}
+
+
 </script>
 
 </body>

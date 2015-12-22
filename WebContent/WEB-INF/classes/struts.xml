@@ -92,14 +92,12 @@
             class="com.struts2.progettoSondaggio.AmministratoreAction" 
             method="creaSondaggio">
             <result type="redirectAction" name="success">mostraListaSondaggiAmministratore</result>
-            <!--   <result name="success">/creaSondaggio.jsp</result>-->
-            <result name="error">/AmministratoreView.jsp</result>
+            <result name="error">/creaSondaggio.jsp</result>
       </action>
       <action name="mostraSondaggio" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">
             <result name="success">/Partecipazione.jsp</result>
-            <result name="error">/HelloWorld.jsp</result>
       </action>
       <action name="prendiInfoSondaggioAndroid" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
@@ -153,14 +151,13 @@
 	  <action name="modificaSondaggio" 
 	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
 	          method="modificaSondaggio">
-	          <result name="success">/modificaSondaggio.jsp</result>
-	    	  <result name="error">/AmministratoreView.jsp</result>
+	          <result type="redirectAction" name="success">mostraListaSondaggiAmministratore</result>
+	    	  <result name="error">/modificaSondaggio.jsp</result>
 	  </action>
 	  <action name="mostraReport" 
 	          class="com.struts2.progettoSondaggio.ReportAction" 
 	          method="mostraReport">
 	          <result name="success">/ReportView.jsp</result>
-	    	  <result name="error">/prova.jsp</result>
 	  </action>
       </package>
       

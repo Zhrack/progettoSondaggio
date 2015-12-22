@@ -35,6 +35,11 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	private LoginData loginData;
 	private LoginController loginController;
 	
+
+	// mi serve per vedere se è amm
+	private String isAmministratore;
+
+	
 	private String username;
 	private String password;
 	private String nome;
@@ -71,6 +76,9 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 			loginData.username = username;
 			loginData.password = password;
 			loginData.isAmministratore = false;
+			
+			
+			
 			if(loginController.login(loginData))
 			{
 				System.out.println("Login OK " + loginData.isAmministratore);
@@ -80,6 +88,7 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 				ses.put("userID", userIDFromNickname(username));
 				ses.put("password", password);
 				ses.put("isMobile", isMobile);
+				ses.put("isAmministratore", (loginData.isAmministratore)? "1" : "0");
 				loginSuccessful = true;
 				
 				if(loginData.isAmministratore && this.accessoAmministratoreComeUtente.equals("0"))
@@ -304,6 +313,18 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 
 	public void setMobile(boolean isMobile) {
 		this.isMobile = isMobile;
+	}
+	
+	
+
+	public String getIsAmministratore() {
+		return (String) this.ses.get("isAmministratore");
+	}
+
+
+	public void setIsAmministratore(String isAmministratore) {
+		
+		this.ses.put("isAmministratore",isAmministratore);
 	}
 
 }

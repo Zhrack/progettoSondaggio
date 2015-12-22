@@ -36,6 +36,23 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	private String password;
 
 	
+	// -1 -> default
+	//  0 -> errore
+	//  1 -> successo della creazione sondaggio
+	private String esitoCreazioneSondaggio="-1";
+	
+	
+	// variabile per utilizzata l'interfaccia grafica
+	// 0  -> tutto apposto
+	// -1 -> tutto apposto, ma non cè nessun sondaggio 
+	// -2 -> errore nella query
+	private String esitoPrendiListaSondaggiAmm="0";
+	
+	// -1 -> default
+	//  0 -> errore
+	//  1 -> successo della cancellazione
+	private String esitoCancSond="-1";
+	
 	// dati per creazione sondaggio
 	private String nomeSondaggio;
 	private ArrayList<String> testiDomanda;
@@ -61,7 +78,7 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	
 	// usate per la cancellazione del sondaggio
 	private String sondaggioIDSceltoPerCancellazione;
-	private String esitoCancSond="-1";
+	
 	
 	// dati per prendere lista sondaggi dato l'id amministratore
 	private ArrayList<SondaggioData> listaSondaggiAmministratore;
@@ -209,14 +226,13 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		{
 			listaSondaggiAmministratore.clear();
 			String result = sondaggioDB.prendiListaSondaggiAmministratore(listaSondaggiAmministratore);
-			
 			System.out.println("ritorno :"+result);
 			
-			
-			return result;
+			return ERROR;
 		}
 		catch(Exception ex)
 		{
+			this.esitoPrendiListaSondaggiAmm="-2";
 			Logger.getLogger(AmministratoreAction.class.getName()).log( 
                     Level.SEVERE, null, ex);
 		}
@@ -549,5 +565,22 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 	public void setProva(String prova) {
 		this.prova = prova;
 	}
+
+	public String getEsitoPrendiListaSondaggiAmm() {
+		return esitoPrendiListaSondaggiAmm;
+	}
+
+	public void setEsitoPrendiListaSondaggiAmm(String esitoPrendiListaSondaggiAmm) {
+		this.esitoPrendiListaSondaggiAmm = esitoPrendiListaSondaggiAmm;
+	}
+
+	public String getEsitoCreazioneSondaggio() {
+		return esitoCreazioneSondaggio;
+	}
+
+	public void setEsitoCreazioneSondaggio(String esitoCreazioneSondaggio) {
+		this.esitoCreazioneSondaggio = esitoCreazioneSondaggio;
+	}
+
 
 }

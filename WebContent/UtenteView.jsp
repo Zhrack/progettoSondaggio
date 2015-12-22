@@ -10,11 +10,6 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<style type="text/css">
-			.bs-example{
-				margin: 20px;
-				}
-		</style>
 <script src="http://code.jquery.com/jquery-latest.min.js"type="text/javascript"></script>
 <title>Utente - Home</title>
 </head>
@@ -64,7 +59,7 @@
                  		
                  		   
                  			var form='<form action="mostraSondaggio"><s:hidden name="sondaggioIDScelto" value="'+id+'"/><s:hidden name="nomeSondaggioUtente" value="'+nomeSondaggio+'"/><s:hidden name="autoreSondaggioUtente" value="'+ammID+'"/><input type="submit" value="Partecipa" ></form>';	  
-                    	    $('<li>', {html: "<p id="+p_id+">nome: "+nomeSondaggio+" ammID: "+ammID+form+"</p>"}).appendTo('ul.ulID')
+                    	    $('<li>', {html: "<p id="+p_id+"><strong>nome</strong>:"+nomeSondaggio+" <strong>amministratore</strong>:"+ammID+form+"</p>"}).appendTo('ul.ulID')
                     	}
                  }  
 			});  
@@ -87,7 +82,7 @@
 
 
 
-<div style="text-align: center">
+<div id="divPagamento" style="text-align: center">
 	<div id="yourdiv" style="display: inline-block">
     <h3>Vuoi diventare Amministratore?</h3>
    	<form id="formID" action="effettuaPagamento" method="post">
@@ -98,8 +93,16 @@
    	</form>
    	</div>
 </div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var isAmministratore='<s:property value="isAmministratore"/>';
+	if(isAmministratore=="1")
+		{
+			$("#divPagamento").remove();
+		}
+});
+</script>
 
-<br> 
 
 <div style="text-align: center">
 	<div id="yourdiv" style="display: inline-block">

@@ -63,10 +63,12 @@ public class SondaggioDB {
 		}
 		if(!errore)
 		{
+			amm.setEsitoCreazioneSondaggio("1");
 			return "success";
 		}
 		else
 		{
+			amm.setEsitoCreazioneSondaggio("0");
 			return "error";
 		}
 	}
@@ -287,6 +289,7 @@ public class SondaggioDB {
         
         if (!result.isBeforeFirst() ) 
         {
+        	amm.setEsitoPrendiListaSondaggiAmm("-1");
         	con.close();
       	  	return "error";
         } 

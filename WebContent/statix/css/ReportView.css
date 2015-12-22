@@ -1,5 +1,5 @@
 body {
-    font-family: Verdana;
+        font-family: "Myriad Pro",Helvetica,Arial,sans-serif !important;
     font-size: 12px;
     padding: 30px;
 }
@@ -45,6 +45,18 @@ p {
 	background-color:white;
     width: 50%;
     margin: 0 auto;
+    
+    
+    background: rgba(238,255,186,1);
+background: -moz-linear-gradient(-45deg, rgba(238,255,186,1) 25%, rgba(145,232,66,1) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(25%, rgba(238,255,186,1)), color-stop(100%, rgba(145,232,66,1)));
+background: -webkit-linear-gradient(-45deg, rgba(238,255,186,1) 25%, rgba(145,232,66,1) 100%);
+background: -o-linear-gradient(-45deg, rgba(238,255,186,1) 25%, rgba(145,232,66,1) 100%);
+background: -ms-linear-gradient(-45deg, rgba(238,255,186,1) 25%, rgba(145,232,66,1) 100%);
+background: linear-gradient(135deg, rgba(238,255,186,1) 25%, rgba(145,232,66,1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeffba', endColorstr='#91e842', GradientType=1 );
+    
+    
 }
 
 body

@@ -23,22 +23,48 @@
  <h1>Pannello Amministratore di <s:property value="username"/></h1>
  <div id="divLogout">
 	<form action="logoutAmministratore" method="get">
-		<input type="submit" value="Logout"/>
+		<input class="inputTop" id="logoutInput" type="submit" value="Logout"/>
    	</form>
 </div>
   <div id="top">
 	<form action="ToCreaSondaggio" method="get" id="formNuovoSondaggio" class="formTop">
-		<input type="submit" value="Crea nuovo Sondaggio"/>
+		<input class="inputTop" type="submit" value="Crea nuovo Sondaggio"/>
    	</form>
    	<form action="loginSubmitted" method="get" id="formPartecipaSondaggio" class="formTop">
    	<s:hidden id="accessoAmministratoreComeUtente" name="accessoAmministratoreComeUtente" value="1"/>
    	<s:hidden id="option" name="option" value="login"/>
    	<s:hidden id="tagUsername" name="username" value=""/>
    	<s:hidden id="tagPassword" name="password" value=""/>
-		<input type="submit" value="Partecipa ai Sondaggio" id="inputPartecipaSondaggi"/>
+		<input class="inputTop" type="submit" value="Partecipa ai Sondaggio" id="inputPartecipaSondaggi"/>
    	</form>
 </div><br><br>
 <h2>Lista dei sondaggi creati</h2>
+<div >
+	<p id="messaggioListaSondaggi"></p>
+
+  	<script type="text/javascript">
+  	$(document).ready(function(){
+    	var esitoPrendiListaSondaggiAmm='<s:property value="esitoPrendiListaSondaggiAmm"/>';
+    	
+    	if(esitoPrendiListaSondaggiAmm=="0")
+    		{
+    			$("#messaggioListaSondaggi").hide();
+    		}
+    	else if(esitoPrendiListaSondaggiAmm=="-1")
+    		{
+    			$("#messaggioListaSondaggi").show();
+    			$("#messaggioListaSondaggi").text("Non hai ancora fatto nessun sondaggio.");
+    		}
+    	else if(esitoPrendiListaSondaggiAmm=="-2")
+    		{
+    			$("#messaggioListaSondaggi").show();
+    			$("#messaggioListaSondaggi").text("Spiacente, c'è stato un'errore.");		
+    		}
+    	});
+  	</script>
+</div>
+
+
 <div class="bs-example" id="messageBox"><s:property value="prova"/>
     <div class="alert fade in">
     <script type="text/javascript">
@@ -66,7 +92,7 @@
     	
     	
     	
-    	$(message).insertAfter($("#dismissMessageBox"));
+    	$(message).insertAfter($("#dismissMessageBox"));    	
     });
 		</script>
         <a id="dismissMessageBox" href="#" class="close" data-dismiss="alert">&times;</a>
@@ -83,15 +109,15 @@
 		<div class="contanierOption">
 			<form action="mostraReport" method="get" class="leftDiv">
 				<s:hidden name="sondaggioIDReport" value="%{sondaggioID}"/>
-				<input type="submit" value="Report" class="inputReport"/>
+				<input class="inputReport" type="submit" value="Report" class="inputReport"/>
    			</form>
    			<form action="mostraPaginaModificaSondaggio" method="get" class="leftDiv">
    				<s:hidden id="%{sondaggioIDPerModifica}" name="sondaggioIDSceltoPerModifica" value=""/>
-				<input type="submit" value="Modifica" class="inputModifica"/>
+				<input class="inputModifica" type="submit" value="Modifica" class="inputModifica"/>
    			</form>
    			<form action="cancellaSondaggio" method="get" class="rightDiv">
    				<s:hidden id="%{sondaggioIDPerCancellazione}" name="sondaggioIDSceltoPerCancellazione" value=""/>
-				<input type="submit" value="Cancella" class="inputCancella"/>
+				<input class="inputCancella" type="submit" value="Cancella" class="inputCancella"/>
    			</form>
 		</div>	
 	</li>
@@ -120,9 +146,7 @@
 //-----------------------------------------------------------------------------------------------------
 // setto l'attributo della action "sondaggioIDscelto" per cancellarlo
  $('.inputCancella').on("click",function() {
-	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val()
-	 alert(sondaggioIDscelto);
-	 
+	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val();
 	 $("#c_"+sondaggioIDscelto).val(sondaggioIDscelto);
 	});
  
@@ -132,8 +156,6 @@
 //setto l'attributo della action "sondaggioIDscelto" per modificarlo
  $('.inputModifica').on("click",function() {
 	 var sondaggioIDscelto=$(this).parent().parent().parent().find("#hiddenSondaggioID").val()
-	 alert(sondaggioIDscelto);
-	 console.log($("#m_"+sondaggioIDscelto));
 	 $("#m_"+sondaggioIDscelto).val(sondaggioIDscelto);
 	 
 	});

@@ -34,7 +34,7 @@ public class PartecipazioneDB{
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
         Connection con = DriverManager.getConnection(LoginController.url, LoginController.user, LoginController.psw);
         
-        // controllo che l'utente non abbia già partecipato
+        // controllo che l'utente non abbia giï¿½ partecipato
         // prima raccolgo le domandeID a cui l'utente ha partecipato
         boolean partecipato = false;
         ArrayList<String> listaDomandeFatte = new ArrayList<String>();
@@ -66,7 +66,7 @@ public class PartecipazioneDB{
             } 
         }
         
-        // controllo che i 2 array non abbiano elementi in comune, altrimenti significa che l'utente ha già partecipato
+        // controllo che i 2 array non abbiano elementi in comune, altrimenti significa che l'utente ha giï¿½ partecipato
         for(int i = 0; i < listaDomandeFatte.size(); ++i)
         {
         	String domandaFatta = listaDomandeFatte.get(i);
@@ -74,7 +74,7 @@ public class PartecipazioneDB{
         	{
         		if(domandaFatta.equals(listaDomandeDaInserire.get(j)))
         		{
-        			// l'utente ha già una partecipazione in questa domanda, stiamo partecipando di nuovo ad un sondaggio
+        			// l'utente ha giï¿½ una partecipazione in questa domanda, stiamo partecipando di nuovo ad un sondaggio
         			partecipato = true;
         			break;
         		}
@@ -100,9 +100,9 @@ public class PartecipazioneDB{
         }
         else
         {
-        	System.out.println("Utente ha già partecipato!");
+        	System.out.println("Utente ha giï¿½ partecipato!");
         	con.close();
-      	  	return "error";
+      	  	return "secondaPartecipazione";
         }
 	}
 

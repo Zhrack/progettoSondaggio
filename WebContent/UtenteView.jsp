@@ -110,7 +110,6 @@ $(document).ready(function(){
 		alert("Non puoi partecipare a un sondaggio al quale hai giá partecipato.")
 		$("#bloccoPartecipazioneHidden").val("-1");
 	}
-
 });
 </script>
 

@@ -97,9 +97,7 @@
       <action name="mostraSondaggio" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">
-            <!--  <result name="success">/Partecipazione.jsp</result> -->
-                        <result type="redirectAction" name="success">bloccaPartecipazione</result>
-            <result type="redirectAction" name="secondaPartecipazione">bloccaPartecipazione</result>
+            <result name="success">/Partecipazione.jsp</result>
             <result name="error">/UtenteView.jsp</result>
       </action>
       
@@ -128,6 +126,7 @@
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="aggiungiPartecipazione">
             <result type="redirectAction" name="success">mostraSuccessoPartecipazione</result>
+            <result type="redirectAction" name="secondaPartecipazione">bloccaPartecipazione</result>
             <result type="redirectAction" name="error">mostraErrorePartecipazione</result>
       </action>
 	 <action name="mostraSuccessoPartecipazione" 

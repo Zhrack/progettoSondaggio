@@ -97,9 +97,23 @@
       <action name="mostraSondaggio" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">
-            <result name="success">/Partecipazione.jsp</result>
+            <!--  <result name="success">/Partecipazione.jsp</result> -->
+                        <result type="redirectAction" name="success">bloccaPartecipazione</result>
+            <result type="redirectAction" name="secondaPartecipazione">bloccaPartecipazione</result>
             <result name="error">/UtenteView.jsp</result>
       </action>
+      
+      
+      
+      <action name="bloccaPartecipazione" 
+            class="com.struts2.progettoSondaggio.VisitatoreAction" 
+            method="bloccaPartecipazione">
+            <result name="success"> /UtenteView.jsp</result>
+      </action>
+      
+      
+      
+      
       <action name="prendiInfoSondaggioAndroid" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggioAndroid">

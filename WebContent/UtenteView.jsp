@@ -93,6 +93,9 @@
    	</form>
    	</div>
 </div>
+
+<s:hidden id="bloccoPartecipazioneHidden" name="bloccoPartecipazione" value=""/>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	var isAmministratore='<s:property value="isAmministratore"/>';
@@ -100,6 +103,14 @@ $(document).ready(function(){
 		{
 			$("#divPagamento").remove();
 		}
+	
+	var bloccoPartecipazione='<s:property value="bloccoPartecipazione"/>';
+	if(bloccoPartecipazione=="1")
+	{
+		alert("Non puoi partecipare a un sondaggio al quale hai giá partecipato.")
+		$("#bloccoPartecipazioneHidden").val("-1");
+	}
+
 });
 </script>
 

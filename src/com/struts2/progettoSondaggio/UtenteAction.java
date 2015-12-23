@@ -48,10 +48,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	
 	
 	private String userID = "";
-
-
 	private boolean startup;
-	
 	private String usernameSicurezza;
 
 	public UtenteAction()
@@ -269,8 +266,6 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	}
 
 	
-
-	
 	private String userIDFromNickname(String username) throws Exception
 	{
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -435,6 +430,10 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		this.userID = userID;
 	}
 
+
+
+
+	
 
 
 

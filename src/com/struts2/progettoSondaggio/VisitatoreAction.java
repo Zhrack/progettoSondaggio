@@ -60,6 +60,12 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 	// ----
 
 	private Map<String, Object> ses;
+	
+	
+	// -1 default
+	//  1 blocco partecipazione attivo 
+	private String bloccoPartecipazione="-1";
+
 		
 	public VisitatoreAction()
 	{
@@ -201,6 +207,13 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		return "success";
 	}
 	
+	
+	public String bloccaPartecipazione()
+	{
+		this.setBloccoPartecipazione("1");
+		return "success";
+	}
+	
 	public String getPassword() {
 		return password;
 	}
@@ -326,5 +339,16 @@ public class VisitatoreAction extends ActionSupport implements SessionAware{
 		
 		this.ses.put("isAmministratore",isAmministratore);
 	}
+
+	public String getBloccoPartecipazione() {
+		return bloccoPartecipazione;
+	}
+
+	public void setBloccoPartecipazione(String bloccoPartecipazione) {
+		System.out.println("asdasdasdasdasdasdsa");
+		this.bloccoPartecipazione = bloccoPartecipazione;
+	}
+
+	
 
 }

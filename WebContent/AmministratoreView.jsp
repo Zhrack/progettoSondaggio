@@ -70,6 +70,7 @@
     <script type="text/javascript">
     $(document).ready(function(){
     	var esitoCancSond='<s:property value="esitoCancSond"/>';
+    	var esitoReport='<s:property value="esitoReport"/>';
     	var message;
 		
     	
@@ -85,10 +86,17 @@
     			$("#messageBox").children().addClass("alert-danger");
     			$('#messageBox').css("visibility","visible");
     		}
+    	else if(esitoReport=="0")
+		{
+			message="<strong>Il sondaggio non ha ancora avuto nessuna partecipazione.</strong>"
+			$("#messageBox").children().addClass("alert-danger");
+			$('#messageBox').css("visibility","visible");
+		}
     	else if(esitoCancSond=="-1")
     		{
     			$('#messageBox').css("visibility","hidden");
     		}
+    	
     	
     	
     	
@@ -98,6 +106,13 @@
         <a id="dismissMessageBox" href="#" class="close" data-dismiss="alert">&times;</a>
     </div>
 </div>
+
+
+
+
+
+
+
 
 <ul id="listaSondaggi">
 <s:hidden id="hiddenSondaggioIDScelto" name="sondaggioIDScelto" value=""/> 

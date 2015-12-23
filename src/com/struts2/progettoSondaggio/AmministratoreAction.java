@@ -37,21 +37,25 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	
 	// -1 -> default
+	//  0 -> errore o nessuna partecipazione
+	private String esitoReport="-1";
+	
+	// -1 -> default
 	//  0 -> errore
 	//  1 -> successo della creazione sondaggio
 	private String esitoCreazioneSondaggio="-1";
-	
-	
-	// variabile per utilizzata l'interfaccia grafica
-	// 0  -> tutto apposto
-	// -1 -> tutto apposto, ma non cè nessun sondaggio 
-	// -2 -> errore nella query
-	private String esitoPrendiListaSondaggiAmm="0";
 	
 	// -1 -> default
 	//  0 -> errore
 	//  1 -> successo della cancellazione
 	private String esitoCancSond="-1";
+	
+	// variabile per utilizzata l'interfaccia grafica
+	// 0  -> tutto apposto
+	// -1 -> tutto apposto, ma non cè nessun sondaggio 
+	// -2 -> errore nella query
+	private String esitoPrendiListaSondaggiAmm="0";	
+	
 	
 	// dati per creazione sondaggio
 	private String nomeSondaggio;
@@ -371,6 +375,15 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		this.prendiListaSondaggiAmministratore();
 		return "success";
 	}
+	
+	public String gestioneReportErrore()
+	{
+		this.esitoReport="0";
+		System.out.println("asdasdasasasd");
+		return this.prendiListaSondaggiAmministratore();
+	}
+	
+	
 
 	
 	public String logout() throws Exception
@@ -580,6 +593,14 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 
 	public void setEsitoCreazioneSondaggio(String esitoCreazioneSondaggio) {
 		this.esitoCreazioneSondaggio = esitoCreazioneSondaggio;
+	}
+
+	public String getEsitoReport() {
+		return esitoReport;
+	}
+
+	public void setEsitoReport(String esitoReport) {
+		this.esitoReport = esitoReport;
 	}
 
 

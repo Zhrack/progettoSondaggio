@@ -50,7 +50,7 @@
 		chartDataArray.push(chartData);
 	}
 	
-	
+	console.log(chartDataArray);
 	
 	
 	AmCharts.ready(function() {

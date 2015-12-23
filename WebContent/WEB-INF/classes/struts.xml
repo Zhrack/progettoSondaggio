@@ -158,6 +158,13 @@
 	          class="com.struts2.progettoSondaggio.ReportAction" 
 	          method="mostraReport">
 	          <result name="success">/ReportView.jsp</result>
+	          <result type="redirectAction" name="error">reportErrore</result>
+	  </action>
+	   <action name="reportErrore" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="gestioneReportErrore">
+	          <result name="success"> /AmministratoreView.jsp</result>
+   			  <result name="error"> /AmministratoreView.jsp</result>
 	  </action>
       </package>
       

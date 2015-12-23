@@ -114,12 +114,28 @@ function controlloNumeroDomande()
 	}
 	
 	
+//----------------------------------------------------------------------------------------------------------------	
+function tuttiCampiRiempiti(){
+	var response=true;
+	$("input[type='text']").each(function(){
+			if($(this).val().length==0)
+				{
+					response=false;
+				}
+		})
+	
+	if(response==false)
+		{
+			alert("Devi riempire tutti i campi di testo");
+		}
+	return response;
+}
 //----------------------------------------------------------------------------------------------------------------
 // Questa funzione viene chiamata quando l'utente clicca sul bottone "Crea", controlla che i dati
 // sono stati inseriti correttamente e poi setta gli attributi della action (che mi serviranno)
 // per salvare i dati del nuovo sondaggio nel DB
 function controlloCreaSondaggio(){
-		if(controlloNumeroDomande()==false)
+		if(controlloNumeroDomande() || tuttiCampiRiempiti()==false)
 			return false;
 		else
 			{

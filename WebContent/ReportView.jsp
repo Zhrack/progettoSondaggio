@@ -13,13 +13,19 @@
 </head>
 <body>
 <h1>Report <s:property value="nomeSondaggio"/></h1>
+<div>
+	<form action="ritornaInAmmView" method="get">
+		<input class="inputTop" id="logoutInput" type="submit" value="Ritorna alla pagina Amministratore"/>
+   	</form>
+</div>
+<br>
+<br>
 <p>Statistiche maschi/femmine</p>
 <div id="chartSexDiv" class="classChart"></div>
 <div id="container"></div>
 
 <script type="text/javascript">
 
-	
 	var string='<s:property value="jsonQuery"/>';
 	var jsonString=string.replace(/&quot;/g,'"');
 	var obj=jQuery.parseJSON(jsonString);
@@ -50,7 +56,7 @@
 		chartDataArray.push(chartData);
 	}
 	
-	
+	console.log(chartDataArray);
 	
 	
 	AmCharts.ready(function() {
@@ -116,7 +122,7 @@
 				var testoDomanda=testoDomande[i];
 				
 				$( "<h3>"+testoDomanda+"</h3>" ).appendTo($( "#container" ));
-				$( "<div id="+idChartDiv+" class='classChart'></div>" ).appendTo($( "#container" ));
+				$( "<div id="+idChartDiv+" class='classChart'></div><br><br><br>" ).appendTo($( "#container" ));
 				
 		
 				chart.write(idChartDiv);

@@ -98,6 +98,7 @@
             class="com.struts2.progettoSondaggio.UtenteAction" 
             method="prendiInfoSondaggio">
             <result name="success">/Partecipazione.jsp</result>
+            <result name="error">/UtenteView.jsp</result>
       </action>
       <action name="prendiInfoSondaggioAndroid" 
             class="com.struts2.progettoSondaggio.UtenteAction" 
@@ -163,6 +164,12 @@
 	   <action name="reportErrore" 
 	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
 	          method="gestioneReportErrore">
+	          <result name="success"> /AmministratoreView.jsp</result>
+   			  <result name="error"> /AmministratoreView.jsp</result>
+	  </action>
+	  <action name="ritornaInAmmView" 
+	          class="com.struts2.progettoSondaggio.AmministratoreAction" 
+	          method="ritornaInAmmView">
 	          <result name="success"> /AmministratoreView.jsp</result>
    			  <result name="error"> /AmministratoreView.jsp</result>
 	  </action>

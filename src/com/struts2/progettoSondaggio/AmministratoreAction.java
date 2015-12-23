@@ -382,9 +382,16 @@ public class AmministratoreAction extends ActionSupport implements SessionAware,
 		System.out.println("asdasdasasasd");
 		return this.prendiListaSondaggiAmministratore();
 	}
-	
-	
 
+	public String ritornaInAmmView()
+	{	
+		this.esitoCancSond="-1";
+		this.esitoCreazioneSondaggio="-1";
+		this.esitoReport="-1";
+		this.esitoPrendiListaSondaggiAmm="0";
+				
+		return this.prendiListaSondaggiAmministratore();
+	}
 	
 	public String logout() throws Exception
 	{

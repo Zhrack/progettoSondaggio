@@ -83,9 +83,11 @@ public class ReportAction extends ActionSupport implements SessionAware{
 	        // prendi numero di partecipanti al sondaggio
 	        
 			result = stmt.executeQuery(
-					"SELECT COUNT(*) AS numero FROM Utente U, Partecipazione P, Risposta R, Domanda D, Sondaggio S" +
-					" WHERE U.userID=P.userID_fk AND P.rispostaID_fk=R.rispostaID" +
-					" AND R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=S.sondaggioID AND S.sondaggioID=" + sondaggioIDReport
+					"SELECT COUNT(*) AS numero FROM (" +
+					"SELECT DISTINCT U.userID FROM Utente U, Partecipazione P, Risposta R, Domanda D, Sondaggio S" +
+                    " WHERE U.userID=P.userID_fk AND P.rispostaID_fk=R.rispostaID" +
+                    " AND R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=S.sondaggioID AND S.sondaggioID=" + this.sondaggioIDReport +
+                    ") AS Partecipanti"
 					);
 			
 			if (!result.isBeforeFirst() ) 
@@ -101,10 +103,12 @@ public class ReportAction extends ActionSupport implements SessionAware{
 			
 			// prendi numero partecipanti maschili
 			result = stmt.executeQuery(
-					"SELECT COUNT(*) AS maschi FROM Utente U, Partecipazione P, Risposta R, Domanda D, Sondaggio S" +
-					" WHERE U.userID=P.userID_fk AND P.rispostaID_fk=R.rispostaID" +
-					" AND R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=S.sondaggioID AND S.sondaggioID=" + sondaggioIDReport +
-					" AND U.sesso=1"
+					"SELECT COUNT(*) AS maschi FROM (" +
+					"SELECT DISTINCT U.userID FROM" +
+					" Utente U, Partecipazione P, Risposta R, Domanda D, Sondaggio S" +
+                    " WHERE U.userID=P.userID_fk AND P.rispostaID_fk=R.rispostaID" +
+                    " AND R.domandaID_fk=D.domandaID AND D.sondaggioID_fk=S.sondaggioID AND S.sondaggioID=" + this.sondaggioIDReport +
+                    " AND U.sesso=1) AS Maschi"
 					);
 			if (!result.isBeforeFirst() ) 
 	        {    

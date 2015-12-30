@@ -20,7 +20,7 @@ public class PartecipazioneDB{
 		this.ses = ses;
 	}
 	
-	public String aggiungiPartecipazione(ArrayList<String> risposte, String userIDAndroid, String partecipazioneOK) throws Exception
+	public String aggiungiPartecipazione(ArrayList<String> risposte, String userIDAndroid, UtenteAction utente) throws Exception
 	{
 		String userID = (String)ses.get("userID");
 		
@@ -94,14 +94,14 @@ public class PartecipazioneDB{
     	        	return "error";
     	        }
             }
-        	partecipazioneOK.replace(partecipazioneOK, "1");
+        	utente.setPartecipazioneOK("1");
         	con.close();
         	return "success";
         }
         else
         {
         	System.out.println("Utente ha gi� partecipato!");
-        	partecipazioneOK.replace(partecipazioneOK, "0");
+        	utente.setPartecipazioneOK("0");
         	con.close();
       	  	return "secondaPartecipazione";
         }

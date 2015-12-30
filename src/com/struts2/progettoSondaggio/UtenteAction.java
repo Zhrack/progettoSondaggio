@@ -264,7 +264,7 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		// faccio la query con l'arrayList con le risposte selezionate
 		try {
 			partecipazioneOK = "0";
-			return partecipazioneDB.aggiungiPartecipazione(listdata, userID, partecipazioneOK);
+			return partecipazioneDB.aggiungiPartecipazione(listdata, userID, this);
 		} catch (Exception e) {
 			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, e);

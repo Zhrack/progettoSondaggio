@@ -36,8 +36,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 				<form action="loginSubmitted" method="post">
 				<s:hidden name="option" value="login"/>
-						<input name="username" type="text" class="text" value="davide" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'USERNAME';}" >
-						<input name="password" type="password" value="davide" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Password';}">
+						<input name="username" type="text" class="text" value="davide" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'username';}" >
+						<input name="password" type="password" value="davide" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'password';}">
 						<div class="submit">
 							<input type="submit" onclick="myFunction()" value="Accedi" >
 					</div>	 

@@ -17,6 +17,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.config.ConfigurationManager;
 import com.opensymphony.xwork2.config.entities.Parameterizable;
+
 import org.json.*;
 
 import com.mysql.jdbc.ResultSetMetaData;
@@ -29,12 +30,13 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	public String resultQuery;
 	private Map<String, Object> ses;
 	private PagamentoController pagamentoController;
+	private SondaggioDB sondaggioDB;
+	private PartecipazioneDB partecipazioneDB;
 	
 	// varibili per generare la lista di sondaggi disponibili
 	private ArrayList<SondaggioData> sondaggiDisponibili;
 	
-	private SondaggioDB sondaggioDB;
-	private PartecipazioneDB partecipazioneDB;
+	
 	
 	// variabili usate per partecipare ad un sondaggio
 	private String sondaggioIDScelto;

@@ -46,6 +46,10 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 	private ArrayList<String> testiRispostaUtenteInStringa;
 	private String listaRisultatoPartecipazione;
 	
+	// 1 -> OK
+	// 0 -> Già partecipato
+	private String partecipazioneOK;
+	
 	
 	private String userID = "";
 	private boolean startup;
@@ -257,7 +261,8 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 		
 		// faccio la query con l'arrayList con le risposte selezionate
 		try {
-			return partecipazioneDB.aggiungiPartecipazione(listdata, userID);
+			partecipazioneOK = "0";
+			return partecipazioneDB.aggiungiPartecipazione(listdata, userID, partecipazioneOK);
 		} catch (Exception e) {
 			Logger.getLogger(UtenteAction.class.getName()).log( 
                     Level.SEVERE, null, e);
@@ -428,6 +433,20 @@ public class UtenteAction extends ActionSupport implements SessionAware,Paramete
 
 	public void setUserID(String userID) {
 		this.userID = userID;
+	}
+
+
+
+
+	public String getPartecipazioneOK() {
+		return partecipazioneOK;
+	}
+
+
+
+
+	public void setPartecipazioneOK(String partecipazioneOK) {
+		this.partecipazioneOK = partecipazioneOK;
 	}
 
 

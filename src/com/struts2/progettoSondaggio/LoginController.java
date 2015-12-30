@@ -40,7 +40,7 @@ public class LoginController {
 	          ResultSet result = stmt.executeQuery("select * from utente WHERE nickname='" + data.username + "'");
 	          if (!result.isBeforeFirst() ) 
 	          {    
-	        	  return false;
+	        	  return false; 
 	          } 
 	          result.next();
 	          System.out.println("Pass DB: " + result.getString("pswrd"));
